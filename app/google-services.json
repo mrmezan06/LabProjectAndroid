@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "959889579018",
+    "firebase_url": "https://extreme-31264.firebaseio.com",
+    "project_id": "extreme-31264",
+    "storage_bucket": "extreme-31264.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959889579018:android:8b406d9c1b566bd03653f3",
+        "android_client_info": {
+          "package_name": "com.mezan.extreme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959889579018-kdc419l5heq21isccfrknkq840cvc4ee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mezan.extreme",
+            "certificate_hash": "421e4e30b8c9ab3da1fb7fe9d0803a907c817646"
+          }
+        },
+        {
+          "client_id": "959889579018-qjqv8vsuvtci1q8gf84hqml8vtsfvfuf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk-f9WifdC-pYLMZEtZYma8EK1dHDGdwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959889579018-qjqv8vsuvtci1q8gf84hqml8vtsfvfuf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
