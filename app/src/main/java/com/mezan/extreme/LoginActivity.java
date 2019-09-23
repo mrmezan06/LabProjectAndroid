@@ -36,12 +36,13 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText Mobile,mCode;
+    private EditText Mobile, mCode;
     private Button mSend;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBacks;
     String mVerificationId;
 
     ConstraintLayout constraintLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
 
         mCode = findViewById(R.id.Code);
         mSend = findViewById(R.id.Confirm);
-        constraintLayout=findViewById(R.id.rootConstraint);
+        constraintLayout = findViewById(R.id.rootConstraint);
 
-        if(!isInternetConnection()){
-            SnackbarAction(constraintLayout);
+        if (!isInternetConnection()) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection Available!", Toast.LENGTH_LONG).show();
             mSend.setEnabled(false);
-        }else {
+        } else {
             mSend.setEnabled(true);
         }
 
@@ -72,11 +73,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    if(mVerificationId != null){
-                        VerifyPhoneNumberWithCode();
-                    }else {
-                        StartPhoneNumberVerification();
-                    }
+                if (mVerificationId != null) {
+                    VerifyPhoneNumberWithCode();
+                } else {
+                    StartPhoneNumberVerification();
+                }
 
 
             }
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        mCallBacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        mCallBacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
                 SignInWithPhoneCredential(phoneAuthCredential);
@@ -99,13 +100,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCodeSent(String VerificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(VerificationId, forceResendingToken);
-                mVerificationId=VerificationId;
+                mVerificationId = VerificationId;
                 mSend.setText("Verify Code");
 
             }
         };
 
-        
+
     }
 
 
@@ -113,19 +114,19 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
-                    final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-                    Toast.makeText(getApplicationContext(),"User Logged In Successfully",Toast.LENGTH_LONG).show();
-                    if(user != null){
-                        final DatabaseReference mUserDB= FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    Toast.makeText(getApplicationContext(), "User Logged In Successfully", Toast.LENGTH_LONG).show();
+                    if (user != null) {
+                        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
                         mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if(!dataSnapshot.exists()){
-                                    Map<String,Object> userMap=new HashMap<>();
-                                    userMap.put("phone",user.getPhoneNumber());
-                                    userMap.put("name",user.getPhoneNumber());
+                                if (!dataSnapshot.exists()) {
+                                    Map<String, Object> userMap = new HashMap<>();
+                                    userMap.put("phone", user.getPhoneNumber());
+                                    userMap.put("name", user.getPhoneNumber());
                                     mUserDB.updateChildren(userMap);
                                 }
                                 UserLoggedIn();
@@ -145,17 +146,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void UserLoggedIn() {
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            startActivity(new Intent(LoginActivity.this,HomePageActivity.class));
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
             finish();
             return;
         }
     }
-    private void VerifyPhoneNumberWithCode(){
-        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(mVerificationId,mCode.getText().toString());
+
+    private void VerifyPhoneNumberWithCode() {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
         SignInWithPhoneCredential(credential);
     }
+
     private void StartPhoneNumberVerification() {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 Mobile.getText().toString(),
@@ -166,18 +169,19 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
-    public  boolean isInternetConnection()
-    {
+    public boolean isInternetConnection() {
 
-        ConnectivityManager connectivityManager =  (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
-    }
-    public void SnackbarAction(View view){
-        if(!isInternetConnection()){
-            Snackbar snackbar1 = Snackbar
-                    .make(constraintLayout, "No Internet Connection Available!", Snackbar.LENGTH_LONG)
-                    .setAction("Try Again Later!",null);
-            snackbar1.show();
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        // ARE WE CONNECTED TO THE NET
+        if (conMgr.getActiveNetworkInfo() != null
+                && conMgr.getActiveNetworkInfo().isAvailable()
+                && conMgr.getActiveNetworkInfo().isConnected()) {
+
+            return true;
+
+        } else {
+            return false;
         }
+
     }
 }
