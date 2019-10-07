@@ -11,16 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomePageActivity"></activity>
+        <activity android:name=".LoginForm"></activity>
+        <activity android:name=".UserInterface" />
+        <activity android:name=".HomePageActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".LoadingScreen">
+        <activity android:name=".LoadingScreen" />
+        <activity android:name=".ContinueWithPhone">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContinueWithPhone" />
     </application>
 
 </manifest>

@@ -1,9 +1,25 @@
 <resources>
-    <string name="app_name">eXtreMe</string>
-    <string name="continuewithphone">Continue WIth Phone Number</string>
+    <string name="app_name">eXtreme</string>
+    <string name="continuewithphone">Continue With Phone Number</string>
     <string name="titlelogin">Enter your mobile number</string>
     <string name="charge">*Standard charge may apply</string>
     <string name="use_sms">Use SMS</string>
     <string name="welcome">Welcome</string>
     <string name="logout">Logout</string>
+    <string name="name">Name</string>
+    <string name="mobile">Address</string>
+    <string name="birthday">Birth of Date:01-06-1998</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="signup">SignUp</string>
+    <string name="alreadylogin">Already have an account?</string>
+    <string name="login_here">Login here</string>
+    <string name="password">Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="mob">Mobile</string>
+    <string name="signup_here">SignUp here</string>
+    <string name="aren_t_sign_up">Aren\'t sign up ?</string>
+
 </resources>

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ContinueWithPhone extends AppCompatActivity {
 
     Button fwLogin;
@@ -18,7 +20,10 @@ public class ContinueWithPhone extends AppCompatActivity {
         fwLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ContinueWithPhone.this,LoginActivity.class));
+                if (FirebaseAuth.getInstance().getCurrentUser() != null)
+                    startActivity(new Intent(ContinueWithPhone.this,LoginForm.class));
+                else
+                    startActivity(new Intent(ContinueWithPhone.this,LoginActivity.class));
             }
         });
     }

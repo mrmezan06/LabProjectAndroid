@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         mCode = findViewById(R.id.Code);
         mSend = findViewById(R.id.Confirm);
         constraintLayout = findViewById(R.id.rootConstraint);
+        mCode.setVisibility(View.GONE);
 
         if (!isInternetConnection()) {
             Toast.makeText(getApplicationContext(), "No Internet Connection Available!", Toast.LENGTH_LONG).show();
@@ -73,9 +75,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 if (mVerificationId != null) {
                     VerifyPhoneNumberWithCode();
                 } else {
+                    //SentCodeToUser();
                     StartPhoneNumberVerification();
                 }
 
@@ -84,33 +88,41 @@ public class LoginActivity extends AppCompatActivity {
 
 
         });
-
         mCallBacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                SignInWithPhoneCredential(phoneAuthCredential);
+                Log.d("getSMSCode","Code:"+phoneAuthCredential.getSmsCode());
+                 SignInWithPhoneCredential(phoneAuthCredential);
 
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
 
+               Log.d("getSMSCodeError",e.getMessage());
             }
 
             @Override
             public void onCodeSent(String VerificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(VerificationId, forceResendingToken);
                 mVerificationId = VerificationId;
-                mSend.setText("Verify Code");
+                mCode.setVisibility(View.VISIBLE);
+                mSend.setText("Verify");
 
             }
         };
+
+
 
 
     }
 
 
     private void SignInWithPhoneCredential(PhoneAuthCredential phoneAuthCredential) {
+        //its checked exactly what i sent
+       // Log.d("getSMSCode","Code:"+phoneAuthCredential.getSmsCode());
+
+
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -119,27 +131,27 @@ public class LoginActivity extends AppCompatActivity {
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Toast.makeText(getApplicationContext(), "User Logged In Successfully", Toast.LENGTH_LONG).show();
                     if (user != null) {
-                        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
-                        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (!dataSnapshot.exists()) {
-                                    Map<String, Object> userMap = new HashMap<>();
-                                    userMap.put("phone", user.getPhoneNumber());
-                                    userMap.put("name", user.getPhoneNumber());
-                                    mUserDB.updateChildren(userMap);
-                                }
-                                UserLoggedIn();
-                            }
+//                        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
+//                        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                if (!dataSnapshot.exists()) {
+//                                    Map<String, Object> userMap = new HashMap<>();
+//                                    userMap.put("phone", user.getPhoneNumber());
+//                                    userMap.put("name", user.getPhoneNumber());
+//                                    mUserDB.updateChildren(userMap);
+//                                }
+//                                UserLoggedIn();
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                            }
+//                        });
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                        UserLoggedIn();
                     }
-
-                    //UserLoggedIn();
                 }
             }
         });
@@ -151,12 +163,19 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
             finish();
             return;
+        }else {
+            Toast.makeText(getApplicationContext(),"Wrong Verification Code",Toast.LENGTH_LONG).show();
+            Log.d("ValidationOfCode","Wrong Verification Code");
         }
     }
 
     private void VerifyPhoneNumberWithCode() {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
-        SignInWithPhoneCredential(credential);
+
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+            SignInWithPhoneCredential(credential);
+
+
+
     }
 
     private void StartPhoneNumberVerification() {
@@ -172,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
     public boolean isInternetConnection() {
 
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // ARE WE CONNECTED TO THE NET
+        // ARE WE CONNECTED TO THE iNET
         if (conMgr.getActiveNetworkInfo() != null
                 && conMgr.getActiveNetworkInfo().isAvailable()
                 && conMgr.getActiveNetworkInfo().isConnected()) {
