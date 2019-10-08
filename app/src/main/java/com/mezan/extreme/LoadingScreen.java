@@ -17,13 +17,15 @@ public class LoadingScreen extends AppCompatActivity {
     ImageView animObj ;
     ConstraintLayout rootView;
     private boolean isFirstAnimation = false;
+    static boolean isFirst = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_loading_screen);
 
@@ -55,7 +57,11 @@ public class LoadingScreen extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 if (!isFirstAnimation) {
                     animObj.clearAnimation();
-                    Intent intent = new Intent(LoadingScreen.this, ContinueWithPhone.class);
+                    Intent intent;
+                    if(isFirst)
+                       intent = new Intent(LoadingScreen.this, ContinueWithPhone.class);
+                    else
+                        intent = new Intent(LoadingScreen.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
