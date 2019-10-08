@@ -28,5 +28,6 @@
     <string name="mobile2">Mobile</string>
     <string name="created">Created</string>
     <string name="update_info">Edit Info</string>
+    <string name="gps_setting">GPS Setting</string>
 
 </resources>
