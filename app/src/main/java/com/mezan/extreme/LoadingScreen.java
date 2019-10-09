@@ -59,7 +59,7 @@ public class LoadingScreen extends AppCompatActivity {
                     animObj.clearAnimation();
                     Intent intent;
                     if(isFirst)
-                       intent = new Intent(LoadingScreen.this, ContinueWithPhone.class);
+                       intent = new Intent(LoadingScreen.this, ModuleActivity.class);
                     else
                         intent = new Intent(LoadingScreen.this, LoginActivity.class);
                     startActivity(intent);

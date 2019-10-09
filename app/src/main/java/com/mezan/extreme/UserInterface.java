@@ -138,6 +138,14 @@ public class UserInterface extends AppCompatActivity {
                                     Log.d("LocationExtreme", String.valueOf(location.getLongitude()));
                                     Log.d("LocationExtreme",String.valueOf(location.getLatitude()));
                                     Snackbar.make(root,"(Lat,Lon)=("+location.getLatitude()+","+location.getLongitude()+")",Snackbar.LENGTH_LONG).show();
+                                    if(!String.valueOf(location.getLatitude()).equals("") && !String.valueOf(location.getLongitude()).equals("")){
+                                        Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
+                                            it.putExtra("lat",location.getLatitude());
+                                            it.putExtra("lon",location.getLongitude());
+                                            startActivity(it);
+                                    }else {
+                                        Snackbar.make(root,"Something went wrong!",Snackbar.LENGTH_LONG).show();
+                                    }
                                 }else {
                                     Log.d("LocationExtreme", "No Location");
                                     Snackbar.make(root,"Location not found!",Snackbar.LENGTH_LONG).show();

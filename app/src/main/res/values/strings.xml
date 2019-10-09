@@ -29,5 +29,9 @@
     <string name="created">Created</string>
     <string name="update_info">Edit Info</string>
     <string name="gps_setting">GPS Setting</string>
+    <string name="title_activity_bike_maps">Map</string>
+    <string name="confirmation_code">Confirmation Code</string>
+    <string name="category">Category</string>
+
 
 </resources>

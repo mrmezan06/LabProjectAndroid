@@ -3,7 +3,6 @@ package com.mezan.extreme;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,42 +31,45 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+public class RiderRegister extends AppCompatActivity {
 
     private EditText Mobile, mCode;
     private Button mSend;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBacks;
     String mVerificationId;
 
-    ConstraintLayout constraintLayout;
+    ConstraintLayout root;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_rider_register);
 
 
         //Check User Logged in or Not
-        UserLoggedIn();
 
 
-        Mobile = findViewById(R.id.phonenumber);
+
+        Mobile = findViewById(R.id.riderPhone);
         Mobile.setSelection(Mobile.getText().length());
 
-        mCode = findViewById(R.id.Code);
-        mSend = findViewById(R.id.Confirm);
-        constraintLayout = findViewById(R.id.rootConstraint);
+        mCode = findViewById(R.id.riderCode);
+        mSend = findViewById(R.id.riderConfirm);
+        root = findViewById(R.id.rootRiderArea);
         mCode.setVisibility(View.GONE);
+
+
+        UserLoggedIn();
 
         if (!isInternetConnection()) {
             Toast.makeText(getApplicationContext(), "No Internet Connection Available!", Toast.LENGTH_LONG).show();
@@ -99,14 +100,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
                 Log.d("getSMSCode","Code:"+phoneAuthCredential.getSmsCode());
-                 SignInWithPhoneCredential(phoneAuthCredential);
+                SignInWithPhoneCredential(phoneAuthCredential);
 
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
 
-               Log.d("getSMSCodeError",e.getMessage());
+                Log.d("getSMSCodeError",e.getMessage());
             }
 
             @Override
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void SignInWithPhoneCredential(PhoneAuthCredential phoneAuthCredential) {
         //its checked exactly what i sent
-       // Log.d("getSMSCode","Code:"+phoneAuthCredential.getSmsCode());
+        // Log.d("getSMSCode","Code:"+phoneAuthCredential.getSmsCode());
 
 
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -136,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    Toast.makeText(getApplicationContext(), "User Logged In Successfully", Toast.LENGTH_LONG).show();
+                    Snackbar.make(root,"Rider logged in Successfully",Snackbar.LENGTH_LONG).show();
                     if (user != null) {
                         UserLoggedIn();
                     }
@@ -148,19 +149,53 @@ public class LoginActivity extends AppCompatActivity {
     private void UserLoggedIn() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-            finish();
-            return;
+            //  startActivity(new Intent(RiderRegisterActivity.this, HomePageActivity.class));
+            //card go sign up page
+
+            startActivity(new Intent(RiderRegister.this,RiderLogin.class));
+
         }else {
-            Toast.makeText(getApplicationContext(),"Wrong Verification Code",Toast.LENGTH_LONG).show();
+
+            Snackbar.make(root,"Wrong Verification Code",Snackbar.LENGTH_LONG).show();
             Log.d("ValidationOfCode","Wrong Verification Code");
         }
     }
 
+
+    private void fetchRiderDataFromFirebase(final String mobile) {
+
+
+        DatabaseReference mriderDB = FirebaseDatabase.getInstance().getReference().child("rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mriderDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+
+                    if(dataSnapshot.child("mobile").getValue() != null){
+                        Log.d("RiderID3",dataSnapshot.getKey());
+                        if (dataSnapshot.child("mobile").getValue().equals(mobile)){
+
+                            startActivity(new Intent(RiderRegister.this,RiderLogin.class));
+                        }else {
+                            startActivity(new Intent(RiderRegister.this,RiderDetailsSubmit.class));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void VerifyPhoneNumberWithCode() {
 
-            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
-            SignInWithPhoneCredential(credential);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+        SignInWithPhoneCredential(credential);
 
 
 
