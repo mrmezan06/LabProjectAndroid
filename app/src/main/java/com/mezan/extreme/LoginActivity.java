@@ -3,7 +3,6 @@ package com.mezan.extreme;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +18,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,8 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_login);
-
+        setContentView(R.layout.acitivity_user_register);
 
         //Check User Logged in or Not
         UserLoggedIn();
@@ -138,7 +134,24 @@ public class LoginActivity extends AppCompatActivity {
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Toast.makeText(getApplicationContext(), "User Logged In Successfully", Toast.LENGTH_LONG).show();
                     if (user != null) {
-                        UserLoggedIn();
+
+                        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("UserAuth");
+                        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, Object> userMap = new HashMap<>();
+                                userMap.put(user.getUid(),"Accepted");
+                                mUserDB.updateChildren(userMap);
+                                UserLoggedIn();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
                     }
                 }
             }
@@ -148,13 +161,43 @@ public class LoginActivity extends AppCompatActivity {
     private void UserLoggedIn() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+            /*startActivity(new Intent(LoginActivity.this, LoginForm.class));
             finish();
-            return;
+            return;*/
+
+            checkUserAuth();
+
         }else {
             Toast.makeText(getApplicationContext(),"Wrong Verification Code",Toast.LENGTH_LONG).show();
             Log.d("ValidationOfCode","Wrong Verification Code");
         }
+    }
+
+    private void checkUserAuth() {
+        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("UserAuth");
+        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+
+                    if (dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue() != null){
+                        Log.d("USERUID",dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().toString());
+                        if(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().equals("Accepted")) {
+                            Log.d("USERUID",dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().toString());
+                            startActivity(new Intent(LoginActivity.this, UserInterface.class));
+                            finish();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private void VerifyPhoneNumberWithCode() {

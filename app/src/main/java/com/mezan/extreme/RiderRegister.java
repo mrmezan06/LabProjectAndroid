@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class RiderRegister extends AppCompatActivity {
@@ -139,6 +141,23 @@ public class RiderRegister extends AppCompatActivity {
                     final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Snackbar.make(root,"Rider logged in Successfully",Snackbar.LENGTH_LONG).show();
                     if (user != null) {
+
+                        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("RiderAuth");
+                        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, Object> userMap = new HashMap<>();
+                                userMap.put(user.getUid(),"Accepted");
+                                mUserDB.updateChildren(userMap);
+                                UserLoggedIn();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                         UserLoggedIn();
                     }
                 }
@@ -151,8 +170,7 @@ public class RiderRegister extends AppCompatActivity {
         if (user != null) {
             //  startActivity(new Intent(RiderRegisterActivity.this, HomePageActivity.class));
             //card go sign up page
-
-            startActivity(new Intent(RiderRegister.this,RiderLogin.class));
+            checkRiderAuth();
 
         }else {
 
@@ -160,25 +178,17 @@ public class RiderRegister extends AppCompatActivity {
             Log.d("ValidationOfCode","Wrong Verification Code");
         }
     }
-
-
-    private void fetchRiderDataFromFirebase(final String mobile) {
-
-
-        DatabaseReference mriderDB = FirebaseDatabase.getInstance().getReference().child("rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mriderDB.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void checkRiderAuth() {
+        final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("RiderAuth");
+        mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 if(dataSnapshot.exists()){
 
-                    if(dataSnapshot.child("mobile").getValue() != null){
-                        Log.d("RiderID3",dataSnapshot.getKey());
-                        if (dataSnapshot.child("mobile").getValue().equals(mobile)){
-
-                            startActivity(new Intent(RiderRegister.this,RiderLogin.class));
-                        }else {
-                            startActivity(new Intent(RiderRegister.this,RiderDetailsSubmit.class));
+                    if (dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue() != null){
+                        if(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().equals("Accepted")) {
+                            startActivity(new Intent(RiderRegister.this, RiderInterface.class));
+                            finish();
                         }
                     }
                 }
@@ -190,7 +200,12 @@ public class RiderRegister extends AppCompatActivity {
             }
         });
 
+
     }
+
+
+
+
 
     private void VerifyPhoneNumberWithCode() {
 

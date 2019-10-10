@@ -80,17 +80,18 @@ public class LoginForm extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     String fMobile = "",fPassword = "";
-                    if (dataSnapshot.child("password").getValue() != ""){
-                        fPassword = (String) dataSnapshot.child("password").getValue();
+                    if (dataSnapshot.child("password").getValue() != null){
+                        fPassword =  dataSnapshot.child("password").getValue().toString();
                         Log.d("Password",fPassword);
                     }
-                    if(dataSnapshot.child("mobile").getValue() != ""){
+                    if(dataSnapshot.child("mobile").getValue() != null){
                         fMobile = dataSnapshot.child("mobile").getValue().toString();
                         Log.d("Mobile",fMobile);
 
                     }
 
-                    if (mobile.equals(fMobile) && password.equals(fPassword)){
+
+                    if (!fMobile.equals(mobile) && !fPassword.equals(password)){
                         startActivity(new Intent(LoginForm.this,UserInterface.class));
                         finish();
                     }

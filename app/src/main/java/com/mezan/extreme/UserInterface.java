@@ -3,6 +3,7 @@ package com.mezan.extreme;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -27,6 +28,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserInterface extends AppCompatActivity {
 
@@ -44,10 +46,17 @@ public class UserInterface extends AppCompatActivity {
     CardView bikeCard,carCard,foodCard,parcelCard;
     LinearLayout root;
 
+    SharedPreferences.Editor data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_interface);
+
+        data = getSharedPreferences("data",MODE_PRIVATE).edit();
+        data.putBoolean("rc",false);
+        data.putBoolean("uc",true);
+        data.apply();
+
 
         EnableRuntimePermission();
 
@@ -183,20 +192,20 @@ public class UserInterface extends AppCompatActivity {
 
         if (id == R.id.menuSignOut) {
 
-            /*FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            Intent intent=new Intent(getApplicationContext(), ModuleActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            finish();*/
+            finish();
 
 
             //user don't want to use again again verification code for those sign out
             //so i am just back him in login page
 
-            Intent intent=new Intent(getApplicationContext(), LoginForm.class);
+           /* Intent intent=new Intent(getApplicationContext(), LoginForm.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            finish();
+            finish();*/
             return true;
         }
         if (id == R.id.userDetails){
