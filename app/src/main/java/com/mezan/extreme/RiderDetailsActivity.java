@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,39 +19,40 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserDetails extends AppCompatActivity {
-
+public class RiderDetailsActivity extends AppCompatActivity {
 
     DatabaseReference mUserDB;
-    EditText etName,etAddress,etBOD,etGender,etMobile,etPassword,etCreated;
+    EditText etName,etAddress,etBOD,etGender,etMobile,etPassword,etCategory,etCreated;
     Button btnEditInfo,btnSaveInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_details);
+        setContentView(R.layout.activity_rider_details);
 
-        etName = findViewById(R.id.detailsName);
-        etAddress = findViewById(R.id.detailsAddress);
-        etBOD = findViewById(R.id.detailsBOD);
-        etGender = findViewById(R.id.detailsGender);
-        etMobile = findViewById(R.id.detailsMobile);
-        etPassword = findViewById(R.id.detailsPassword);
-        etCreated = findViewById(R.id.detailsCreated);
+        etName = findViewById(R.id.detailsNameRider);
+        etAddress = findViewById(R.id.detailsAddressRider);
+        etBOD = findViewById(R.id.detailsBODRider);
+        etGender = findViewById(R.id.detailsGenderRider);
+        etMobile = findViewById(R.id.detailsMobileRider);
+        etPassword = findViewById(R.id.detailsPasswordRider);
+        etCreated = findViewById(R.id.detailsCreatedRider);
+        etCategory = findViewById(R.id.detailsCategoryRider);
+
         //btn
-        btnEditInfo = findViewById(R.id.detailsEditInfo);
-        btnSaveInfo = findViewById(R.id.detailsSave);
+        btnEditInfo = findViewById(R.id.detailsEditInfoRider);
+        btnSaveInfo = findViewById(R.id.detailsSaveRider);
 
 
         btnSaveInfo.setVisibility(View.INVISIBLE);
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-            mUserDB = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            mUserDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
             fetchDataFromFirebase();
 
         }
         else {
-            startActivity(new Intent(UserDetails.this,LoginActivity.class));
+            startActivity(new Intent(getApplicationContext(),RiderRegister.class));
         }
         btnEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +64,7 @@ public class UserDetails extends AppCompatActivity {
                 etName.setEnabled(true);
                 etPassword.setEnabled(true);
                 etMobile.setEnabled(true);
+                etCategory.setEnabled(true);
                 btnSaveInfo.setVisibility(View.VISIBLE);
 
             }
@@ -86,6 +87,7 @@ public class UserDetails extends AppCompatActivity {
         mUserDB.child("address").setValue(etAddress.getText().toString());
         mUserDB.child("gender").setValue(etGender.getText().toString());
         mUserDB.child("bod").setValue(etBOD.getText().toString());
+        mUserDB.child("category").setValue(etCategory.getText().toString());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String currentDateandTime = sdf.format(new Date());
@@ -98,6 +100,7 @@ public class UserDetails extends AppCompatActivity {
         etName.setEnabled(false);
         etPassword.setEnabled(false);
         etMobile.setEnabled(false);
+        etCategory.setEnabled(false);
         btnSaveInfo.setVisibility(View.INVISIBLE);
 
     }
@@ -139,9 +142,13 @@ public class UserDetails extends AppCompatActivity {
                         String bod = ""+dataSnapshot.child("bod").getValue();
                         etBOD.setText(bod);
                     }
+                    if(dataSnapshot.child("category").getValue() != null){
+                        String bod = ""+dataSnapshot.child("category").getValue();
+                        etCategory.setText(bod);
+                    }
                     if(dataSnapshot.child("created").getValue() != null){
-                       String created = ""+dataSnapshot.child("created").getValue();
-                       etCreated.setText(created);
+                        String created = ""+dataSnapshot.child("created").getValue();
+                        etCreated.setText(created);
                     }
 
                     etCreated.setEnabled(false);
@@ -151,6 +158,7 @@ public class UserDetails extends AppCompatActivity {
                     etName.setEnabled(false);
                     etPassword.setEnabled(false);
                     etMobile.setEnabled(false);
+                    etCategory.setEnabled(false);
 
                 }
             }

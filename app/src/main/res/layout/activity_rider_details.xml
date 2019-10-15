@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserDetails"
+    tools:context=".RiderDetailsActivity"
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_margin="5dp"
@@ -28,7 +28,7 @@
             android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/detailsName"
+            android:id="@+id/detailsNameRider"
             />
     </LinearLayout>
     <LinearLayout
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
-            android:id="@+id/detailsAddress"
+            android:id="@+id/detailsAddressRider"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
-            android:id="@+id/detailsGender"
+            android:id="@+id/detailsGenderRider"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
-            android:id="@+id/detailsBOD"
+            android:id="@+id/detailsBODRider"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
-            android:id="@+id/detailsMobile"
+            android:id="@+id/detailsMobileRider"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
-            android:id="@+id/detailsPassword"
+            android:id="@+id/detailsPasswordRider"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
@@ -156,15 +156,39 @@
             android:layout_height="wrap_content"
             />
         <EditText
-            android:id="@+id/detailsCreated"
+            android:id="@+id/detailsCreatedRider"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:textColor="#202001"
+            android:text="@string/category"
+            android:textSize="24sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+        <EditText
+            android:id="@+id/detailsCategoryRider"
+            android:textSize="22sp"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
     <Button
-        android:id="@+id/detailsEditInfo"
+        android:id="@+id/detailsEditInfoRider"
         android:background="#024F53"
         android:textColor="#FFFF07"
         android:layout_marginTop="40dp"
@@ -172,7 +196,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/detailsSave"
+        android:id="@+id/detailsSaveRider"
         android:background="#024F53"
         android:textColor="#FFFF07"
         android:layout_marginTop="40dp"

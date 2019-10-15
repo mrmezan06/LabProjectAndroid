@@ -32,6 +32,7 @@
     <string name="title_activity_bike_maps">Map</string>
     <string name="confirmation_code">Confirmation Code</string>
     <string name="category">Category</string>
+    <string name="save_info">Save Info</string>
 
 
 </resources>

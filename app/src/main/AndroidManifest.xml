@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RiderInterface"></activity>
+        <activity android:name=".RiderDetailsActivity"></activity>
+        <activity android:name=".RiderInterface" />
         <activity android:name=".RiderLogin" />
         <activity android:name=".RiderDetailsSubmit" />
         <activity android:name=".RiderRegister" />

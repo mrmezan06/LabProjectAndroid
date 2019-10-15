@@ -46,16 +46,11 @@ public class UserInterface extends AppCompatActivity {
     CardView bikeCard,carCard,foodCard,parcelCard;
     LinearLayout root;
 
-    SharedPreferences.Editor data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_interface);
 
-        data = getSharedPreferences("data",MODE_PRIVATE).edit();
-        data.putBoolean("rc",false);
-        data.putBoolean("uc",true);
-        data.apply();
 
 
         EnableRuntimePermission();
