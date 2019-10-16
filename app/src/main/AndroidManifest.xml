@@ -17,10 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RiderDetailsActivity"></activity>
+        <activity android:name=".RiderDetailsActivity"/>
         <activity android:name=".RiderInterface" />
-        <activity android:name=".RiderLogin" />
-        <activity android:name=".RiderDetailsSubmit" />
         <activity android:name=".RiderRegister" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -38,10 +36,8 @@
             android:name=".BikeMapsActivity"
             android:label="@string/title_activity_bike_maps" />
         <activity android:name=".UserDetails" />
-        <activity android:name=".LoginForm" />
         <activity android:name=".UserInterface" />
-        <activity android:name=".HomePageActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".UserLoginActivity" />
         <activity android:name=".LoadingScreen" />
         <activity android:name=".ModuleActivity">
             <intent-filter>

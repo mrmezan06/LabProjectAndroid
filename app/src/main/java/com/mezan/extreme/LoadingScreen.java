@@ -61,7 +61,7 @@ public class LoadingScreen extends AppCompatActivity {
                     if(isFirst)
                        intent = new Intent(LoadingScreen.this, ModuleActivity.class);
                     else
-                        intent = new Intent(LoadingScreen.this, LoginActivity.class);
+                        intent = new Intent(LoadingScreen.this, UserLoginActivity.class);
                     startActivity(intent);
                     finish();
                 }

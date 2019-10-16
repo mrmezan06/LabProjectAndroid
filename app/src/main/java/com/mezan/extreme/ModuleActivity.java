@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ModuleActivity extends AppCompatActivity {
@@ -48,7 +47,8 @@ public class ModuleActivity extends AppCompatActivity {
         userCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    startActivity(new Intent(ModuleActivity.this,LoginActivity.class));
+                //User Card
+                    startActivity(new Intent(ModuleActivity.this, UserLoginActivity.class));
                     finish();
             }
         });

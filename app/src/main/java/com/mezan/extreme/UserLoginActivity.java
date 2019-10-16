@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class LoginActivity extends AppCompatActivity {
+public class UserLoginActivity extends AppCompatActivity {
 
     private EditText Mobile, mCode;
     private Button mSend;
@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
     private void UserLoggedIn() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            /*startActivity(new Intent(LoginActivity.this, LoginForm.class));
+            /*startActivity(new Intent(UserLoginActivity.this, LoginForm.class));
             finish();
             return;*/
 
@@ -184,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("USERUID",dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().toString());
                         if(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().equals("Accepted")) {
                             Log.d("USERUID",dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getValue().toString());
-                            startActivity(new Intent(LoginActivity.this, UserInterface.class));
+                            startActivity(new Intent(UserLoginActivity.this, UserInterface.class));
                             finish();
                         }
                     }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +51,7 @@ public class UserDetails extends AppCompatActivity {
 
         }
         else {
-            startActivity(new Intent(UserDetails.this,LoginActivity.class));
+            startActivity(new Intent(UserDetails.this, UserLoginActivity.class));
         }
         btnEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
