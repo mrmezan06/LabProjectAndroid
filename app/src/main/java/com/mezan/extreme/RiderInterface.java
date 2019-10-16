@@ -60,13 +60,11 @@ public class RiderInterface extends AppCompatActivity {
         CheckGpsStatus();
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.user_interface_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -152,7 +150,6 @@ public class RiderInterface extends AppCompatActivity {
 
         }
     }
-
     private void settingGPS(){
         intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent1);
@@ -164,7 +161,6 @@ public class RiderInterface extends AppCompatActivity {
         GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
     }
-
     public void EnableRuntimePermission(){
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(RiderInterface.this,
@@ -179,7 +175,6 @@ public class RiderInterface extends AppCompatActivity {
 
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
 

@@ -45,7 +45,6 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -57,7 +56,6 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
             mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,12f));
         }
-
     private String setAddress(Double latitude, Double longitude){
 
         Geocoder geocoder;

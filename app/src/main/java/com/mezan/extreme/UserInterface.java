@@ -116,7 +116,6 @@ public class UserInterface extends AppCompatActivity {
 
 
     }
-
     private void gettingLocationLatLon(){
         CheckGpsStatus();
 
@@ -167,19 +166,15 @@ public class UserInterface extends AppCompatActivity {
 
         }
     }
-
     private void settingGPS(){
         intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent1);
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.user_interface_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -215,7 +210,6 @@ public class UserInterface extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
     public void CheckGpsStatus(){
 
         locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
@@ -223,7 +217,6 @@ public class UserInterface extends AppCompatActivity {
         GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
     }
-
     public void EnableRuntimePermission(){
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(UserInterface.this,
@@ -238,7 +231,6 @@ public class UserInterface extends AppCompatActivity {
 
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
 

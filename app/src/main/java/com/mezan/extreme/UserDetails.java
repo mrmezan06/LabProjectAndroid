@@ -77,7 +77,6 @@ public class UserDetails extends AppCompatActivity {
         });
 
     }
-
     private void EditData() {
         mUserDB.child("name").setValue(etName.getText().toString());
         mUserDB.child("mobile").setValue(etMobile.getText().toString());
@@ -100,7 +99,6 @@ public class UserDetails extends AppCompatActivity {
         btnSaveInfo.setVisibility(View.INVISIBLE);
 
     }
-
     private void fetchDataFromFirebase() {
 
 

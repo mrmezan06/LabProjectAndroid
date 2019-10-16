@@ -58,12 +58,11 @@ public class LoadingScreen extends AppCompatActivity {
                 if (!isFirstAnimation) {
                     animObj.clearAnimation();
                     Intent intent;
-                    if(isFirst)
-                       intent = new Intent(LoadingScreen.this, ModuleActivity.class);
-                    else
-                        intent = new Intent(LoadingScreen.this, UserLoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(isFirst) {
+                        intent = new Intent(LoadingScreen.this, ModuleActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
                 isFirstAnimation = true;
@@ -96,7 +95,4 @@ public class LoadingScreen extends AppCompatActivity {
         animObj.startAnimation(clockwise);
 
     }
-
-
-
 }

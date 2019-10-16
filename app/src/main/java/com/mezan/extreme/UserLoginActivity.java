@@ -119,8 +119,6 @@ public class UserLoginActivity extends AppCompatActivity {
 
 
     }
-
-
     private void SignInWithPhoneCredential(PhoneAuthCredential phoneAuthCredential) {
         //its checked exactly what i sent
        // Log.d("getSMSCode","Code:"+phoneAuthCredential.getSmsCode());
@@ -157,7 +155,6 @@ public class UserLoginActivity extends AppCompatActivity {
             }
         });
     }
-
     private void UserLoggedIn() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -172,7 +169,6 @@ public class UserLoginActivity extends AppCompatActivity {
             Log.d("ValidationOfCode","Wrong Verification Code");
         }
     }
-
     private void checkUserAuth() {
         final DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("UserAuth");
         mUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -199,7 +195,6 @@ public class UserLoginActivity extends AppCompatActivity {
 
 
     }
-
     private void VerifyPhoneNumberWithCode() {
 
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
@@ -208,7 +203,6 @@ public class UserLoginActivity extends AppCompatActivity {
 
 
     }
-
     private void StartPhoneNumberVerification() {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 Mobile.getText().toString(),
@@ -218,7 +212,6 @@ public class UserLoginActivity extends AppCompatActivity {
                 mCallBacks
         );
     }
-
     public boolean isInternetConnection() {
 
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

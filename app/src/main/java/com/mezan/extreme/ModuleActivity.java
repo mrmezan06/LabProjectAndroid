@@ -3,18 +3,12 @@ package com.mezan.extreme;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
-
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-
-
-
 import com.google.firebase.FirebaseApp;
 
 
