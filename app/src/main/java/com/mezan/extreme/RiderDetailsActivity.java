@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class RiderDetailsActivity extends AppCompatActivity {
 
-    DatabaseReference mUserDB;
+    DatabaseReference mUserDB,mRiderLocDB;
     EditText etName,etAddress,etBOD,etGender,etMobile,etPassword,etCategory,etCreated;
     Button btnEditInfo,btnSaveInfo;
     @Override
@@ -38,14 +38,25 @@ public class RiderDetailsActivity extends AppCompatActivity {
         etCreated = findViewById(R.id.detailsCreatedRider);
         etCategory = findViewById(R.id.detailsCategoryRider);
 
+
+        etCreated.setEnabled(false);
+        etMobile.setEnabled(false);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            etMobile.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+        }
+
         //btn
         btnEditInfo = findViewById(R.id.detailsEditInfoRider);
         btnSaveInfo = findViewById(R.id.detailsSaveRider);
 
 
         btnSaveInfo.setVisibility(View.INVISIBLE);
+        btnEditInfo.setVisibility(View.VISIBLE);
+
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+
             mUserDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
             fetchDataFromFirebase();
@@ -57,13 +68,12 @@ public class RiderDetailsActivity extends AppCompatActivity {
         btnEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                etCreated.setEnabled(true);
+
                 etBOD.setEnabled(true);
                 etGender.setEnabled(true);
                 etAddress.setEnabled(true);
                 etName.setEnabled(true);
                 etPassword.setEnabled(true);
-                etMobile.setEnabled(true);
                 etCategory.setEnabled(true);
                 btnSaveInfo.setVisibility(View.VISIBLE);
 
@@ -80,6 +90,9 @@ public class RiderDetailsActivity extends AppCompatActivity {
 
     }
     private void EditData() {
+
+        mRiderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         mUserDB.child("name").setValue(etName.getText().toString());
         mUserDB.child("mobile").setValue(etMobile.getText().toString());
         mUserDB.child("password").setValue(etPassword.getText().toString());
@@ -87,6 +100,9 @@ public class RiderDetailsActivity extends AppCompatActivity {
         mUserDB.child("gender").setValue(etGender.getText().toString());
         mUserDB.child("bod").setValue(etBOD.getText().toString());
         mUserDB.child("category").setValue(etCategory.getText().toString());
+
+        mRiderLocDB.child("category").setValue(etCategory.getText().toString());
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String currentDateandTime = sdf.format(new Date());
@@ -101,6 +117,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
         etMobile.setEnabled(false);
         etCategory.setEnabled(false);
         btnSaveInfo.setVisibility(View.INVISIBLE);
+        btnEditInfo.setVisibility(View.VISIBLE);
 
     }
     private void fetchDataFromFirebase() {
@@ -149,15 +166,25 @@ public class RiderDetailsActivity extends AppCompatActivity {
                         etCreated.setText(created);
                     }
 
-                    etCreated.setEnabled(false);
+
                     etBOD.setEnabled(false);
                     etGender.setEnabled(false);
                     etAddress.setEnabled(false);
                     etName.setEnabled(false);
                     etPassword.setEnabled(false);
-                    etMobile.setEnabled(false);
                     etCategory.setEnabled(false);
+                    btnEditInfo.setVisibility(View.VISIBLE);
+                    btnSaveInfo.setVisibility(View.INVISIBLE);
+                }else {
 
+                    etBOD.setEnabled(true);
+                    etGender.setEnabled(true);
+                    etAddress.setEnabled(true);
+                    etName.setEnabled(true);
+                    etPassword.setEnabled(true);
+                    etCategory.setEnabled(true);
+                    btnEditInfo.setVisibility(View.INVISIBLE);
+                    btnSaveInfo.setVisibility(View.VISIBLE);
                 }
             }
 

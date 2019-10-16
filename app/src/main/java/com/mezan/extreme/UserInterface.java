@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -29,6 +31,12 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class UserInterface extends AppCompatActivity {
 
@@ -45,6 +53,8 @@ public class UserInterface extends AppCompatActivity {
 
     CardView bikeCard,carCard,foodCard,parcelCard;
     LinearLayout root;
+
+    DatabaseReference mUserLocDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +81,8 @@ public class UserInterface extends AppCompatActivity {
         context = getApplicationContext();
 
         CheckGpsStatus();
+
+        mUserLocDB = FirebaseDatabase.getInstance().getReference().child("UserLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         //Card OnClick Listener
         bikeCard.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +150,16 @@ public class UserInterface extends AppCompatActivity {
                             @Override
                             public void onSuccess(Location location) {
                                 if(location != null){
-                                    Log.d("LocationExtreme", String.valueOf(location.getLongitude()));
-                                    Log.d("LocationExtreme",String.valueOf(location.getLatitude()));
+
                                     Snackbar.make(root,"(Lat,Lon)=("+location.getLatitude()+","+location.getLongitude()+")",Snackbar.LENGTH_LONG).show();
                                     if(!String.valueOf(location.getLatitude()).equals("") && !String.valueOf(location.getLongitude()).equals("")){
+
+                                        mUserLocDB.child("lat").setValue(String.valueOf(location.getLatitude()));
+                                        mUserLocDB.child("lon").setValue(String.valueOf(location.getLongitude()));
+                                        mUserLocDB.child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        String riderAddress = setAddress(location.getLatitude(),location.getLongitude());
+                                        Log.d("RiderAddress",riderAddress);
+                                        //Bike Map
                                         Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
                                             it.putExtra("lat",location.getLatitude());
                                             it.putExtra("lon",location.getLongitude());
@@ -264,6 +282,33 @@ public class UserInterface extends AppCompatActivity {
             return false;
         }
 
+
+    }
+    private String setAddress(Double latitude, Double longitude){
+
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(addresses.size() > 0) {
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+
+            Log.d("Address","address:"+address);
+
+            addresses.get(0).getAdminArea();
+
+            return address;
+        }
+
+        return "No Local Address Found!";
 
     }
 

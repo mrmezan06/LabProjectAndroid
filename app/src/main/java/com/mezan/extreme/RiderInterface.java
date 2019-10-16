@@ -1,5 +1,6 @@
 package com.mezan.extreme;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -8,7 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -18,12 +21,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import static com.mezan.extreme.UserInterface.RequestPermissionCode;
 
@@ -38,14 +51,16 @@ public class RiderInterface extends AppCompatActivity {
     String Holder;
     FusedLocationProviderClient fusedLocationClient;
     LinearLayout root;
+    TextView riderAddressTXT;
 
-
+    DatabaseReference mRiderLocDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_interface);
 
         root = findViewById(R.id.rootRI);
+        riderAddressTXT = findViewById(R.id.addressRider);
 
         EnableRuntimePermission();
 
@@ -57,7 +72,12 @@ public class RiderInterface extends AppCompatActivity {
 
         context = getApplicationContext();
 
+        mRiderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         CheckGpsStatus();
+        if(isInternetConnection()) {
+            gettingLocationLatLon();
+        }
 
     }
     @Override
@@ -130,6 +150,15 @@ public class RiderInterface extends AppCompatActivity {
                                         it.putExtra("lat",location.getLatitude());
                                         it.putExtra("lon",location.getLongitude());
                                         startActivity(it);*/
+
+
+                                            mRiderLocDB.child("lat").setValue(String.valueOf(location.getLatitude()));
+                                        mRiderLocDB.child("lon").setValue(String.valueOf(location.getLongitude()));
+                                        mRiderLocDB.child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        String riderAddress = setAddress(location.getLatitude(),location.getLongitude());
+                                        Log.d("RiderAddress",riderAddress);
+                                        riderAddressTXT.setText(riderAddress);
+
                                     }else {
                                         Snackbar.make(root,"Something went wrong!",Snackbar.LENGTH_LONG).show();
                                     }
@@ -150,6 +179,29 @@ public class RiderInterface extends AppCompatActivity {
 
         }
     }
+
+    String category = "";
+    private String checkCategory() {
+
+        DatabaseReference mRiderDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mRiderDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if(dataSnapshot.child("category").getValue() != null){
+                        category = dataSnapshot.child("category").getValue().toString();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return category;
+    }
+
     private void settingGPS(){
         intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent1);
@@ -210,5 +262,33 @@ public class RiderInterface extends AppCompatActivity {
 
 
     }
+    private String setAddress(Double latitude, Double longitude){
+
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(addresses.size() > 0) {
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+
+            Log.d("Address","address:"+address);
+
+            addresses.get(0).getAdminArea();
+
+            return address;
+        }
+
+        return "No Local Address Found!";
+
+    }
+
 
 }

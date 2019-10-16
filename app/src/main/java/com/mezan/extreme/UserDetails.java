@@ -22,7 +22,7 @@ import java.util.Date;
 public class UserDetails extends AppCompatActivity {
 
 
-    DatabaseReference mUserDB;
+    DatabaseReference mUserDB,mUserLocDB;
     EditText etName,etAddress,etBOD,etGender,etMobile,etPassword,etCreated;
     Button btnEditInfo,btnSaveInfo;
     @Override
@@ -44,6 +44,9 @@ public class UserDetails extends AppCompatActivity {
 
         btnSaveInfo.setVisibility(View.INVISIBLE);
 
+        etCreated.setEnabled(false);
+        etMobile.setEnabled(false);
+
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
             mUserDB = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -56,13 +59,13 @@ public class UserDetails extends AppCompatActivity {
         btnEditInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                etCreated.setEnabled(true);
+
                 etBOD.setEnabled(true);
                 etGender.setEnabled(true);
                 etAddress.setEnabled(true);
                 etName.setEnabled(true);
                 etPassword.setEnabled(true);
-                etMobile.setEnabled(true);
+
                 btnSaveInfo.setVisibility(View.VISIBLE);
 
             }
@@ -78,6 +81,9 @@ public class UserDetails extends AppCompatActivity {
 
     }
     private void EditData() {
+
+
+
         mUserDB.child("name").setValue(etName.getText().toString());
         mUserDB.child("mobile").setValue(etMobile.getText().toString());
         mUserDB.child("password").setValue(etPassword.getText().toString());
@@ -85,17 +91,19 @@ public class UserDetails extends AppCompatActivity {
         mUserDB.child("gender").setValue(etGender.getText().toString());
         mUserDB.child("bod").setValue(etBOD.getText().toString());
 
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String currentDateandTime = sdf.format(new Date());
 
         mUserDB.child("created").setValue(currentDateandTime);
-        etCreated.setEnabled(false);
+
         etBOD.setEnabled(false);
         etGender.setEnabled(false);
         etAddress.setEnabled(false);
         etName.setEnabled(false);
         etPassword.setEnabled(false);
-        etMobile.setEnabled(false);
+
         btnSaveInfo.setVisibility(View.INVISIBLE);
 
     }
@@ -149,6 +157,17 @@ public class UserDetails extends AppCompatActivity {
                     etPassword.setEnabled(false);
                     etMobile.setEnabled(false);
 
+                }
+                else {
+
+                    etBOD.setEnabled(true);
+                    etGender.setEnabled(true);
+                    etAddress.setEnabled(true);
+                    etName.setEnabled(true);
+                    etPassword.setEnabled(true);
+
+                    btnEditInfo.setVisibility(View.INVISIBLE);
+                    btnSaveInfo.setVisibility(View.VISIBLE);
                 }
             }
 

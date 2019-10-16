@@ -95,6 +95,7 @@
             android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="date"
             />
     </LinearLayout>
     <LinearLayout
@@ -117,6 +118,7 @@
             android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
             />
     </LinearLayout>
     <LinearLayout
@@ -139,6 +141,7 @@
             android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+
             />
     </LinearLayout>
     <LinearLayout

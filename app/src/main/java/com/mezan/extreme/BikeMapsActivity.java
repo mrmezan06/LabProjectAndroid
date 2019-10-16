@@ -1,5 +1,6 @@
 package com.mezan.extreme;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,11 +16,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -27,10 +39,17 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
     double latitude=0.0;
     double longitude=0.0;
 
+    DatabaseReference mRiderLocDB;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_maps);
+
+
+
 
         Intent it = getIntent();
         Bundle bd = it.getExtras();
@@ -45,17 +64,121 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+    private void fetchBikerLocation() {
+        mRiderLocDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot ds :  dataSnapshot.getChildren()){
+                        String key = ds.getKey();
+                        Log.d("RiderID",key);
+                        DatabaseReference riderRef =mRiderLocDB.child(key);
+                        riderRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+
+                                    //HashMap<String,String> riderInfoMap = new HashMap<>();
+
+                                    String lat = "",lon = "",uid = "";
+
+                                    if (dataSnapshot.child("lat").getValue() != null){
+                                       // riderInfoMap.put("lat",dataSnapshot.child("lat").getValue().toString());
+                                        lat = dataSnapshot.child("lat").getValue().toString();
+                                    }
+                                    if (dataSnapshot.child("lon").getValue() != null){
+                                       // riderInfoMap.put("lon",dataSnapshot.child("lon").getValue().toString());
+                                        lon = dataSnapshot.child("lon").getValue().toString();
+                                    }
+                                    if (dataSnapshot.child("uid").getValue() != null){
+                                       // riderInfoMap.put("uid",dataSnapshot.child("uid").getValue().toString());
+                                        uid = dataSnapshot.child("uid").getValue().toString();
+                                    }
+                                    if (dataSnapshot.child("category").getValue().toString().equals("bike") || dataSnapshot.child("category").getValue().toString().equals("Bike")){
+                                       // Log.d("RiderInfo",riderInfoMap.toString());
+                                        //bikerLocation.add(riderInfoMap);
+                                        if (!lat.equals("") || !lon.equals("") || !uid.equals("")) {
+                                          //  Log.d("RiderInfo",lat+lon+uid);
+                                            riderMarker(lat, lon, uid);
+                                        }
+                                    }
+
+
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
-        String  address = setAddress(latitude,longitude);
+            String  address = setAddress(latitude,longitude);
             LatLng userLocation = new LatLng(latitude,longitude);
-            mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,12f));
+           Marker marker =  mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
+           marker.setTag("Your Position");
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,6f));
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            mRiderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc");
+
+            fetchBikerLocation();
         }
+
+      }
+
+    private void riderMarker(String latitude,String longitude,String UID) {
+
+      //  Log.d("RiderInfo",latitude+longitude+UID);
+
+        Double lat = Double.valueOf(latitude);
+        Double lon = Double.valueOf(longitude);
+
+        LatLng mLatLng = new LatLng(lat,lon);
+        Marker markers = mMap.addMarker(new MarkerOptions()
+                .position(mLatLng)
+                .title(setAddress(lat,lon))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bikemarke)));
+
+
+        markers.setTag(UID);
+
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                Toast.makeText(getApplicationContext(),marker.getTag().toString(),Toast.LENGTH_LONG).show();
+                Log.d("MarkerClick",marker.getTag().toString());
+
+                return false;
+            }
+        });
+
+    }
+
+
     private String setAddress(Double latitude, Double longitude){
 
         Geocoder geocoder;
@@ -83,6 +206,9 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
         return "No Local Address Found!";
 
     }
+
+
+
 
     }
 
