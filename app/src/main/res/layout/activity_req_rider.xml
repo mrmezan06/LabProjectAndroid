@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#35352D"
+    android:orientation="vertical"
+    android:id="@+id/rootReqRider"
+    tools:context=".ReqRiderActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="28sp"
+        android:text="@string/information"
+        android:textAlignment="center"
+        android:textColor="#FF00"
+        android:id="@+id/info"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            >
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Driver :"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                />
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Driver A"
+                android:textColor="#fff2"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:id="@+id/driverName"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            >
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Distance :"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                />
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="000000"
+                android:textColor="#fff2"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:id="@+id/distance"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            >
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Mobile :"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                />
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#fff2"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:id="@+id/driverMobile"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            >
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Available :"
+                android:textColor="#fff"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                />
+            <TextView
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:textColor="#fff2"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:id="@+id/driverAvailable"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:background="#4BFF22"
+        android:text="Request or Call"
+        android:textColor="#fff"
+        android:id="@+id/reqBtn"
+        />
+
+</LinearLayout>

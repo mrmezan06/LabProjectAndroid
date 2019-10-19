@@ -33,6 +33,7 @@
     <string name="confirmation_code">Confirmation Code</string>
     <string name="category">Category</string>
     <string name="save_info">Save Info</string>
+    <string name="information">Information</string>
 
 
 </resources>

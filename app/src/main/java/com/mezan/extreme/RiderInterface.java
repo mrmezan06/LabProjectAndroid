@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +45,7 @@ import static com.mezan.extreme.UserInterface.RequestPermissionCode;
 public class RiderInterface extends AppCompatActivity {
 
 
+    public  static final int RequestPermissionCode  = 1 ;
     Context context;
     Intent intent1 ;
     LocationManager locationManager ;
@@ -53,7 +56,13 @@ public class RiderInterface extends AppCompatActivity {
     LinearLayout root;
     TextView riderAddressTXT;
 
+    ListView reqList;
+
     DatabaseReference mRiderLocDB;
+
+    ArrayList<reqDataObj> infoData = new ArrayList<>();
+    reqListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,11 @@ public class RiderInterface extends AppCompatActivity {
 
         root = findViewById(R.id.rootRI);
         riderAddressTXT = findViewById(R.id.addressRider);
+
+        reqList = findViewById(R.id.reqList);
+
+        adapter = new reqListAdapter(infoData,this);
+        reqList.setAdapter(adapter);
 
         EnableRuntimePermission();
 
@@ -79,7 +93,85 @@ public class RiderInterface extends AppCompatActivity {
             gettingLocationLatLon();
         }
 
+
+        fetchReqData();
+
     }
+
+
+
+
+    private void fetchReqData() {
+
+        final DatabaseReference reqDB = FirebaseDatabase.getInstance().getReference().child("Request").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        reqDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot ds :  dataSnapshot.getChildren()){
+                        String key = ds.getKey();
+                        //
+                        Log.d("MyUser",key);
+                        DatabaseReference infoRef =reqDB.child(key);
+                        infoRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String name = "",lat = "",lon = "";
+                                String mobile = "",distance = "",uid = "",reqTime = "";
+
+                                if (dataSnapshot.child("distance").getValue() != null){
+                                    distance = dataSnapshot.child("distance").getValue().toString();
+                                }
+                                if (dataSnapshot.child("mobile").getValue() != null){
+                                    mobile = dataSnapshot.child("mobile").getValue().toString();
+                                }
+                                if (dataSnapshot.child("reqtime").getValue() != null){
+                                    reqTime = dataSnapshot.child("reqtime").getValue().toString();
+                                }
+                                if (dataSnapshot.child("name").getValue() != null){
+                                    name = dataSnapshot.child("name").getValue().toString();
+                                }
+                                if (dataSnapshot.child("lat").getValue() != null){
+                                    lat = dataSnapshot.child("lat").getValue().toString();
+                                }
+                                if (dataSnapshot.child("lon").getValue() != null){
+                                    lon = dataSnapshot.child("lon").getValue().toString();
+                                }
+
+
+                                reqDataObj obj = new reqDataObj(name,mobile,distance,lat,lon,reqTime,uid);
+
+                                Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid);
+
+                                infoData.add(obj);
+                                adapter.notifyDataSetChanged();
+
+                            }
+
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.user_interface_menu, menu);
@@ -218,13 +310,14 @@ public class RiderInterface extends AppCompatActivity {
         if (ActivityCompat.shouldShowRequestPermissionRationale(RiderInterface.this,
                 Manifest.permission.ACCESS_FINE_LOCATION))
         {
-            Snackbar.make(root,"GPS Permission must be allowed us!",Snackbar.LENGTH_LONG).show();
-
-        } else {
-
             ActivityCompat.requestPermissions(RiderInterface.this,new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION}, RequestPermissionCode);
 
+
+
+        } else {
+
+            Snackbar.make(root,"GPS Permission must be allowed us!",Snackbar.LENGTH_LONG).show();
         }
     }
     @Override

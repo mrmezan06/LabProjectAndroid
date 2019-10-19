@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#35352D"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="28sp"
+        android:text="@string/information"
+        android:textAlignment="center"
+        android:textColor="#FF00"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Username :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Driver A"
+            android:textColor="#fff2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:id="@+id/userName"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Mobile :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Driver A"
+            android:textColor="#fff2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:id="@+id/userMobile"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Distance :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Driver A"
+            android:textColor="#fff2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:id="@+id/userDistance"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="User Location :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="(26,89)"
+            android:textColor="#fff2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:id="@+id/userLatLng"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Request Time :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="XXXXXXXXX"
+            android:textColor="#fff2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:id="@+id/userReqTime"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#4CD305"
+        />
+</LinearLayout>

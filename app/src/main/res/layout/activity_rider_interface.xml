@@ -6,16 +6,49 @@
     android:layout_height="match_parent"
     android:id="@+id/rootRI"
     android:orientation="vertical"
-    tools:context=".RiderInterface">
+    android:weightSum="20"
+    tools:context=".RiderInterface"
+    >
 
-    <TextView
+    <LinearLayout
+        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:textColor="#FFF"
         android:background="#E2151C"
-        android:id="@+id/addressRider"
-        />
+        android:layout_height="0dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:background="#E2151C"
+            android:text="Your Current Address : "
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:background="#E2151C"
+            android:id="@+id/addressRider"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="18"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ListView
+            android:id="@+id/reqList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

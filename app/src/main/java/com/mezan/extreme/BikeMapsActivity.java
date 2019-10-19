@@ -36,8 +36,8 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
 
     private GoogleMap mMap;
 
-    double latitude=0.0;
-    double longitude=0.0;
+    double ulat=0.0;
+    double ulon=0.0;
 
     DatabaseReference mRiderLocDB;
 
@@ -54,8 +54,8 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
         Intent it = getIntent();
         Bundle bd = it.getExtras();
         if(bd != null){
-            latitude = bd.getDouble("lat",0.0);
-            longitude = bd.getDouble("lon",0.0);
+            ulat = bd.getDouble("lat",0.0);
+            ulon = bd.getDouble("lon",0.0);
         }
 
 
@@ -135,8 +135,8 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
-            String  address = setAddress(latitude,longitude);
-            LatLng userLocation = new LatLng(latitude,longitude);
+            String  address = setAddress(ulat,ulon);
+            LatLng userLocation = new LatLng(ulat,ulon);
            Marker marker =  mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
            marker.setTag("Your Position");
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,6f));
@@ -148,7 +148,7 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
 
       }
 
-    private void riderMarker(String latitude,String longitude,String UID) {
+    private void riderMarker(String latitude,  String longitude, String UID) {
 
       //  Log.d("RiderInfo",latitude+longitude+UID);
 
@@ -169,8 +169,23 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-                Toast.makeText(getApplicationContext(),marker.getTag().toString(),Toast.LENGTH_LONG).show();
+               /* Toast.makeText(getApplicationContext(),marker.getTag().toString(),Toast.LENGTH_LONG).show();
                 Log.d("MarkerClick",marker.getTag().toString());
+*/
+               Intent reqIntent = new Intent(getApplicationContext(),ReqRiderActivity.class);
+
+                //user latlng
+               reqIntent.putExtra("ulat",ulat);
+               reqIntent.putExtra("ulon",ulon);
+
+                //rider latlng
+                reqIntent.putExtra("rlat",marker.getPosition().latitude);
+                reqIntent.putExtra("rlon",marker.getPosition().longitude);
+
+                //rider uid
+                reqIntent.putExtra("ruid",marker.getTag().toString());
+                startActivity(reqIntent);
+                finish();
 
                 return false;
             }
