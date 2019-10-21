@@ -58,11 +58,12 @@
         <TextView
             android:layout_weight="5"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="Driver A"
-            android:textColor="#fff2"
+            android:background="@drawable/call"
+            android:textColor="#F30606"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:id="@+id/userMobile"
             />
 
@@ -96,6 +97,7 @@
     </LinearLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -111,14 +113,16 @@
             android:textSize="24sp"
             />
         <TextView
+            android:background="@drawable/smallmap"
             android:layout_weight="5"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="(26,89)"
             android:textColor="#fff2"
             android:textAlignment="center"
             android:textSize="24sp"
             android:id="@+id/userLatLng"
+            android:textStyle="bold"
             />
 
     </LinearLayout>

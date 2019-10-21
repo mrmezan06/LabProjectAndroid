@@ -45,7 +45,7 @@ import static com.mezan.extreme.UserInterface.RequestPermissionCode;
 public class RiderInterface extends AppCompatActivity {
 
 
-    public  static final int RequestPermissionCode  = 1 ;
+    public  static final int RequestLocationCode  = 1 ;
     Context context;
     Intent intent1 ;
     LocationManager locationManager ;
@@ -69,6 +69,8 @@ public class RiderInterface extends AppCompatActivity {
         setContentView(R.layout.activity_rider_interface);
 
         root = findViewById(R.id.rootRI);
+
+
         riderAddressTXT = findViewById(R.id.addressRider);
 
         reqList = findViewById(R.id.reqList);
@@ -97,6 +99,8 @@ public class RiderInterface extends AppCompatActivity {
         fetchReqData();
 
     }
+
+
 
 
 
@@ -305,13 +309,16 @@ public class RiderInterface extends AppCompatActivity {
         GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
     }
+
+    public  static final int RequestCallCode  = 3 ;
+
     public void EnableRuntimePermission(){
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(RiderInterface.this,
                 Manifest.permission.ACCESS_FINE_LOCATION))
         {
             ActivityCompat.requestPermissions(RiderInterface.this,new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION}, RequestPermissionCode);
+                    Manifest.permission.ACCESS_FINE_LOCATION}, RequestLocationCode);
 
 
 
@@ -319,13 +326,26 @@ public class RiderInterface extends AppCompatActivity {
 
             Snackbar.make(root,"GPS Permission must be allowed us!",Snackbar.LENGTH_LONG).show();
         }
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(RiderInterface.this,
+                Manifest.permission.CALL_PHONE))
+        {
+
+            ActivityCompat.requestPermissions(RiderInterface.this,new String[]{
+                    Manifest.permission.CALL_PHONE}, RequestCallCode);
+
+        } else {
+
+            Snackbar.make(root,"Call Permission must be allowed us!",Snackbar.LENGTH_LONG).show();
+        }
+
     }
     @Override
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
 
         switch (RC) {
 
-            case RequestPermissionCode:
+            case RequestLocationCode:
 
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -334,6 +354,18 @@ public class RiderInterface extends AppCompatActivity {
                 } else {
 
                     Snackbar.make(root,"GPS Permission Cancelled!",Snackbar.LENGTH_LONG).show();
+
+                }
+                break;
+            case RequestCallCode:
+
+                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Snackbar.make(root,"Call Permission Granted!",Snackbar.LENGTH_LONG).show();
+
+                } else {
+
+                    Snackbar.make(root,"Call Permission Cancelled!",Snackbar.LENGTH_LONG).show();
 
                 }
                 break;

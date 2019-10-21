@@ -1,8 +1,16 @@
 package com.mezan.extreme;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +18,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class reqListAdapter extends BaseAdapter {
 
@@ -54,9 +67,14 @@ public class reqListAdapter extends BaseAdapter {
         Name.setText(dataObj.get(i).getName());
         Mobile.setText(dataObj.get(i).getMobile());
         Distance.setText(dataObj.get(i).getDistance());
-        Loc.setText("("+dataObj.get(i).getLat()+","+dataObj.get(i).getLon()+")");
+
+        String address = setAddress(dataObj.get(i).getLat(),dataObj.get(i).getLon());
+
+        Loc.setText(address);
         ReqTime.setText(dataObj.get(i).getReqTime());
 
+
+        Loc.setTextColor(Color.BLUE);
 
         Loc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +87,53 @@ public class reqListAdapter extends BaseAdapter {
             }
         });
 
+        Mobile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent phoneIntent = new Intent(Intent.ACTION_CALL);
+                phoneIntent.setData(Uri.parse("tel:"+dataObj.get(i).getMobile()));
+                if (ActivityCompat.checkSelfPermission(context,
+                        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    context.startActivity(phoneIntent);
+                }else {
+                    Toast.makeText(context,"Call Permission Required",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
 
         return view;
+    }
+    private String setAddress(String lat, String lon){
+
+        Double latitude = Double.parseDouble(lat);
+        Double longitude= Double.parseDouble(lon);
+
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(context, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(addresses.size() > 0) {
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+
+            Log.d("Address","address:"+address);
+
+            addresses.get(0).getAdminArea();
+
+            return address;
+        }
+
+        return "No Local Address Found!";
+
     }
 }
 

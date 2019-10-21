@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCallback , TaskLoadedCallback{
+public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -59,15 +59,17 @@ public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCa
 
         getDirection = findViewById(R.id.btnGetDirection);
 
+        getDirection.setVisibility(View.INVISIBLE);
 
-        place1 = new MarkerOptions().position(new LatLng(22.3039, 70.8022)).title(setAddress(22.3039, 70.8022));
+       /* place1 = new MarkerOptions().position(new LatLng(22.3039, 70.8022)).title(setAddress(22.3039, 70.8022));
         place2 = new MarkerOptions().position(new LatLng(23.0225, 72.5714)).title(setAddress(23.0225, 72.5714));
-
+*/
         Intent it = getIntent();
         Bundle bd = it.getExtras();
         if(bd != null){
             ulat = Double.parseDouble(bd.getString("slat"));
             ulon = Double.parseDouble(bd.getString("slon"));
+
         }
 
         getDirection.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +78,7 @@ public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCa
 
 
 
-                new FetchURL(UserInMapActivity.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
+             //   new FetchURL(UserInMapActivity.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
 
                /* if (ulat != 0.0 || ulon != 0.0 || rlat != 0.0 || rlon != 0.0){
                     place1 = new MarkerOptions().position(new LatLng(ulat, ulon)).title(setAddress(ulat,ulon));
@@ -102,22 +104,12 @@ public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        /*String  address = setAddress(ulat,ulon);
+        String  address = setAddress(ulat,ulon);
         LatLng userLocation = new LatLng(ulat,ulon);
-        Marker marker =  mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
-        marker.setTag("User Position");
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,6f));
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            mRiderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-            fetchBikerLocation();
-        }*/
-
-        mMap.addMarker(place1);
-        mMap.addMarker(place2);
+       mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
 
         CameraPosition googlePlex = CameraPosition.builder()
-                .target(new LatLng(22.7739,71.6673))
+                .target(new LatLng(ulat,ulon))
                 .zoom(7)
                 .bearing(0)
                 .tilt(45)
@@ -126,30 +118,16 @@ public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCa
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 5000, null);
 
 
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,6f));
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            mRiderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            fetchBikerLocation();
+        }
+
+
     }
 
-    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Mode
-        String mode = "mode=" + directionMode;
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + mode;
-        // Output format
-        String output = "json";
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyCC40nAoHLW9EsF3SLMbMXNQoa9NFlvHcU";
-        return url;
-    }
-
-    @Override
-    public void onTaskDone(Object... values) {
-        if (currentPolyline != null)
-            currentPolyline.remove();
-        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-    }
 
     private void fetchBikerLocation() {
         mRiderLocDB.addValueEventListener(new ValueEventListener() {
@@ -203,13 +181,6 @@ public class UserInMapActivity extends AppCompatActivity implements OnMapReadyCa
                 .position(mLatLng)
                 .title(setAddress(lat,lon))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.bikemarke)));
-
-
-
-
-
-
-
     }
 
     private String setAddress(Double latitude, Double longitude){
