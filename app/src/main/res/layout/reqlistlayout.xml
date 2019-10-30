@@ -11,7 +11,7 @@
         android:textSize="28sp"
         android:text="@string/information"
         android:textAlignment="center"
-        android:textColor="#FF00"
+        android:textColor="#666363"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,13 @@
         android:weightSum="10"
         >
         <TextView
-            android:layout_weight="5"
+            android:background="@drawable/userlogo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Username :"
@@ -33,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Driver A"
-            android:textColor="#fff2"
+            android:textColor="#8A8A83"
             android:textAlignment="center"
             android:textSize="24sp"
             android:id="@+id/userName"
@@ -47,7 +53,13 @@
         android:weightSum="10"
         >
         <TextView
-            android:layout_weight="5"
+            android:background="@drawable/call"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Mobile :"
@@ -55,13 +67,13 @@
             android:textAlignment="center"
             android:textSize="24sp"
             />
+
         <TextView
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:text="Driver A"
-            android:background="@drawable/call"
-            android:textColor="#F30606"
+            android:textColor="#8A8A83"
             android:textAlignment="center"
             android:textSize="26sp"
             android:id="@+id/userMobile"
@@ -75,7 +87,13 @@
         android:weightSum="10"
         >
         <TextView
-            android:layout_weight="5"
+            android:background="@drawable/distancelogo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Distance :"
@@ -88,7 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Driver A"
-            android:textColor="#fff2"
+            android:textColor="#8A8A83"
             android:textAlignment="center"
             android:textSize="24sp"
             android:id="@+id/userDistance"
@@ -104,21 +122,26 @@
         android:weightSum="10"
         >
         <TextView
-            android:layout_weight="5"
+            android:background="@drawable/addresslogo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="User Location :"
+            android:text="User Address :"
             android:textColor="#fff"
             android:textAlignment="center"
             android:textSize="24sp"
             />
         <TextView
-            android:background="@drawable/smallmap"
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:text="(26,89)"
-            android:textColor="#fff2"
+            android:text="Khulna"
+            android:textColor="#8A8A83"
             android:textAlignment="center"
             android:textSize="24sp"
             android:id="@+id/userLatLng"
@@ -135,6 +158,46 @@
         android:weightSum="10"
         >
         <TextView
+            android:background="@drawable/categorylogo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Request Category :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bike"
+            android:textColor="#8A8A83"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:id="@+id/userReqCategory"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <TextView
+            android:background="@drawable/reqtimelogo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <TextView
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -148,16 +211,42 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="XXXXXXXXX"
-            android:textColor="#fff2"
+            android:textColor="#8A8A83"
             android:textAlignment="center"
             android:textSize="24sp"
             android:id="@+id/userReqTime"
             />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:background="#FF0000"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:text="Reject"
+            android:id="@+id/reqReject"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:textColor="#FFF"
+            android:background="#00FF00"
+            android:text="Accept"
+            android:id="@+id/reqAccept"
+            />
+
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#4CD305"
+        android:background="#8A8A83"
         />
 </LinearLayout>

@@ -10,10 +10,13 @@ public class reqDataObj {
     String lon;
     String reqTime;
     String UID;
+    String reqID;
+    String category;
+    String status;
     public  reqDataObj(){
 
     }
-    public reqDataObj(String name,String mobile,String distance,String lat,String lon,String reqTime,String UID){
+    public reqDataObj(String name,String mobile,String distance,String lat,String lon,String reqTime,String UID,String reqID,String category,String status){
         this.name = name;
         this.mobile = mobile;
         this.distance = distance;
@@ -21,7 +24,34 @@ public class reqDataObj {
         this.lon = lon;
         this.reqTime = reqTime;
         this.UID = UID;
+        this.reqID = reqID;
+        this.category = category;
+        this.status = status;
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getReqID() {
+        return reqID;
+    }
+
+    public void setReqID(String reqID) {
+        this.reqID = reqID;
     }
 
     public String getName() {

@@ -111,6 +111,7 @@ public class RiderInterface extends AppCompatActivity {
         reqDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                infoData.clear();
                 if (dataSnapshot.exists()){
                     for (DataSnapshot ds :  dataSnapshot.getChildren()){
                         String key = ds.getKey();
@@ -121,7 +122,7 @@ public class RiderInterface extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String name = "",lat = "",lon = "";
-                                String mobile = "",distance = "",uid = "",reqTime = "";
+                                String mobile = "",distance = "",uid = "",reqTime = "",reqid="",category = "",reqStatus = "";
 
                                 if (dataSnapshot.child("distance").getValue() != null){
                                     distance = dataSnapshot.child("distance").getValue().toString();
@@ -142,14 +143,27 @@ public class RiderInterface extends AppCompatActivity {
                                     lon = dataSnapshot.child("lon").getValue().toString();
                                 }
 
+                                if (dataSnapshot.child("reqid").getValue() != null){
+                                    reqid = dataSnapshot.child("reqid").getValue().toString();
+                                }
 
-                                reqDataObj obj = new reqDataObj(name,mobile,distance,lat,lon,reqTime,uid);
+                                if (dataSnapshot.child("category").getValue() != null){
+                                    category = dataSnapshot.child("category").getValue().toString();
+                                }
 
-                                Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid);
+                                if (dataSnapshot.child("request").getValue() != null){
+                                    reqStatus = dataSnapshot.child("request").getValue().toString();
+                                }
 
-                                infoData.add(obj);
+                                    reqDataObj obj = new reqDataObj(name, mobile, distance, lat, lon, reqTime, uid, reqid, category,reqStatus);
+                                    infoData.add(obj);
+
+                                Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid+reqid+category);
+
+
                                 adapter.notifyDataSetChanged();
-
+                               /* adapter = new reqListAdapter(infoData,getApplicationContext());
+                                reqList.setAdapter(adapter);*/
                             }
 
 
@@ -276,27 +290,6 @@ public class RiderInterface extends AppCompatActivity {
         }
     }
 
-    String category = "";
-    private String checkCategory() {
-
-        DatabaseReference mRiderDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mRiderDB.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    if(dataSnapshot.child("category").getValue() != null){
-                        category = dataSnapshot.child("category").getValue().toString();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return category;
-    }
 
     private void settingGPS(){
         intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);

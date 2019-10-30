@@ -15,13 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +36,7 @@ public class reqListAdapter extends BaseAdapter {
 
     //List<CountryObject> Country = new ArrayList<>();
     ArrayList<reqDataObj> dataObj = new ArrayList<>();
+    Button reqAccept,reqReject;
     Context context;
     public  reqListAdapter(){
 
@@ -57,7 +65,12 @@ public class reqListAdapter extends BaseAdapter {
     public View getView(final int i, View view, ViewGroup root) {
         view= LayoutInflater.from(context).inflate(R.layout.reqlistlayout,root,false);
 
-        TextView Name,Mobile,Distance,Loc,ReqTime;
+        TextView Name,Mobile,Distance,Loc,ReqTime,ReqCategory;
+
+        reqAccept = view.findViewById(R.id.reqAccept);
+        reqReject = view.findViewById(R.id.reqReject);
+
+        ReqCategory = view.findViewById(R.id.userReqCategory);
         Name = view.findViewById(R.id.userName);
         Mobile = view.findViewById(R.id.userMobile);
         Distance = view.findViewById(R.id.userDistance);
@@ -67,14 +80,12 @@ public class reqListAdapter extends BaseAdapter {
         Name.setText(dataObj.get(i).getName());
         Mobile.setText(dataObj.get(i).getMobile());
         Distance.setText(dataObj.get(i).getDistance());
+        ReqCategory.setText(dataObj.get(i).getCategory());
 
         String address = setAddress(dataObj.get(i).getLat(),dataObj.get(i).getLon());
 
         Loc.setText(address);
         ReqTime.setText(dataObj.get(i).getReqTime());
-
-
-        Loc.setTextColor(Color.BLUE);
 
         Loc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +110,28 @@ public class reqListAdapter extends BaseAdapter {
                     Toast.makeText(context,"Call Permission Required",Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        if (dataObj.get(i).getStatus().equals("Accepted")){
+            reqAccept.setBackgroundColor(Color.rgb(0,0,0));
+            reqReject.setEnabled(false);
+            reqAccept.setEnabled(false);
+        }else if (dataObj.get(i).getStatus().equals("Rejected")){
+            reqReject.setBackgroundColor(Color.rgb(0,0,0));
+            reqReject.setEnabled(false);
+            reqAccept.setEnabled(false);
+        }
+        reqAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestManage(true,i);
+            }
+        });
+        reqReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestManage(false,i);
             }
         });
 
@@ -134,6 +167,37 @@ public class reqListAdapter extends BaseAdapter {
 
         return "No Local Address Found!";
 
+    }
+    private void RequestManage(boolean accept,int i){
+        if (dataObj.get(i).getStatus().equals("Pending")){
+        final DatabaseReference reqDB = FirebaseDatabase.getInstance().getReference().child("Request").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(dataObj.get(i).reqID);
+        reqAccept.setVisibility(View.GONE);
+        reqReject.setVisibility(View.GONE);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String currentDateandTime = sdf.format(new Date());
+        reqDB.child("responsetime").setValue(currentDateandTime);
+            if (accept){
+               //database accept
+
+                dataObj.get(i).setStatus("Accepted");
+                reqDB.child("request").setValue("Accepted");
+                dataObj.clear();
+            }else {
+                //database reject
+                dataObj.get(i).setStatus("Rejected");
+                reqDB.child("request").setValue("Rejected");
+
+            }
+
+      }else if (dataObj.get(i).getStatus().equals("Accepted")){
+            reqAccept.setBackgroundColor(Color.rgb(0,0,0));
+            reqReject.setEnabled(false);
+            reqAccept.setEnabled(false);
+        }else if (dataObj.get(i).getStatus().equals("Rejected")){
+            reqReject.setBackgroundColor(Color.rgb(0,0,0));
+            reqReject.setEnabled(false);
+            reqAccept.setEnabled(false);
+        }
     }
 }
 

@@ -90,13 +90,13 @@ public class ReqRiderActivity extends AppCompatActivity {
                         return;
                     }
 
-
+                    reqDB.child("reqid").setValue(reqDB.getKey());
                     reqDB.child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     String currentDateandTime = sdf.format(new Date());
 
                     reqDB.child("reqtime").setValue(currentDateandTime);
-
+                    reqDB.child("responsetime").setValue("none");
 
 
                     LatLng latLngFrom = new LatLng(ulat,ulon);
@@ -112,6 +112,8 @@ public class ReqRiderActivity extends AppCompatActivity {
                         String val = format.format(distance);
                         dist = val+"M";
                     }
+                    reqDB.child("category").setValue("Bike");
+                    reqDB.child("request").setValue("Pending");
 
                     reqDB.child("distance").setValue(dist);
                     reqDB.child("mobile").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
