@@ -36,5 +36,50 @@
     <string name="information">Information</string>
     <string name="title_activity_user_in_map">Map</string>
 
+    <string-array name="foodname">
+        <item>Pizza</item>
+        <item>Pasta</item>
+        <item>Burger</item>
+        <item>Sandwich</item>
+        <item>Chicken Chilly</item>
+        <item>Fish Chilly</item>
+        <item>Veg Chilly</item>
+        <item>Onion Salad</item>
+        <item>Mixed Salad</item>
+        <item>Jeera Rice</item>
+        <item>Kaju Rice</item>
+        <item>Chicken Soup</item>
+        <item>Tomato Soup</item>
+        <item>Veg Hot and Sour Soup</item>
+        <item>Chicken Garlic Soup</item>
+        <item>Cold Drink 200ML</item>
+        <item>Cold Drink 500ML</item>
+        <item>Water Bottle</item>
+        <item>Zeera Soda</item>
+        <item>Badam Milk</item>
+    </string-array>
+    <string-array name="foodprice">
+        <item>130</item>
+        <item>80</item>
+        <item>140</item>
+        <item>90</item>
+        <item>150</item>
+        <item>180</item>
+        <item>110</item>
+        <item>30</item>
+        <item>40</item>
+        <item>100</item>
+        <item>110</item>
+        <item>80</item>
+        <item>70</item>
+        <item>80</item>
+        <item>80</item>
+        <item>15</item>
+        <item>40</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
 
 </resources>

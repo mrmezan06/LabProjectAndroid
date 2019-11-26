@@ -89,7 +89,7 @@ public class UserInterface extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isInternetConnection())
-                gettingLocationLatLon();
+                gettingLocationLatLon("bike");
                 else
                     Snackbar.make(root,"No Internet Available",Snackbar.LENGTH_LONG).show();
 
@@ -99,7 +99,7 @@ public class UserInterface extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isInternetConnection())
-                    gettingLocationLatLon();
+                    gettingLocationLatLon("car");
                 else
                     Snackbar.make(root,"No Internet Available",Snackbar.LENGTH_LONG).show();
 
@@ -109,7 +109,7 @@ public class UserInterface extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isInternetConnection())
-                    gettingLocationLatLon();
+                    gettingLocationLatLon("food");
                 else
                     Snackbar.make(root,"No Internet Available",Snackbar.LENGTH_LONG).show();
 
@@ -119,7 +119,7 @@ public class UserInterface extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isInternetConnection())
-                    gettingLocationLatLon();
+                    gettingLocationLatLon("parcel");
                 else
                     Snackbar.make(root,"No Internet Available",Snackbar.LENGTH_LONG).show();
 
@@ -128,7 +128,7 @@ public class UserInterface extends AppCompatActivity {
 
 
     }
-    private void gettingLocationLatLon(){
+    private void gettingLocationLatLon(final String type){
         CheckGpsStatus();
 
         if(GpsStatus) {
@@ -159,11 +159,23 @@ public class UserInterface extends AppCompatActivity {
                                         mUserLocDB.child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                         String riderAddress = setAddress(location.getLatitude(),location.getLongitude());
                                         Log.d("RiderAddress",riderAddress);
-                                        //Bike Map
-                                        Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
+                                        if(type.equals("bike")){
+                                            //Bike Map
+                                            Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
                                             it.putExtra("lat",location.getLatitude());
                                             it.putExtra("lon",location.getLongitude());
                                             startActivity(it);
+                                        }else if (type.equals("food")){
+                                            //food
+
+                                        }else if (type.equals("car")){
+                                            //car
+                                        }else if (type.equals("parcel")){
+                                            //parcel
+                                        }else {
+                                            //something went wrong
+                                        }
+
                                     }else {
                                         Snackbar.make(root,"Something went wrong!",Snackbar.LENGTH_LONG).show();
                                     }
