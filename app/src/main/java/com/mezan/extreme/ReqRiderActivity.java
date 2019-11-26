@@ -41,6 +41,7 @@ public class ReqRiderActivity extends AppCompatActivity {
     double ulat = 0.0;
     double ulon = 0.0;
     String ruid = "";
+    String  category = "Bike";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class ReqRiderActivity extends AppCompatActivity {
             ulat = bd.getDouble("ulat",0.0);
             ulon = bd.getDouble("ulon",0.0);
             ruid = bd.getString("ruid");
+            category = bd.getString("category");
 
         }
 
@@ -112,7 +114,7 @@ public class ReqRiderActivity extends AppCompatActivity {
                         String val = format.format(distance);
                         dist = val+"M";
                     }
-                    reqDB.child("category").setValue("Bike");
+                    reqDB.child("category").setValue(category);
                     reqDB.child("request").setValue("Pending");
 
                     reqDB.child("distance").setValue(dist);

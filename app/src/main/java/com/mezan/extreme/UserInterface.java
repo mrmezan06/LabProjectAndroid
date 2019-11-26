@@ -170,6 +170,11 @@ public class UserInterface extends AppCompatActivity {
 
                                         }else if (type.equals("car")){
                                             //car
+
+                                            Intent it = new Intent(UserInterface.this,CarMapsActivity.class);
+                                            it.putExtra("lat",location.getLatitude());
+                                            it.putExtra("lon",location.getLongitude());
+                                            startActivity(it);
                                         }else if (type.equals("parcel")){
                                             //parcel
                                         }else {

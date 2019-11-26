@@ -80,6 +80,7 @@
         <item>25</item>
         <item>30</item>
     </string-array>
+    <string name="title_activity_car_maps">Map</string>
 
 
 </resources>
