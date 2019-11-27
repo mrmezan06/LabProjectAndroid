@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mezan.extreme">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -19,7 +18,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".food.FoodMenu"></activity>
+        <activity android:name=".food.Bismillah"></activity>
+        <activity android:name=".food.Bonefish_Restaurant"></activity>
+        <activity android:name=".food.Brit_Cafe"></activity>
+        <activity android:name=".food.Dolce_Vita"></activity>
+        <activity android:name=".food.Eatery"></activity>
+        <activity android:name=".food.Ebong_Khichuri"></activity>
+        <activity android:name=".food.Food_Festival"></activity>
+        <activity android:name=".food.Foodsta_Restaurant"></activity>
+        <activity android:name=".food.Fuchka_Corner"></activity>
+        <activity android:name=".food.Kashmiri_Biryani_kabab"></activity>
+        <activity android:name=".food.Kitchen_Arabia"></activity>
+        <activity android:name=".food.Muzahid_Biryani"></activity>
+        <activity android:name=".food.Rajkachuri"></activity>
+        <activity android:name=".food.Rijul_Biryani_House"></activity>
+        <activity android:name=".food.ShushanFood"></activity>
+        <activity android:name=".food.The_Kitchen"></activity>
+        <activity android:name=".food.The_Kitchen_Kacchi"></activity>
+        <activity android:name=".food.TheLakeview"></activity>
+        <activity android:name=".food.Vorta_Bari"></activity>
+        <activity android:name=".food.Wendy_Khulna"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,7 +53,7 @@
 
         <activity
             android:name=".CarMapsActivity"
-            android:label="@string/title_activity_car_maps"></activity>
+            android:label="@string/title_activity_car_maps" />
         <activity android:name=".FoodMenu" />
         <activity
             android:name=".UserInMapActivity"

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".food.Muzahid_Biryani"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:textAlignment="viewEnd"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Food"
+            android:textColor="#FF9800"
+            android:textSize="24dp"
+            android:fontFamily="@font/roboto_bolditalic"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="end" />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Menu"
+            android:textColor="#000000"
+            android:textSize="24dp"
+            android:fontFamily="@font/roboto_bolditalic"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+                    <LinearLayout
+                        android:layout_weight="6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Chicken"
+                            android:textColor="#FF0000"
+                            android:textSize="28sp"
+                            android:textAlignment="center"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Prize: 90tk"
+                            android:textColor="#C9740E"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/chicken"
+                        />
+                    <CheckBox
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkbox3">
+
+                    </CheckBox>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+                    <LinearLayout
+                        android:layout_weight="6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Fried Chicken"
+                            android:textColor="#FF0000"
+                            android:textSize="28sp"
+                            android:textAlignment="center"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Prize: 120tk"
+                            android:textColor="#C9740E"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/fried"
+                        />
+                    <CheckBox
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkbox5">
+
+                    </CheckBox>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+                    <LinearLayout
+                        android:layout_weight="6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Biryani"
+                            android:textColor="#FF0000"
+                            android:textSize="28sp"
+                            android:textAlignment="center"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Prize: 150tk"
+                            android:textColor="#C9740E"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/biryani"
+                        />
+                    <CheckBox
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkbox2">
+
+                    </CheckBox>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+                    <LinearLayout
+                        android:layout_weight="6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Kebab"
+                            android:textColor="#FF0000"
+                            android:textSize="28sp"
+                            android:textAlignment="center"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Prize: 70tk"
+                            android:textColor="#C9740E"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/kebab"
+                        />
+                    <CheckBox
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkbox6">
+
+                    </CheckBox>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+    <Button
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Order"
+        android:id="@+id/btn"/>
+
+
+</LinearLayout>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".food.Vorta_Bari"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:textAlignment="viewEnd"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Food"
+            android:textColor="#FF9800"
+            android:textSize="24dp"
+            android:fontFamily="@font/roboto_bolditalic"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="end" />
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Menu"
+            android:textColor="#000000"
+            android:textSize="24dp"
+            android:fontFamily="@font/roboto_bolditalic"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_weight="8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+                    <LinearLayout
+                        android:layout_weight="6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Five Type Vorta"
+                            android:textColor="#FF0000"
+                            android:textSize="28sp"
+                            android:textAlignment="center"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Prize: 60tk"
+                            android:textColor="#C9740E"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/vorta"
+                        />
+                    <CheckBox
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkbox2">
+
+                    </CheckBox>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    >
+                    <LinearLayout
+                        android:layout_weight="6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Rice"
+                            android:textColor="#FF0000"
+                            android:textSize="28sp"
+                            android:textAlignment="center"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Prize: 20tk"
+                            android:textColor="#C9740E"
+                            android:textAlignment="center"
+                            android:textSize="22sp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/whiterice"
+                        />
+                    <CheckBox
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkbox1">
+
+                    </CheckBox>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+    <Button
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Order"
+        android:id="@+id/btn"/>
+
+
+</LinearLayout>
