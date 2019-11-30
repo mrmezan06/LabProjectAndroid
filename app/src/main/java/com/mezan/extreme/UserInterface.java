@@ -30,7 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mezan.extreme.food.FoodMenu;
+import com.mezan.extreme.food.HotelMenu;
 
 import java.io.IOException;
 import java.util.List;
@@ -165,7 +165,7 @@ public class UserInterface extends AppCompatActivity {
                                             startActivity(it);
                                         }else if (type.equals("food")){
                                             //food
-                                            Intent it = new Intent(UserInterface.this, FoodMenu.class);
+                                            Intent it = new Intent(UserInterface.this, HotelMenu.class);
                                             it.putExtra("lat",location.getLatitude());
                                             it.putExtra("lon",location.getLongitude());
                                             startActivity(it);
