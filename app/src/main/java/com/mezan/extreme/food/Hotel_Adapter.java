@@ -68,9 +68,9 @@ public class Hotel_Adapter extends BaseAdapter {
         hotelImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent it = new Intent(context.getApplicationContext(), HotelMenu.class);
+                Intent it = new Intent(context.getApplicationContext(), FoodTabMenu.class);
                 it.putExtra("index",i);
-                context.startActivity(it);*/
+                context.startActivity(it);
                 Toast.makeText(context.getApplicationContext(),name[i],Toast.LENGTH_SHORT).show();
             }
         });

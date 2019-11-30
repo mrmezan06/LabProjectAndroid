@@ -62,4 +62,380 @@
     <string name="title_activity_car_maps">Map</string>
 
 
+    <string-array name="appetizer_name">
+        <item>BBQ Chicken Lollipop</item>
+        <item>Wonthon</item>
+        <item>Spring Roll</item>
+        <item>Chicken Cutlet</item>
+        <item>Prawn Toast</item>
+        <item>Chicken Lollipop</item>
+        <item>Fish Cake and Salad</item>
+        <item>Honey Glazed Chicken Wings</item>
+        <item>Squid Fry with French Fry</item>
+        <item>Prawn Fry with French Fries</item>
+        <item>Fish Finger with French Fries</item>
+        <item>Nachos</item>
+        <item>Tower Nachos</item>
+        <item>Special French Fries</item>
+    </string-array>
+    <string-array name="appetizer_description">
+        <item>8 pieces of bbq chicken lollipop</item>
+        <item>8 pieces of wonthon</item>
+        <item>8 pieces of spring roll</item>
+        <item>N/A</item>
+        <item>8 pieces of prawn toast</item>
+        <item>8 pieces of chicken lollipop</item>
+        <item>8 pieces of fish cake</item>
+        <item>8 pieces of honey glazed chicken wings</item>
+        <item>N/A</item>
+        <item>10 pieces of prawn fry</item>
+        <item>10 pieces of fish finger</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>Served with cheese</item>
+    </string-array>
+    <string-array name="appetizer_price">
+        <item>250.00</item>
+        <item>190.00</item>
+        <item>220.00</item>
+        <item>300.00</item>
+        <item>260.00</item>
+        <item>260.00</item>
+        <item>300.00</item>
+        <item>220.00</item>
+        <item>250.00</item>
+        <item>300.00</item>
+        <item>300.00</item>
+        <item>160.00</item>
+        <item>350.00</item>
+        <item>100.00</item>
+    </string-array>
+
+    <string-array name="SALAD">
+
+        <item>Chicken Cashewnut Salad</item>
+        <item>Seafood Salad - Spicy</item>
+        <item>Chicken Larb Style Salad</item>
+        <item>Dhaka Foods Special Salad</item>
+        <item>Szechuan Salad</item>
+
+    </string-array>
+
+    <string-array name="SALAD_price">
+
+        <item>320.00</item>
+        <item>310.00</item>
+        <item>320.00</item>
+        <item>370.00</item>
+        <item>300.00</item>
+
+    </string-array>
+
+    <string-array name="SALAD_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+
+    <string-array name="SOUP">
+        <item>Thai Clear Soup</item>
+        <item>Dhaka Foods Special Soup</item>
+        <item>Chicken Corn Soup</item>
+        <item>Thick Thai Soup</item>
+        <item>Mixed Seafood Soup</item>
+        <item>Mixed Vegetable Soup</item>
+        <item>Tom Yum Soup</item>
+        <item>Hot and Sour Soup</item>
+    </string-array>
+
+    <string-array name="SOUP_price">
+        <item>160.00</item>
+        <item>170.00</item>
+        <item>110.00</item>
+        <item>150.00</item>
+        <item>160.00</item>
+        <item>120.00</item>
+        <item>160.00</item>
+        <item>130.00</item>
+    </string-array>
+
+    <string-array name="SOUP_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+    <string-array name="PASTA">
+        <item>Meat Sauce Pasta</item>
+        <item>Chicken Pasta</item>
+        <item>Beef Pasta</item>
+        <item>Pasta Italiano</item>
+        <item>Pane Pasta</item>
+        <item>Beef BBQ Pasta</item>
+        <item>Chicken BBQ Pasta</item>
+    </string-array>
+
+    <string-array name="PASTA_price">
+        <item>300.00</item>
+        <item>250.00</item>
+        <item>270.00</item>
+        <item>300.00</item>
+        <item>200.00</item>
+        <item>280.00</item>
+        <item>260.00</item>
+    </string-array>
+
+    <string-array name="PASTA_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+    <string-array name="PIZZA">
+        <item>Dhaka Foods Pizza</item>
+        <item>Chefs Special Pizza</item>
+        <item>Pizza Italian</item>
+        <item>Mexican Chicken Pizza</item>
+    </string-array>
+
+    <string-array name="PIZZA_price">
+        <item>650.00</item>
+        <item>630.00</item>
+        <item>590.00</item>
+        <item>570.00</item>
+    </string-array>
+
+    <string-array name="PIZZA_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+
+    <string-array name="BURGER">
+        <item>Beef Burger</item>
+        <item>Dhaka Foods Special Chicken Burger</item>
+        <item>Dhaka Foods Special Beef Burger</item>
+        <item>American Burger</item>
+        <item>Chicken Burger</item>
+        <item>Chicken Cheese Burger</item>
+        <item>SHAWARMA and SANDWICH</item>
+        <item>Chicken Shawarma</item>
+        <item>Beef Shawarma</item>
+        <item>Club Sandwich</item>
+    </string-array>
+
+    <string-array name="BURGER_price">
+        <item>160.00</item>
+        <item>200.00</item>
+        <item>300.00</item>
+        <item>300.00</item>
+        <item>280.00</item>
+        <item>140.00</item>
+        <item>180.00</item>
+        <item>140.00</item>
+        <item>180.00</item>
+        <item>150.00</item>
+    </string-array>
+
+    <string-array name="BURGER_description">
+        <item>N/A</item>
+        <item>Served with french fries</item>
+        <item>Served with french fries</item>
+        <item>Served with french fries</item>
+        <item>Served with french fries</item>
+        <item>Served with french fries</item>
+        <item>Chicken Shawarma</item>
+        <item>N/A</item>
+        <item>Served with french fries</item>
+    </string-array>
+
+    <string-array name="CHICKEN">
+        <item>Szechuan Chicken</item>
+        <item>Chicken Boneless Gravy</item>
+        <item>Chicken Masala Boneless</item>
+        <item>Chicken Mushroom Black Olive</item>
+        <item>Foil Fried Chicken</item>
+        <item>Crispy Chicken Fry with French Fries</item>
+        <item>Crispy Chicken Fry</item>
+        <item>Thai Fried Chicken</item>
+        <item>Honey Glazed Chicken</item>
+        <item>Chicken Masala</item>
+        <item>Chicken Sizzling</item>
+        <item>Chicken Chili Onion</item>
+        <item>Chicken Chili with Mushroom</item>
+        <item>Chicken Chili Dry</item>
+    </string-array>
+
+    <string-array name="CHICKEN_price">
+        <item>330.00</item>
+        <item>350.00</item>
+        <item>300.00</item>
+        <item>280.00</item>
+        <item>280.00</item>
+        <item>370.00</item>
+        <item>180.00</item>
+        <item>380.00</item>
+        <item>380.00</item>
+        <item>320.00</item>
+        <item>380.00</item>
+        <item>300.00</item>
+        <item>350.00</item>
+        <item>350.00</item>
+    </string-array>
+
+    <string-array name="CHICKEN_description">
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>4 pieces of thai fried chicken served with cheese</item>
+        <item>4 pieces of foil fried chicken</item>
+        <item>4 pieces of crispy chicken fry served with french fries and coleslaw</item>
+        <item>2 pieces of crispy chicken fry</item>
+        <item>6 pieces of thai fried chicken</item>
+        <item>6 pieces of honey glazed chicken</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+    </string-array>
+
+    <string-array name="BEEF">
+        <item>Beef Sizzling</item>
+        <item>Beef Masala</item>
+        <item>Beef Chili Onion</item>
+        <item>Beef Black Pepper with Mushroom</item>
+        <item>Beef Chili Dry</item>
+    </string-array>
+
+    <string-array name="BEEF_price">
+        <item>480.00</item>
+        <item>390.00</item>
+        <item>370.00</item>
+        <item>400.00</item>
+        <item>400.00</item>
+    </string-array>
+
+    <string-array name="BEEF_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+    <string-array name="VEGETABLE">
+        <item>Thai Mixed Vegetable</item>
+        <item>Chicken Vegetable</item>
+        <item>Beef Vegetable</item>
+        <item>Prawn Vegetable</item>
+        <item>Show Mushroom</item>
+        <item>Mushroom Chili</item>
+        <item>Garlic Mushroom</item>
+    </string-array>
+
+    <string-array name="VEGETABLE_price">
+        <item>300.00</item>
+        <item>250.00</item>
+        <item>270.00</item>
+        <item>260.00</item>
+        <item>320.00</item>
+        <item>350.00</item>
+        <item>360.00</item>
+    </string-array>
+
+
+    <string-array name="VEGETABLE_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+    <string-array name="RICE">
+        <item>Thai Fried Rice</item>
+        <item>Mixed Fried Rice</item>
+        <item>Vegetable Fried Rice</item>
+        <item>Masala Fried Rice</item>
+        <item>Szechuan Fried Rice</item>
+        <item>Beef Fried Rice</item>
+        <item>Egg Fried Rice</item>
+    </string-array>
+
+    <string-array name="RICE_price">
+        <item>350.00</item>
+        <item>320.00</item>
+        <item>250.00</item>
+        <item>300.00</item>
+        <item>290.00</item>
+        <item>300.00</item>
+        <item>280.00</item>
+    </string-array>
+
+    <string-array name="RICE_description">
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+        <item>For 3 person</item>
+    </string-array>
+
+    <string-array name="SET_MENU">
+        <item>Fried Rice with Vegetable and Chicken Fry</item>
+        <item>Fried Rice with Fried Chicken and Vegetable</item>
+        <item>Fried Rice with Chicken Fry and Vegetable</item>
+        <item>BBQ Chicken with Green Salad</item>
+    </string-array>
+
+    <string-array name="SET_MENU_price">
+        <item>170.00</item>
+        <item>220.00</item>
+        <item>220.00</item>
+        <item>280.00</item>
+    </string-array>
+
+    <string-array name="SET_MENU_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+
+    <string-array name="Drinks">
+        <item>Water 500mL</item>
+        <item>Water 500mL</item>
+        <item>Cold Drinks 200mL</item>
+    </string-array>
+    <string-array name="Drinks_description">
+        <item>N/A</item>
+        <item>N/A</item>
+        <item>N/A</item>
+    </string-array>
+    <string-array name="Drinks_price">
+        <item>20.00</item>
+        <item>40.00</item>
+        <item>25.00</item>
+    </string-array>
+
+
+
 </resources>
