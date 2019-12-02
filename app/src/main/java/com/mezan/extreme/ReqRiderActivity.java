@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,8 @@ import static com.mezan.extreme.UserInterface.RequestPermissionCode;
 public class ReqRiderActivity extends AppCompatActivity {
 
     TextView nameTxt,distanceTxt,mobileTxt,availableTxt;
-    Button btnReq;
+    EditText pickAddress;
+    Button btnReq,btnCall;
     LinearLayout root;
 
     double rlat = 0.0;
@@ -58,6 +60,8 @@ public class ReqRiderActivity extends AppCompatActivity {
         availableTxt = findViewById(R.id.driverAvailable);
 
         btnReq = findViewById(R.id.reqBtn);
+        btnCall = findViewById(R.id.callBtn);
+        pickAddress = findViewById(R.id.pickAddress);
 
 
 
@@ -79,7 +83,7 @@ public class ReqRiderActivity extends AppCompatActivity {
 
 
         final DatabaseReference reqDB = FirebaseDatabase.getInstance().getReference().child("Request").child(ruid).push();
-        btnReq.setOnClickListener(new View.OnClickListener() {
+        btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String mob = mobileTxt.getText().toString();
@@ -88,10 +92,23 @@ public class ReqRiderActivity extends AppCompatActivity {
                     phoneIntent.setData(Uri.parse("tel:"+mob));
                     if (ActivityCompat.checkSelfPermission(ReqRiderActivity.this,
                             Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                            EnableRuntimePermission();
+                        EnableRuntimePermission();
                         return;
                     }
+                    startActivity(phoneIntent);
+                }
+            }
+        });
+        btnReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                    String pAddress = pickAddress.getText().toString();
+                    if (pAddress.equals("") || pAddress.equals(null)){
+                        pAddress = "N/A";
+                    }
+                    reqDB.child("pick").setValue(pAddress);
+                    reqDB.child("riderid").setValue(ruid);
                     reqDB.child("reqid").setValue(reqDB.getKey());
                     reqDB.child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -112,13 +129,31 @@ public class ReqRiderActivity extends AppCompatActivity {
                         dist = val+"Km";
                     }else {
                         String val = format.format(distance);
-                        dist = val+"M";
+                        dist = val+"m";
                     }
                     reqDB.child("category").setValue(category);
                     reqDB.child("request").setValue("Pending");
 
                     reqDB.child("distance").setValue(dist);
                     reqDB.child("mobile").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+
+
+                DatabaseReference riderDb = FirebaseDatabase.getInstance().getReference().child("Rider").child(ruid);
+                riderDb.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            if (dataSnapshot.child("notificationKey").getValue() != null){
+                                new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!",dataSnapshot.child("notificationKey").getValue().toString());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                     DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     userDb.addValueEventListener(new ValueEventListener() {
@@ -127,7 +162,11 @@ public class ReqRiderActivity extends AppCompatActivity {
                             if (dataSnapshot.exists()){
                                 if (dataSnapshot.child("name").getValue() != null){
                                     reqDB.child("name").setValue(dataSnapshot.child("name").getValue());
+
                                 }
+                                /*if (dataSnapshot.child("notificationKey").getValue() != null){
+                                    new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!",dataSnapshot.child("notificationKey").getValue().toString());
+                                }*/
                             }
                         }
 
@@ -165,8 +204,8 @@ public class ReqRiderActivity extends AppCompatActivity {
                     });
 
 
-                    startActivity(phoneIntent);
-                }
+
+
             }
         });
 

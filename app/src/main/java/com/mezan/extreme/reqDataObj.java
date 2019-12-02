@@ -13,10 +13,11 @@ public class reqDataObj {
     String reqID;
     String category;
     String status;
+    String pickAddress;
     public  reqDataObj(){
 
     }
-    public reqDataObj(String name,String mobile,String distance,String lat,String lon,String reqTime,String UID,String reqID,String category,String status){
+    public reqDataObj(String name,String mobile,String distance,String lat,String lon,String reqTime,String UID,String reqID,String category,String status,String pickAddress){
         this.name = name;
         this.mobile = mobile;
         this.distance = distance;
@@ -27,7 +28,16 @@ public class reqDataObj {
         this.reqID = reqID;
         this.category = category;
         this.status = status;
+        this.pickAddress = pickAddress;
 
+    }
+
+    public void setPickAddress(String pickAddress) {
+        this.pickAddress = pickAddress;
+    }
+
+    public String getPickAddress() {
+        return pickAddress;
     }
 
     public String getStatus() {

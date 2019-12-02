@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.onesignal.OneSignal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,6 +68,24 @@ public class RiderInterface extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_interface);
+
+
+        /*One Signal Notification Init*/
+
+        OneSignal.setSubscription(true);
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+            @Override
+            public void idsAvailable(String userId, String registrationId) {
+                FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getUid()).child("notificationKey").setValue(userId);
+            }
+        });
+        //force application to notification top bar
+        OneSignal.setInFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification);
+
+        //  new SendNotification("Good Morning","Greeting!",null);
+
+        /*End of One Signal Init*/
+
 
         root = findViewById(R.id.rootRI);
 
@@ -122,7 +141,7 @@ public class RiderInterface extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String name = "",lat = "",lon = "";
-                                String mobile = "",distance = "",uid = "",reqTime = "",reqid="",category = "",reqStatus = "";
+                                String mobile = "",distance = "",uid = "",reqTime = "",reqid="",category = "",reqStatus = "",pick = "";
 
                                 if (dataSnapshot.child("distance").getValue() != null){
                                     distance = dataSnapshot.child("distance").getValue().toString();
@@ -154,11 +173,14 @@ public class RiderInterface extends AppCompatActivity {
                                 if (dataSnapshot.child("request").getValue() != null){
                                     reqStatus = dataSnapshot.child("request").getValue().toString();
                                 }
+                                if (dataSnapshot.child("pick").getValue() != null){
+                                    pick = dataSnapshot.child("pick").getValue().toString();
+                                }
 
-                                    reqDataObj obj = new reqDataObj(name, mobile, distance, lat, lon, reqTime, uid, reqid, category,reqStatus);
+                                    reqDataObj obj = new reqDataObj(name, mobile, distance, lat, lon, reqTime, uid, reqid, category,reqStatus,pick);
                                     infoData.add(obj);
 
-                                Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid+reqid+category);
+                                Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid+reqid+category+pick);
 
 
                                 adapter.notifyDataSetChanged();

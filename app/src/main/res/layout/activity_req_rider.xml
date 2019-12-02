@@ -137,15 +137,52 @@
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Pick Address :"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:textColor="#fff2"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:hint="Boyra more"
+            android:background="#FFF"
+            android:id="@+id/pickAddress"
+            />
+    </LinearLayout>
+
     <Button
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="26sp"
         android:background="#4BFF22"
-        android:text="Request or Call"
+        android:text="Request"
         android:textColor="#fff"
         android:id="@+id/reqBtn"
+        />
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:background="#4BFF22"
+        android:text="Call"
+        android:textColor="#fff"
+        android:id="@+id/callBtn"
         />
 
 </LinearLayout>

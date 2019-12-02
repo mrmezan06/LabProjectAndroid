@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mezan.extreme.food.HotelMenu;
+import com.onesignal.OneSignal;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,7 +60,22 @@ public class UserInterface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_interface);
 
+        /*One Signal Notification Init*/
 
+        OneSignal.setSubscription(true);
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+            @Override
+            public void idsAvailable(String userId, String registrationId) {
+                FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getUid()).child("notificationKey").setValue(userId);
+                FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getUid()).child("mobile").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+            }
+        });
+        //force application to notification top bar
+        OneSignal.setInFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification);
+
+        //  new SendNotification("Good Morning","Greeting!",null);
+
+        /*End of One Signal Init*/
 
         EnableRuntimePermission();
 

@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import com.google.firebase.FirebaseApp;
+import com.onesignal.OneSignal;
 
 
 public class ModuleActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class ModuleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_module);
 
         FirebaseApp.initializeApp(this);
+        OneSignal.startInit(this).init();
 
 
         userCard = findViewById(R.id.userArea);
