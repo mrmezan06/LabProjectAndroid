@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:title="@string/details"
-        app:showAsAction="never"
-        android:id="@+id/userDetails"
-        />
-    <item
-        android:title="@string/gps_setting"
-        app:showAsAction="never"
-        android:id="@+id/gpsSetting"
-        />
     <item
         android:title="@string/signout"
-        app:showAsAction="never"
+        app:showAsAction="always"
         android:icon="@drawable/menusignout"
         android:id="@+id/menuSignOut"
         />

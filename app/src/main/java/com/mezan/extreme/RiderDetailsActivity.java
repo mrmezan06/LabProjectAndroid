@@ -22,7 +22,7 @@ import java.util.Date;
 public class RiderDetailsActivity extends AppCompatActivity {
 
     DatabaseReference mUserDB,mRiderLocDB;
-    EditText etName,etAddress,etBOD,etGender,etMobile,etPassword,etCategory,etCreated;
+    EditText etName,etAddress,etBOD,etGender,etMobile,etNationality,etCategory,etCreated;
     Button btnEditInfo,btnSaveInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
         etBOD = findViewById(R.id.detailsBODRider);
         etGender = findViewById(R.id.detailsGenderRider);
         etMobile = findViewById(R.id.detailsMobileRider);
-        etPassword = findViewById(R.id.detailsPasswordRider);
+        etNationality = findViewById(R.id.detailsPasswordRider);
         etCreated = findViewById(R.id.detailsCreatedRider);
         etCategory = findViewById(R.id.detailsCategoryRider);
 
@@ -73,7 +73,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
                 etGender.setEnabled(true);
                 etAddress.setEnabled(true);
                 etName.setEnabled(true);
-                etPassword.setEnabled(true);
+                etNationality.setEnabled(true);
                 etCategory.setEnabled(true);
                 btnSaveInfo.setVisibility(View.VISIBLE);
 
@@ -95,7 +95,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
 
         mUserDB.child("name").setValue(etName.getText().toString());
         mUserDB.child("mobile").setValue(etMobile.getText().toString());
-        mUserDB.child("password").setValue(etPassword.getText().toString());
+        mUserDB.child("nationality").setValue(etNationality.getText().toString());
         mUserDB.child("address").setValue(etAddress.getText().toString());
         mUserDB.child("gender").setValue(etGender.getText().toString());
         mUserDB.child("bod").setValue(etBOD.getText().toString());
@@ -113,7 +113,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
         etGender.setEnabled(false);
         etAddress.setEnabled(false);
         etName.setEnabled(false);
-        etPassword.setEnabled(false);
+        etNationality.setEnabled(false);
         etMobile.setEnabled(false);
         etCategory.setEnabled(false);
         btnSaveInfo.setVisibility(View.INVISIBLE);
@@ -139,9 +139,9 @@ public class RiderDetailsActivity extends AppCompatActivity {
                         // Log.d("Mobile",fMobile);
 
                     }
-                    if (dataSnapshot.child("password").getValue() != null){
-                        String password = ""+ dataSnapshot.child("password").getValue();
-                        etPassword.setText(password);
+                    if (dataSnapshot.child("nationality").getValue() != null){
+                        String password = ""+ dataSnapshot.child("nationality").getValue();
+                        etNationality.setText(password);
                         //Log.d("Password",fPassword);
                     }
                     if(dataSnapshot.child("address").getValue() != null){
@@ -171,7 +171,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
                     etGender.setEnabled(false);
                     etAddress.setEnabled(false);
                     etName.setEnabled(false);
-                    etPassword.setEnabled(false);
+                    etNationality.setEnabled(false);
                     etCategory.setEnabled(false);
                     btnEditInfo.setVisibility(View.VISIBLE);
                     btnSaveInfo.setVisibility(View.INVISIBLE);
@@ -181,7 +181,7 @@ public class RiderDetailsActivity extends AppCompatActivity {
                     etGender.setEnabled(true);
                     etAddress.setEnabled(true);
                     etName.setEnabled(true);
-                    etPassword.setEnabled(true);
+                    etNationality.setEnabled(true);
                     etCategory.setEnabled(true);
                     btnEditInfo.setVisibility(View.INVISIBLE);
                     btnSaveInfo.setVisibility(View.VISIBLE);

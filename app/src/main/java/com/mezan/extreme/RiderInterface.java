@@ -1,13 +1,8 @@
 package com.mezan.extreme;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -20,9 +15,15 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -37,11 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.onesignal.OneSignal;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static com.mezan.extreme.UserInterface.RequestPermissionCode;
 
 public class RiderInterface extends AppCompatActivity {
 
@@ -55,14 +53,15 @@ public class RiderInterface extends AppCompatActivity {
     String Holder;
     FusedLocationProviderClient fusedLocationClient;
     LinearLayout root;
-    TextView riderAddressTXT;
+    TextView riderAddressTXT,txtUpdateDetails,txtGPSSetting,txtRideReqList;
+    Switch isAvailable;
 
-    ListView reqList;
+
 
     DatabaseReference mRiderLocDB;
 
-    ArrayList<reqDataObj> infoData = new ArrayList<>();
-    reqListAdapter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,16 +85,19 @@ public class RiderInterface extends AppCompatActivity {
 
         /*End of One Signal Init*/
 
+        //menu of option
+        txtGPSSetting = findViewById(R.id.txtRiderGPSSetting);
+        txtRideReqList = findViewById(R.id.txtRideRequest);
+        txtUpdateDetails = findViewById(R.id.txtRiderDetails);
+
+        isAvailable = findViewById(R.id.checkAvailability);
 
         root = findViewById(R.id.rootRI);
 
 
         riderAddressTXT = findViewById(R.id.addressRider);
 
-        reqList = findViewById(R.id.reqList);
 
-        adapter = new reqListAdapter(infoData,this);
-        reqList.setAdapter(adapter);
 
         EnableRuntimePermission();
 
@@ -114,103 +116,74 @@ public class RiderInterface extends AppCompatActivity {
             gettingLocationLatLon();
         }
 
-
-        fetchReqData();
-
-    }
-
-
-
-
-
-
-    private void fetchReqData() {
-
-        final DatabaseReference reqDB = FirebaseDatabase.getInstance().getReference().child("Request").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        reqDB.addValueEventListener(new ValueEventListener() {
+        txtGPSSetting.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                infoData.clear();
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot ds :  dataSnapshot.getChildren()){
-                        String key = ds.getKey();
-                        //
-                        Log.d("MyUser",key);
-                        DatabaseReference infoRef =reqDB.child(key);
-                        infoRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String name = "",lat = "",lon = "";
-                                String mobile = "",distance = "",uid = "",reqTime = "",reqid="",category = "",reqStatus = "",pick = "";
-
-                                if (dataSnapshot.child("distance").getValue() != null){
-                                    distance = dataSnapshot.child("distance").getValue().toString();
-                                }
-                                if (dataSnapshot.child("mobile").getValue() != null){
-                                    mobile = dataSnapshot.child("mobile").getValue().toString();
-                                }
-                                if (dataSnapshot.child("reqtime").getValue() != null){
-                                    reqTime = dataSnapshot.child("reqtime").getValue().toString();
-                                }
-                                if (dataSnapshot.child("name").getValue() != null){
-                                    name = dataSnapshot.child("name").getValue().toString();
-                                }
-                                if (dataSnapshot.child("lat").getValue() != null){
-                                    lat = dataSnapshot.child("lat").getValue().toString();
-                                }
-                                if (dataSnapshot.child("lon").getValue() != null){
-                                    lon = dataSnapshot.child("lon").getValue().toString();
-                                }
-
-                                if (dataSnapshot.child("reqid").getValue() != null){
-                                    reqid = dataSnapshot.child("reqid").getValue().toString();
-                                }
-
-                                if (dataSnapshot.child("category").getValue() != null){
-                                    category = dataSnapshot.child("category").getValue().toString();
-                                }
-
-                                if (dataSnapshot.child("request").getValue() != null){
-                                    reqStatus = dataSnapshot.child("request").getValue().toString();
-                                }
-                                if (dataSnapshot.child("pick").getValue() != null){
-                                    pick = dataSnapshot.child("pick").getValue().toString();
-                                }
-
-                                    reqDataObj obj = new reqDataObj(name, mobile, distance, lat, lon, reqTime, uid, reqid, category,reqStatus,pick);
-                                    infoData.add(obj);
-
-                                Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid+reqid+category+pick);
-
-
-                                adapter.notifyDataSetChanged();
-                               /* adapter = new reqListAdapter(infoData,getApplicationContext());
-                                reqList.setAdapter(adapter);*/
-                            }
-
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-
-                    }
-
-                }
+            public void onClick(View view) {
+                settingGPS();
             }
+        });
 
+        txtUpdateDetails.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), RiderDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        txtRideReqList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RiderInterface.this,UserRequest.class));
+            }
+        });
+
+        isAvailable.setTextOff("Unavailable");
+        isAvailable.setTextOn("Available");
+
+       final DatabaseReference riderDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+       riderDB.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               if (dataSnapshot.exists()){
+                   if (dataSnapshot.child("availability").getValue() != null){
+                       String check = dataSnapshot.child("availability").getValue().toString();
+                       if (check.equals("yes")){
+                           isAvailable.setChecked(true);
+                       }else {
+                           isAvailable.setChecked(false);
+                       }
+                   }
+               }
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError databaseError) {
+
+           }
+       });
+
+        isAvailable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    riderDB.child("availability").setValue("yes");
+                }else {
+                    riderDB.child("availability").setValue("no");
+                }
             }
         });
 
 
 
     }
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -240,7 +213,7 @@ public class RiderInterface extends AppCompatActivity {
             finish();*/
             return true;
         }
-        if (id == R.id.userDetails){
+       /* if (id == R.id.userDetails){
             Intent intent=new Intent(getApplicationContext(), RiderDetailsActivity.class);
             startActivity(intent);
             return true;
@@ -248,7 +221,7 @@ public class RiderInterface extends AppCompatActivity {
         if (id == R.id.gpsSetting){
             settingGPS();
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

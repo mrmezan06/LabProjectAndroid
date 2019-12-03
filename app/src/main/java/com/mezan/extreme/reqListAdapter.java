@@ -178,7 +178,6 @@ public class reqListAdapter extends BaseAdapter {
         reqDB.child("responsetime").setValue(currentDateandTime);
             if (accept){
                //database accept
-
                 dataObj.get(i).setStatus("Accepted");
                 reqDB.child("request").setValue("Accepted");
                 dataObj.clear();
@@ -199,5 +198,6 @@ public class reqListAdapter extends BaseAdapter {
             reqAccept.setEnabled(false);
         }
     }
+
 }
 

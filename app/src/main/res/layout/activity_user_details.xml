@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Ex: Jon A. Bobs"
             android:textSize="22sp"
             android:layout_weight="6"
             android:layout_width="0dp"
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Ex: London,USA"
             android:id="@+id/detailsAddress"
             android:textSize="22sp"
             android:layout_weight="6"
@@ -68,6 +70,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Ex: Female"
             android:id="@+id/detailsGender"
             android:textSize="22sp"
             android:layout_weight="6"
@@ -90,6 +93,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Ex: dd-mm-YYYY"
             android:id="@+id/detailsBOD"
             android:textSize="22sp"
             android:layout_weight="6"
@@ -113,6 +117,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Ex: +8801XXXXXXXXX"
             android:id="@+id/detailsMobile"
             android:textSize="22sp"
             android:layout_weight="6"
@@ -128,13 +133,14 @@
         >
         <TextView
             android:textColor="#202001"
-            android:text="@string/password"
+            android:text="Nationality"
             android:textSize="24sp"
             android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Ex: USA"
             android:id="@+id/detailsPassword"
             android:textSize="22sp"
             android:layout_weight="6"
@@ -157,6 +163,7 @@
             android:layout_height="wrap_content"
             />
         <EditText
+            android:hint="Auto Generated"
             android:id="@+id/detailsCreated"
             android:textSize="22sp"
             android:layout_weight="6"

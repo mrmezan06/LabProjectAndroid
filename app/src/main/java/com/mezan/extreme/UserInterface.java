@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +52,8 @@ public class UserInterface extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationClient;
 
     CardView bikeCard,carCard,foodCard,parcelCard;
-    LinearLayout root;
+    LinearLayout root,rootAddress;
+    TextView txtGetCurrentAddress,txtUpdateInfo,txtGPSSetting,txtShowAddress;
 
     DatabaseReference mUserLocDB;
 
@@ -86,6 +88,18 @@ public class UserInterface extends AppCompatActivity {
         parcelCard = findViewById(R.id.parcelCard);
         root = findViewById(R.id.rootUserInterface);
 
+        //txt
+        txtGetCurrentAddress = findViewById(R.id.txtGetCurrentAddress);
+        txtGPSSetting = findViewById(R.id.txtGPSSetting);
+        txtUpdateInfo = findViewById(R.id.txtUpdateDetails);
+
+        //view Address
+        txtShowAddress = findViewById(R.id.txtShowAddress);
+
+        //root address
+        rootAddress = findViewById(R.id.AddressRoot);
+
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         criteria = new Criteria();
@@ -96,6 +110,30 @@ public class UserInterface extends AppCompatActivity {
 
         CheckGpsStatus();
 
+        txtUpdateInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), UserDetails.class);
+                startActivity(intent);
+            }
+        });
+
+        txtGPSSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settingGPS();
+            }
+        });
+
+        txtGetCurrentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isInternetConnection())
+                    gettingLocationLatLon("address");
+                else
+                    Snackbar.make(root,"No Internet Available",Snackbar.LENGTH_LONG).show();
+            }
+        });
         mUserLocDB = FirebaseDatabase.getInstance().getReference().child("UserLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         //Card OnClick Listener
@@ -194,7 +232,12 @@ public class UserInterface extends AppCompatActivity {
                                             startActivity(it);
                                         }else if (type.equals("parcel")){
                                             //parcel
-                                        }else {
+                                        }else if (type.equals("address")){
+                                            String myAddress = setAddress(location.getLatitude(),location.getLongitude());
+                                            rootAddress.setVisibility(View.VISIBLE);
+                                            txtShowAddress.setText(myAddress);
+                                        }
+                                        else {
                                             //something went wrong
                                         }
 
@@ -240,17 +283,9 @@ public class UserInterface extends AppCompatActivity {
             startActivity(intent);
             finish();
 
-
-            //user don't want to use again again verification code for those sign out
-            //so i am just back him in login page
-
-           /* Intent intent=new Intent(getApplicationContext(), LoginForm.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();*/
             return true;
         }
-        if (id == R.id.userDetails){
+        /*if (id == R.id.userDetails){
             Intent intent=new Intent(getApplicationContext(), UserDetails.class);
             startActivity(intent);
             return true;
@@ -259,7 +294,7 @@ public class UserInterface extends AppCompatActivity {
             settingGPS();
             return true;
         }
-
+*/
         return super.onOptionsItemSelected(item);
     }
     public void CheckGpsStatus(){

@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".food.FoodTabMenu"></activity>
+        <activity android:name=".UserRequest"></activity>
+        <activity android:name=".food.FoodTabMenu" />
         <activity android:name=".food.HotelMenu" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

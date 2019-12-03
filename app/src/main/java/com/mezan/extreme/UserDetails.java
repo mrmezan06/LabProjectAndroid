@@ -23,7 +23,7 @@ public class UserDetails extends AppCompatActivity {
 
 
     DatabaseReference mUserDB,mUserLocDB;
-    EditText etName,etAddress,etBOD,etGender,etMobile,etPassword,etCreated;
+    EditText etName,etAddress,etBOD,etGender,etMobile,etNationality,etCreated;
     Button btnEditInfo,btnSaveInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class UserDetails extends AppCompatActivity {
         etBOD = findViewById(R.id.detailsBOD);
         etGender = findViewById(R.id.detailsGender);
         etMobile = findViewById(R.id.detailsMobile);
-        etPassword = findViewById(R.id.detailsPassword);
+        etNationality = findViewById(R.id.detailsPassword);
         etCreated = findViewById(R.id.detailsCreated);
         //btn
         btnEditInfo = findViewById(R.id.detailsEditInfo);
@@ -64,7 +64,7 @@ public class UserDetails extends AppCompatActivity {
                 etGender.setEnabled(true);
                 etAddress.setEnabled(true);
                 etName.setEnabled(true);
-                etPassword.setEnabled(true);
+                etNationality.setEnabled(true);
 
                 btnSaveInfo.setVisibility(View.VISIBLE);
 
@@ -86,7 +86,7 @@ public class UserDetails extends AppCompatActivity {
 
         mUserDB.child("name").setValue(etName.getText().toString());
         mUserDB.child("mobile").setValue(etMobile.getText().toString());
-        mUserDB.child("password").setValue(etPassword.getText().toString());
+        mUserDB.child("nationality").setValue(etNationality.getText().toString());
         mUserDB.child("address").setValue(etAddress.getText().toString());
         mUserDB.child("gender").setValue(etGender.getText().toString());
         mUserDB.child("bod").setValue(etBOD.getText().toString());
@@ -102,7 +102,7 @@ public class UserDetails extends AppCompatActivity {
         etGender.setEnabled(false);
         etAddress.setEnabled(false);
         etName.setEnabled(false);
-        etPassword.setEnabled(false);
+        etNationality.setEnabled(false);
 
         btnSaveInfo.setVisibility(View.INVISIBLE);
 
@@ -126,9 +126,9 @@ public class UserDetails extends AppCompatActivity {
                         // Log.d("Mobile",fMobile);
 
                     }
-                    if (dataSnapshot.child("password").getValue() != null){
-                        String password = ""+ dataSnapshot.child("password").getValue();
-                        etPassword.setText(password);
+                    if (dataSnapshot.child("nationality").getValue() != null){
+                        String nationality = ""+ dataSnapshot.child("nationality").getValue();
+                        etNationality.setText(nationality);
                         //Log.d("Password",fPassword);
                     }
                     if(dataSnapshot.child("address").getValue() != null){
@@ -154,7 +154,7 @@ public class UserDetails extends AppCompatActivity {
                     etGender.setEnabled(false);
                     etAddress.setEnabled(false);
                     etName.setEnabled(false);
-                    etPassword.setEnabled(false);
+                    etNationality.setEnabled(false);
                     etMobile.setEnabled(false);
 
                 }
@@ -164,7 +164,7 @@ public class UserDetails extends AppCompatActivity {
                     etGender.setEnabled(true);
                     etAddress.setEnabled(true);
                     etName.setEnabled(true);
-                    etPassword.setEnabled(true);
+                    etNationality.setEnabled(true);
 
                     btnEditInfo.setVisibility(View.INVISIBLE);
                     btnSaveInfo.setVisibility(View.VISIBLE);

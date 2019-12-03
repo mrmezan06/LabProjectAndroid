@@ -144,7 +144,8 @@ public class ReqRiderActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()){
                             if (dataSnapshot.child("notificationKey").getValue() != null){
-                                new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!",dataSnapshot.child("notificationKey").getValue().toString());
+                                new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!"+"Pick Address :"+pickAddress.getText(),dataSnapshot.child("notificationKey").getValue().toString());
+                                Snackbar.make(root,"Request has been sent!",Snackbar.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -162,6 +163,7 @@ public class ReqRiderActivity extends AppCompatActivity {
                             if (dataSnapshot.exists()){
                                 if (dataSnapshot.child("name").getValue() != null){
                                     reqDB.child("name").setValue(dataSnapshot.child("name").getValue());
+
 
                                 }
                                 /*if (dataSnapshot.child("notificationKey").getValue() != null){
