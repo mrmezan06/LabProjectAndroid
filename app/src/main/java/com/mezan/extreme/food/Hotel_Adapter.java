@@ -63,6 +63,10 @@ public class Hotel_Adapter extends BaseAdapter {
         nameTxt.setText(name[i]);
         deliveryTimeTxt.setText("45\nMIN");
         hotelRating.setRating(Rating[i]);
+        hotelRating.setFocusable(false);
+        hotelRating.setIsIndicator(true);
+        //hotelRating.setEnabled(false);
+
         hotelImage.setBackgroundResource(image[i]);
 
         hotelImage.setOnClickListener(new View.OnClickListener() {

@@ -19,11 +19,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -168,14 +172,55 @@ public class reqListAdapter extends BaseAdapter {
         return "No Local Address Found!";
 
     }
-    private void RequestManage(boolean accept,int i){
+    private void RequestManage(final boolean accept, int i){
         if (dataObj.get(i).getStatus().equals("Pending")){
         final DatabaseReference reqDB = FirebaseDatabase.getInstance().getReference().child("Request").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(dataObj.get(i).reqID);
+
         reqAccept.setVisibility(View.GONE);
         reqReject.setVisibility(View.GONE);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String currentDateandTime = sdf.format(new Date());
         reqDB.child("responsetime").setValue(currentDateandTime);
+
+            reqDB.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        if (dataSnapshot.child("userid").getValue() != null){
+                            String UID = dataSnapshot.child("userid").getValue().toString();
+                            DatabaseReference UDB = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(UID);
+                            UDB.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()){
+                                        if (dataSnapshot.child("notificationKey").getValue() != null){
+                                            String notificationKey = dataSnapshot.child("notificationKey").getValue().toString();
+                                            String acceptStr = "";
+                                            if (accept){
+                                                acceptStr = "accepted!";
+                                            }else {
+                                                acceptStr = "rejected!";
+                                            }
+                                            new SendNotification("Your request has been "+acceptStr,"Info",notificationKey);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
             if (accept){
                //database accept
                 dataObj.get(i).setStatus("Accepted");
@@ -185,6 +230,7 @@ public class reqListAdapter extends BaseAdapter {
                 //database reject
                 dataObj.get(i).setStatus("Rejected");
                 reqDB.child("request").setValue("Rejected");
+                dataObj.clear();
 
             }
 
@@ -197,6 +243,7 @@ public class reqListAdapter extends BaseAdapter {
             reqReject.setEnabled(false);
             reqAccept.setEnabled(false);
         }
+
     }
 
 }

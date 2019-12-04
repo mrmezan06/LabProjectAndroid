@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:weightSum="10"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:text="BBQ Chicken Lollipop"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/priceOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:textSize="18sp"
+        android:text="250.00"
+        android:textColor="#000"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/qtyOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:text="4 Pcs"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/tPriceOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="1000.00"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        />
+
+</LinearLayout>

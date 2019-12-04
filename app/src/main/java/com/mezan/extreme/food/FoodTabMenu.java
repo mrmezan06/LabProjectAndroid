@@ -5,8 +5,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,6 +20,8 @@ public class FoodTabMenu extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
+
+    Button btnOrderList;
 
     int []image = {R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.d,R.drawable.e,
             R.drawable.f,R.drawable.g,R.drawable.h,R.drawable.i,R.drawable.j,
@@ -58,10 +62,26 @@ public class FoodTabMenu extends AppCompatActivity {
         LinearLayout hotelImage;
         hotelImage = findViewById(R.id.foodHotelImage);
 
+        btnOrderList = findViewById(R.id.btnOrderList);
+
+        btnOrderList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FoodTabMenu.this,OrderList.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //hotel identification
         nameTxt.setText(name[positionHotel]);
         deliveryTimeTxt.setText("45\nMIN");
+
         hotelRating.setRating(Rating[positionHotel]);
+        //hotelRating.setEnabled(false);
+        hotelRating.setFocusable(false);
+        hotelRating.setIsIndicator(true);
+
         hotelImage.setBackgroundResource(image[positionHotel]);
 
 
