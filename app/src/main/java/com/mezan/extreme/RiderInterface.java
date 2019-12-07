@@ -141,7 +141,7 @@ public class RiderInterface extends AppCompatActivity {
         isAvailable.setTextOff("Unavailable");
         isAvailable.setTextOn("Available");
 
-       final DatabaseReference riderDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+       final DatabaseReference riderDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
        riderDB.addValueEventListener(new ValueEventListener() {
            @Override
@@ -260,6 +260,26 @@ public class RiderInterface extends AppCompatActivity {
                                             mRiderLocDB.child("lat").setValue(String.valueOf(location.getLatitude()));
                                         mRiderLocDB.child("lon").setValue(String.valueOf(location.getLongitude()));
                                         mRiderLocDB.child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        mRiderLocDB.child("availability").setValue("yes");
+
+
+
+                                        mRiderLocDB.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()){
+                                                    if (!dataSnapshot.child("category").exists()){
+                                                        mRiderLocDB.child("category").setValue("bike");
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
                                         String riderAddress = setAddress(location.getLatitude(),location.getLongitude());
                                         Log.d("RiderAddress",riderAddress);
                                         riderAddressTXT.setText(riderAddress);

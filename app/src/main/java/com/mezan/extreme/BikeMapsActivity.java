@@ -15,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -94,10 +95,12 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
                                     if (dataSnapshot.child("uid").getValue() != null){
                                        // riderInfoMap.put("uid",dataSnapshot.child("uid").getValue().toString());
                                         uid = dataSnapshot.child("uid").getValue().toString();
+
                                     }
                                     if (dataSnapshot.child("category").getValue().toString().equals("bike") || dataSnapshot.child("category").getValue().toString().equals("Bike")){
                                        // Log.d("RiderInfo",riderInfoMap.toString());
                                         //bikerLocation.add(riderInfoMap);
+                                        if(dataSnapshot.child("availability").getValue().toString().equals("yes"))
                                         if (!lat.equals("") || !lon.equals("") || !uid.equals("")) {
                                           //  Log.d("RiderInfo",lat+lon+uid);
                                             riderMarker(lat, lon, uid);
@@ -139,7 +142,33 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
             LatLng userLocation = new LatLng(ulat,ulon);
            Marker marker =  mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
            marker.setTag("Your Position");
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,6f));
+
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(ulat,ulon))
+                .zoom(7)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 5000, null);
+
+           // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,6f));
+
+
+        /*String  address = setAddress(ulat,ulon);
+        LatLng userLocation = new LatLng(ulat,ulon);
+        mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(ulat,ulon))
+                .zoom(7)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 5000, null);*/
+
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             mRiderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc");
 
@@ -163,6 +192,20 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
 
 
         markers.setTag(UID);
+
+
+                /*String  address = setAddress(ulat,ulon);
+        LatLng userLocation = new LatLng(ulat,ulon);
+        mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(ulat,ulon))
+                .zoom(7)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 5000, null);*/
 
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
