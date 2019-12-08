@@ -173,16 +173,16 @@
     </LinearLayout>
     <Button
         android:id="@+id/detailsEditInfo"
-        android:background="#024F53"
-        android:textColor="#FFFF07"
+        android:background="#E91E63"
+        android:textColor="#FFF"
         android:layout_marginTop="40dp"
         android:text="@string/update_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/detailsSave"
-        android:background="#024F53"
-        android:textColor="#FFFF07"
+        android:background="#0EB607"
+        android:textColor="#FFF"
         android:layout_marginTop="40dp"
         android:text="@string/save_info"
         android:layout_width="match_parent"

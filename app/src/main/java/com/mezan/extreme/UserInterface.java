@@ -53,7 +53,7 @@ public class UserInterface extends AppCompatActivity {
 
     CardView bikeCard,carCard,foodCard,parcelCard;
     LinearLayout root,rootAddress;
-    TextView txtGetCurrentAddress,txtUpdateInfo,txtGPSSetting,txtShowAddress;
+    TextView txtGetCurrentAddress,txtUpdateInfo,txtLogOut,txtShowAddress;
 
     DatabaseReference mUserLocDB;
 
@@ -90,7 +90,7 @@ public class UserInterface extends AppCompatActivity {
 
         //txt
         txtGetCurrentAddress = findViewById(R.id.txtGetCurrentAddress);
-        txtGPSSetting = findViewById(R.id.txtGPSSetting);
+        txtLogOut = findViewById(R.id.txtGPSSetting);
         txtUpdateInfo = findViewById(R.id.txtUpdateDetails);
 
         //view Address
@@ -118,10 +118,14 @@ public class UserInterface extends AppCompatActivity {
             }
         });
 
-        txtGPSSetting.setOnClickListener(new View.OnClickListener() {
+        txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingGPS();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent=new Intent(getApplicationContext(), ModuleActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -278,11 +282,8 @@ public class UserInterface extends AppCompatActivity {
 
         if (id == R.id.menuSignOut) {
 
-            FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(getApplicationContext(), ModuleActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+            /**/
+            settingGPS();
 
             return true;
         }

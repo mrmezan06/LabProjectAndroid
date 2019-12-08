@@ -53,7 +53,7 @@ public class RiderInterface extends AppCompatActivity {
     String Holder;
     FusedLocationProviderClient fusedLocationClient;
     LinearLayout root;
-    TextView riderAddressTXT,txtUpdateDetails,txtGPSSetting,txtRideReqList;
+    TextView riderAddressTXT,txtUpdateDetails,txtLogOut,txtRideReqList;
     Switch isAvailable;
 
 
@@ -86,7 +86,7 @@ public class RiderInterface extends AppCompatActivity {
         /*End of One Signal Init*/
 
         //menu of option
-        txtGPSSetting = findViewById(R.id.txtRiderGPSSetting);
+        txtLogOut = findViewById(R.id.txtRiderGPSSetting);
         txtRideReqList = findViewById(R.id.txtRideRequest);
         txtUpdateDetails = findViewById(R.id.txtRiderDetails);
 
@@ -116,10 +116,15 @@ public class RiderInterface extends AppCompatActivity {
             gettingLocationLatLon();
         }
 
-        txtGPSSetting.setOnClickListener(new View.OnClickListener() {
+        txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingGPS();
+                //settingGPS();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent=new Intent(getApplicationContext(), ModuleActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -197,12 +202,10 @@ public class RiderInterface extends AppCompatActivity {
 
         if (id == R.id.menuSignOut) {
 
-            FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(getApplicationContext(), ModuleActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+            //setting
 
+
+            settingGPS();
 
             //user don't want to use again again verification code for those sign out
             //so i am just back him in login page

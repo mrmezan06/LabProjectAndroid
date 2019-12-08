@@ -4,36 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:weightSum="10"
+    android:background="#E91E63"
+    android:gravity="center"
     android:id="@+id/rootModule"
     tools:context=".ModuleActivity">
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="5"
         android:id="@+id/userArea"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#C0C0C0"
+            android:background="#9B2515"
+            android:gravity="center"
             android:weightSum="10"
             >
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:src="@drawable/userarea"
+                android:text="USER\nAREA"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="#FFF"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:textAlignment="center"
-                android:textSize="28sp"
-                android:textColor="#6F1414"
+                android:textSize="22sp"
+                android:textColor="#FFF"
                 android:text="Bike,Car,Food,Parcel"
                 />
 
@@ -41,9 +47,9 @@
 
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="5"
         android:id="@+id/riderArea"
         >
         <LinearLayout
@@ -51,20 +57,23 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="10"
-            android:background="#E2E2E2"
+            android:background="#347505"
             >
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="7"
-                android:src="@drawable/adminarea"
+                android:text="RIDER\nAREA"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="#FFF"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:textColor="#6F1414"
-                android:textSize="28sp"
+                android:textColor="#FFF"
+                android:textSize="22sp"
                 android:textAlignment="center"
                 android:text="Any Interested Rider Allowed"
                 />
@@ -72,17 +81,4 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:layout_weight="2"
-        android:background="#403D3D3D"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <ImageView
-            android:scaleType="fitXY"
-            android:src="@drawable/logocompany"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
 </LinearLayout>

@@ -107,7 +107,7 @@ public class UserRequest extends AppCompatActivity {
                                 Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid+reqid+category+pick);
                                 adapter.notifyDataSetChanged();
 
-                               /* adapter = new reqListAdapter(infoData,getApplicationContext());
+                               /*adapter = new reqListAdapter(infoData,getApplicationContext());
                                 reqList.setAdapter(adapter);*/
                             }
                             @Override
