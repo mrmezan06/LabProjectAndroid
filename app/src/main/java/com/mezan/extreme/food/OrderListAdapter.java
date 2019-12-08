@@ -1,12 +1,18 @@
 package com.mezan.extreme.food;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mezan.extreme.R;
 
 import java.util.ArrayList;
@@ -48,11 +54,22 @@ public class OrderListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
 
         view = LayoutInflater.from(context).inflate(R.layout.order_list_layout,viewGroup,false);
-        TextView txtName,txtPrice,txtQty,txtTotalPrice;
+        final TextView txtName,txtPrice,txtQty,txtTotalPrice;
+        TextView qtyplux,qtyminus;
+        final LinearLayout root;
+
+        qtyminus = view.findViewById(R.id.qtyminus);
+        qtyplux = view.findViewById(R.id.qtyplus);
+
+        root = view.findViewById(R.id.root_orderList);
+
+
+
+
         txtName = view.findViewById(R.id.nameOrder);
         txtPrice = view.findViewById(R.id.priceOrder);
         txtQty = view.findViewById(R.id.qtyOrder);
@@ -70,10 +87,78 @@ public class OrderListAdapter extends BaseAdapter {
             txtName.setText("Total Price :");
             txtPrice.setText("");
             txtQty.setText("");
+            qtyminus.setText("");
+            qtyplux.setText("");
+            qtyplux.setEnabled(false);
+            qtyminus.setEnabled(false);
             txtTotalPrice.setText(String.valueOf(estimatedPrice));
         }
 
+        qtyplux.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference addcartDB = FirebaseDatabase.getInstance().getReference().child("addcart")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(nameList.get(i));
+
+                int cqty = getINTPlus(quantityList.get(i));
+
+                addcartDB.child("Quantity").setValue(String.valueOf(cqty));
+                txtQty.setText(String.valueOf(cqty));
+                addcartDB.child("totalPrice").setValue(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
+                txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
+            }
+        });
+
+        qtyminus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference addcartDB = FirebaseDatabase.getInstance().getReference().child("addcart")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(nameList.get(i));
+
+                int cqty = getINTMinus(quantityList.get(i));
+
+                addcartDB.child("Quantity").setValue(String.valueOf(cqty));
+                txtQty.setText(String.valueOf(cqty));
+                addcartDB.child("totalPrice").setValue(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
+                txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
+                if (cqty == 0){
+                    Snackbar.make(root,"No More Decrease item available",Snackbar.LENGTH_LONG).show();
+                    addcartDB.setValue(null);
+                }
+            }
+        });
+
 
         return view;
+    }
+    private int getINTPlus(String qty){
+        int x = 0;
+        try{
+            x = Integer.parseInt(qty);
+        }catch (Exception e){
+            Log.d("Parse Integer error",e.toString());
+        }
+
+
+        return x+1;
+    }
+    private int getINTMinus(String qty){
+        int x = 0;
+        try{
+            x = Integer.parseInt(qty);
+        }catch (Exception e){
+            Log.d("Parse Integer error",e.toString());
+        }
+
+        if (x>0){
+            return x-1;
+        }else {
+
+            return 0;
+        }
+
+
     }
 }

@@ -51,6 +51,10 @@ public class OrderList extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
 
+                    nameList.clear();
+                    priceTotalList.clear();
+                    priceSingleList.clear();
+                    quantityList.clear();
                     for (DataSnapshot child : dataSnapshot.getChildren()){
                         Log.d("Name",child.child("Name").getValue().toString());
                         Log.d("Name",child.child("Price").getValue().toString());

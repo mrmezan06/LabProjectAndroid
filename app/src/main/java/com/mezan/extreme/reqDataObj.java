@@ -1,7 +1,5 @@
 package com.mezan.extreme;
 
-import android.app.UiAutomation;
-
 public class reqDataObj {
     String name;
     String mobile;

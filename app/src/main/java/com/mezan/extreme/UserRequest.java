@@ -51,8 +51,11 @@ public class UserRequest extends AppCompatActivity {
         reqDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                infoData.clear();
+
                 if (dataSnapshot.exists()){
+
+                    infoData.clear();
+
                     for (DataSnapshot ds :  dataSnapshot.getChildren()){
                         String key = ds.getKey();
                         //
@@ -103,6 +106,7 @@ public class UserRequest extends AppCompatActivity {
 
                                 Log.d("MyUser",name+mobile+distance+lat+lon+reqTime+uid+reqid+category+pick);
                                 adapter.notifyDataSetChanged();
+
                                /* adapter = new reqListAdapter(infoData,getApplicationContext());
                                 reqList.setAdapter(adapter);*/
                             }
@@ -112,6 +116,7 @@ public class UserRequest extends AppCompatActivity {
                             }
                         });
                     }
+
 
                 }
             }
