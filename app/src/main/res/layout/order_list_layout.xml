@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:text="BBQ Chicken Lollipop"
+        android:text=""
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="18sp"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
         android:textSize="18sp"
-        android:text="250.00"
+        android:text=""
         android:textColor="#000"
         android:textAlignment="center"
         />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
         android:textSize="22sp"
-        android:text="-"
+        android:text=""
         android:textColor="#FF0000"
         android:textAlignment="center"/>
     <TextView
@@ -41,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
-        android:text="4 Pcs"
+        android:text=""
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="18sp"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
         android:textSize="22sp"
-        android:text="+"
+        android:text=""
         android:textColor="#FF0000"
         android:textAlignment="center"/>
     <TextView
@@ -60,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:text="1000.00"
+        android:text=""
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="18sp"

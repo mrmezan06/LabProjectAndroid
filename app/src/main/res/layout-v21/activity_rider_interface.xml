@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/rootRI"
     android:orientation="vertical"
-    android:background="#D81B60"
+    android:background="@color/cardview_dark_background"
     android:weightSum="20"
     android:layout_margin="10dp"
     tools:context=".RiderInterface"
@@ -44,7 +44,7 @@
         android:layout_height="0dp">
 
         <LinearLayout
-            android:background="@color/cardview_dark_background"
+            android:background="#D81B60"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -60,7 +60,7 @@
                 />
         </LinearLayout>
         <LinearLayout
-            android:background="@color/cardview_dark_background"
+            android:background="#D81B60"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -79,7 +79,7 @@
         <LinearLayout
             android:weightSum="10"
             android:orientation="horizontal"
-            android:background="@color/cardview_dark_background"
+            android:background="#D81B60"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -100,13 +100,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:buttonTint="@color/colorAccent"
+                android:buttonTint="#FFF"
                 />
 
         </LinearLayout>
 
         <LinearLayout
-            android:background="@color/cardview_dark_background"
+            android:background="#D81B60"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

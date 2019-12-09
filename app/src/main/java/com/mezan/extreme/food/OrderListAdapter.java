@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class OrderListAdapter extends BaseAdapter {
 
 
-    Double estimatedPrice = 0.0;
+    Double estimatedPrice;
     Context context;
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> priceSingleList = new ArrayList<>();
@@ -30,12 +30,13 @@ public class OrderListAdapter extends BaseAdapter {
     public OrderListAdapter(){
 
     }
-    public OrderListAdapter(Context context,ArrayList<String> nameList, ArrayList<String> priceSingleList, ArrayList<String> priceTotalList, ArrayList<String> quantityList){
+    public OrderListAdapter(Context context,ArrayList<String> nameList, ArrayList<String> priceSingleList, ArrayList<String> priceTotalList, ArrayList<String> quantityList,Double totalprice){
         this.context =context;
         this.nameList = nameList;
         this.priceSingleList = priceSingleList;
         this.priceTotalList = priceTotalList;
         this.quantityList = quantityList;
+        this.estimatedPrice = totalprice;
     }
 
     @Override
@@ -78,20 +79,38 @@ public class OrderListAdapter extends BaseAdapter {
         if (i < nameList.size()){
             txtName.setText(nameList.get(i));
             txtPrice.setText(priceSingleList.get(i));
+            qtyminus.setText("-");
+            qtyplux.setText("+");
             txtQty.setText(quantityList.get(i)+" Pcs");
             txtTotalPrice.setText(priceTotalList.get(i));
-            Double tPrice = Double.parseDouble(priceTotalList.get(i));
-            estimatedPrice += tPrice;
+            /*Double tPrice = Double.parseDouble(priceTotalList.get(i));
+            estimatedPrice += tPrice;*/
+
+
 
         }else if (i== nameList.size()){
-            txtName.setText("Total Price :");
-            txtPrice.setText("");
-            txtQty.setText("");
-            qtyminus.setText("");
-            qtyplux.setText("");
-            qtyplux.setEnabled(false);
-            qtyminus.setEnabled(false);
-            txtTotalPrice.setText(String.valueOf(estimatedPrice));
+            if (nameList.size()>0){
+                txtName.setText("Total Price :");
+                txtPrice.setText("");
+                txtQty.setText("");
+                qtyminus.setText("");
+                qtyplux.setText("");
+                qtyplux.setEnabled(false);
+                qtyminus.setEnabled(false);
+
+                Double mp = 0.0;
+                try {
+
+                    for (int j=0;j<priceTotalList.size();j++){
+                        mp += Double.parseDouble(priceTotalList.get(j));
+                    }
+                    txtTotalPrice.setText(String.valueOf(mp));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+
         }
 
         qtyplux.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +144,18 @@ public class OrderListAdapter extends BaseAdapter {
                 txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
                 if (cqty == 0){
                     Snackbar.make(root,"No More Decrease item available",Snackbar.LENGTH_LONG).show();
-                    addcartDB.setValue(null);
+                    if(nameList.isEmpty()){
+                        DatabaseReference addUserCartDB = FirebaseDatabase.getInstance().getReference().child("addcart")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        addUserCartDB.setValue(null);
+                        nameList.clear();
+                        priceSingleList.clear();
+                        priceTotalList.clear();
+                        quantityList.clear();
+                    }else {
+                        addcartDB.setValue(null);
+                    }
+
                 }
             }
         });

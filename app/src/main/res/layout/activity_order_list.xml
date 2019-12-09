@@ -11,7 +11,7 @@
         android:id="@+id/orderList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8.4"
+        android:layout_weight="9.0"
         ></ListView>
     <Button
         android:id="@+id/btnConfirmOrder"

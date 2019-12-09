@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorAccent"
+    android:background="@color/cardview_dark_background"
     android:padding="10dp"
     android:layout_margin="5dp"
     android:id="@+id/rootUserInterface"
@@ -168,7 +168,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/cardview_dark_background"
+        android:background="#D81B60"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -184,7 +184,7 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:background="@color/cardview_dark_background"
+        android:background="#D81B60"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -200,7 +200,7 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:background="@color/cardview_dark_background"
+        android:background="#D81B60"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -217,7 +217,7 @@
     </LinearLayout>
     <LinearLayout
         android:visibility="invisible"
-        android:background="@color/cardview_dark_background"
+        android:background="#D81B60"
         android:id="@+id/AddressRoot"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"

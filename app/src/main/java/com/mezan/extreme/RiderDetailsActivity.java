@@ -158,8 +158,8 @@ public class RiderDetailsActivity extends AppCompatActivity {
                         etBOD.setText(bod);
                     }
                     if(dataSnapshot.child("category").getValue() != null){
-                        String bod = ""+dataSnapshot.child("category").getValue();
-                        etCategory.setText(bod);
+                        String category = ""+dataSnapshot.child("category").getValue();
+                        etCategory.setText(category);
                     }
                     if(dataSnapshot.child("created").getValue() != null){
                         String created = ""+dataSnapshot.child("created").getValue();

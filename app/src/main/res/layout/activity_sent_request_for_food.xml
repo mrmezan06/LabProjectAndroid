@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootSRF"
+    android:orientation="vertical"
+    android:background="@color/cardview_dark_background"
+    tools:context=".food.SentRequestForFoodActivity">
+
+    <LinearLayout
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="Pick Address :"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/addressET"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:hint="Enter an address"
+            android:textColorHint="#FFF"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="Pick Driver :"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/sentOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="sent Order"
+        android:background="@color/colorAccent"
+        android:textColor="#FFF"
+        />
+
+
+</LinearLayout>

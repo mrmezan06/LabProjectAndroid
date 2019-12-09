@@ -99,7 +99,7 @@
                 android:layout_weight="5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="XXXXXXX"
                 android:textColor="#fff2"
                 android:textAlignment="center"
                 android:textSize="24sp"
@@ -158,7 +158,7 @@
             android:textColor="#fff2"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:hint="Boyra more"
+            android:hint="Enter An Address"
             android:background="#FFF"
             android:id="@+id/pickAddress"
             />
