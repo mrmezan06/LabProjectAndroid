@@ -53,7 +53,7 @@ public class RiderInterface extends AppCompatActivity {
     String Holder;
     FusedLocationProviderClient fusedLocationClient;
     LinearLayout root;
-    TextView riderAddressTXT,txtUpdateDetails,txtLogOut,txtRideReqList;
+    TextView riderAddressTXT,txtUpdateDetails,txtLogOut,txtRideReqList,txtFoodRL;
     Switch isAvailable;
 
 
@@ -90,12 +90,17 @@ public class RiderInterface extends AppCompatActivity {
         txtRideReqList = findViewById(R.id.txtRideRequest);
         txtUpdateDetails = findViewById(R.id.txtRiderDetails);
 
+        txtFoodRL = findViewById(R.id.txtFoodRequest);
+
+
+
         isAvailable = findViewById(R.id.checkAvailability);
 
         root = findViewById(R.id.rootRI);
 
 
         riderAddressTXT = findViewById(R.id.addressRider);
+
 
 
 
@@ -115,6 +120,14 @@ public class RiderInterface extends AppCompatActivity {
         if(isInternetConnection()) {
             gettingLocationLatLon();
         }
+
+
+        txtFoodRL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),RiderFoodOrder.class));
+            }
+        });
 
         txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override

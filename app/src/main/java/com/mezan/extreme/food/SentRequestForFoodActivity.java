@@ -126,8 +126,7 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
         //order theke set korte hobe
         //FoodOrderDB.child("orderid").setValue("");
-        FoodOrderDB.child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        FoodOrderDB.child("status").setValue("pending");
+
 
         final DatabaseReference orderDB = FirebaseDatabase.getInstance().getReference().child("Order").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         orderDB.child("driver").setValue(driverUID);
@@ -137,7 +136,10 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
         final String orderid = orderDB.child("order").push().getKey();
 
         orderDB.child("orderid").setValue(orderid);
-        FoodOrderDB.child("orderid").setValue(orderid);
+
+        FoodOrderDB.child(orderid).child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        FoodOrderDB.child(orderid).child("status").setValue("pending");
+        FoodOrderDB.child(orderid).child("orderid").setValue(orderid);
 
         //orderDB.child("order").child(orderid);
         DatabaseReference addcartDB = FirebaseDatabase.getInstance().getReference().child("addcart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -157,9 +159,9 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
                             Log.d("Name",ds.child("Quantity").getValue().toString());
 
                             orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("Name").setValue(ds.child("Name").getValue().toString());
-                            orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("Name").setValue(ds.child("Price").getValue().toString());
-                            orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("Name").setValue(ds.child("totalPrice").getValue().toString());
-                            orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("Name").setValue(ds.child("Quantity").getValue().toString());
+                            orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("Price").setValue(ds.child("Price").getValue().toString());
+                            orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("totalPrice").setValue(ds.child("totalPrice").getValue().toString());
+                            orderDB.child("order").child(orderid).child(ds.child("Name").getValue().toString()).child("Quantity").setValue(ds.child("Quantity").getValue().toString());
 
 
 
