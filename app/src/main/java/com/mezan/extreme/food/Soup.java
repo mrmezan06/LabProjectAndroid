@@ -62,7 +62,11 @@ public class Soup extends Fragment {
                             if (dataSnapshot.child("status").exists()){
                                 String status = dataSnapshot.child("status").getValue().toString();
                                 if (status.equals("pending")){
-                                    Toast.makeText(getContext(),"Already have a pending order",Toast.LENGTH_LONG).show();
+                                    try {
+                                        Toast.makeText(getContext(),"Already have a pending order",Toast.LENGTH_LONG).show();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
                                 }else {
                                     addtocart(i);
                                 }

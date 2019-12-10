@@ -220,6 +220,7 @@ public class UserInterface extends AppCompatActivity {
                                             Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
                                             it.putExtra("lat",location.getLatitude());
                                             it.putExtra("lon",location.getLongitude());
+                                            it.putExtra("order","bike");
                                             startActivity(it);
                                         }else if (type.equals("food")){
                                             //food

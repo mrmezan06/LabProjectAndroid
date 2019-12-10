@@ -3,6 +3,8 @@ package com.mezan.extreme.food;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,27 +33,26 @@ import java.util.Map;
 public class SentRequestForFoodActivity extends AppCompatActivity {
 
     DatabaseReference mRiderDB;
-    ArrayList<String> uidList = new ArrayList<>();
-    ArrayList<String> nameList = new ArrayList<>();
 
-    Spinner driverSpinner;
-    ArrayAdapter adapter;
-    String driverName = "";
+
+    TextView driverNameText;
+
     String driverUID = "";
 
     EditText pickAddressET;
     Button btnSOrder;
     LinearLayout root;
 
-    infoObject object;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sent_request_for_food);
 
-        driverSpinner = findViewById(R.id.spinner);
 
+
+        driverNameText = findViewById(R.id.driverText);
         pickAddressET = findViewById(R.id.addressET);
         btnSOrder = findViewById(R.id.sentOrder);
 
@@ -58,32 +60,29 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
 
 
-        adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,nameList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        driverSpinner.setAdapter(adapter);
-
-        mRiderDB = FirebaseDatabase.getInstance().getReference().child("Rider");
-
-        fetchBiker();
 
 
 
-        driverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                driverName = nameList.get(i);
-                driverUID = uidList.get(i);
-               // object = new infoObject(nameList.get(i),uidList.get(i));
 
-
+        Intent it = getIntent();
+        Bundle bd = it.getExtras();
+        if (bd != null){
+            driverUID = bd.getString("duid");
+            if (!driverUID.equals("")){
+                mRiderDB = FirebaseDatabase.getInstance().getReference().child("Rider").child(driverUID);
+                fetchBiker();
+            }else {
+                btnSOrder.setEnabled(false);
+                Snackbar.make(root,"Something Went wrong!",Snackbar.LENGTH_LONG).show();
             }
+        }else {
+            btnSOrder.setEnabled(false);
+            Snackbar.make(root,"Something Went wrong!",Snackbar.LENGTH_LONG).show();
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
+
+
 
         btnSOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,13 +90,9 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
                 String address = pickAddressET.getText().toString();
 
-                if (address.equals("") || address.equals(null)){
-                    Snackbar.make(root,"Need an Address!",Snackbar.LENGTH_LONG).show();
-                }/*else if (driverUID.equals("")){
-                    driverUID = uidList.get(0);
-                    //Snackbar.make(root,"Please select a driver!",Snackbar.LENGTH_LONG).show();
-                }*/else {
-                    driverUID = uidList.get(0);
+                if (address.equals("") || address.equals(null)) {
+                    Snackbar.make(root, "Need an Address!", Snackbar.LENGTH_LONG).show();
+                }else {
                     MakeOrder();
 
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Rider").child(driverUID);
@@ -177,6 +172,7 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
 
                     dataSnapshot.getRef().setValue(null);
+                    btnSOrder.setBackgroundColor(Color.rgb(0,0,0));
 
 
                 }
@@ -198,53 +194,25 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    for (DataSnapshot ds :  dataSnapshot.getChildren()){
-                        final String key = ds.getKey();
-                        Log.d("RiderID",key);
-                        DatabaseReference riderRef =FirebaseDatabase.getInstance().getReference().child("Rider").child(key);
-                        riderRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot ds) {
-                                if (ds.exists()){
-
-                                    //HashMap<String,String> riderInfoMap = new HashMap<>();
 
                                     String name = "";
 
-                                    if (ds.child("name").getValue() != null){
+                                    if (dataSnapshot.child("name").getValue() != null){
                                         // riderInfoMap.put("uid",dataSnapshot.child("uid").getValue().toString());
-                                        name = ds.child("name").getValue().toString();
+                                        name = dataSnapshot.child("name").getValue().toString();
+                                        try {
+                                            driverNameText.setText(name);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
 
-                                    }
-                                    if (ds.child("category").getValue().toString().equals("bike") || ds.child("category").getValue().toString().equals("Bike")){
-                                        // Log.d("RiderInfo",riderInfoMap.toString());
-                                        //bikerLocation.add(riderInfoMap);
-
-                                            //key and name
-                                            Log.d("UID",key);
-                                            Log.d("NAME",name);
-                                            nameList.add(name);
-                                            uidList.add(key);
 
                                     }
 
-
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
                     }
-
-                    adapter.notifyDataSetChanged();
 
 
                 }
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

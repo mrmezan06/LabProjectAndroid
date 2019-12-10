@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mezan.extreme.food.SentRequestForFoodActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
 
     double ulat=0.0;
     double ulon=0.0;
+    String food ="";
 
     DatabaseReference mRiderLocDB;
 
@@ -57,6 +59,11 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
         if(bd != null){
             ulat = bd.getDouble("lat",0.0);
             ulon = bd.getDouble("lon",0.0);
+            try {
+                food = bd.getString("order");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
 
@@ -213,23 +220,40 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
             public boolean onMarkerClick(Marker marker) {
 
                /* Toast.makeText(getApplicationContext(),marker.getTag().toString(),Toast.LENGTH_LONG).show();
-                Log.d("MarkerClick",marker.getTag().toString());
-*/
-               Intent reqIntent = new Intent(getApplicationContext(),ReqRiderActivity.class);
+                Log.d("MarkerClick",marker.getTag().toString());    */
+               if (marker.getTag().equals("Your Position")){
+                   Toast.makeText(getApplicationContext(),"Click Driver Marker",Toast.LENGTH_LONG).show();
+               }else {
+                   if (food.equals("food")){
 
-                //user latlng
-               reqIntent.putExtra("ulat",ulat);
-               reqIntent.putExtra("ulon",ulon);
 
-                //rider latlng
-                reqIntent.putExtra("rlat",marker.getPosition().latitude);
-                reqIntent.putExtra("rlon",marker.getPosition().longitude);
+                       Intent foodIT = new Intent(getApplicationContext(), SentRequestForFoodActivity.class);
+                       foodIT.putExtra("duid",marker.getTag().toString());
+                       startActivity(foodIT);
+                       finish();
 
-                //rider uid
-                reqIntent.putExtra("ruid",marker.getTag().toString());
-                reqIntent.putExtra("category","Bike");
-                startActivity(reqIntent);
-                finish();
+
+                   }else {
+                       Intent reqIntent = new Intent(getApplicationContext(),ReqRiderActivity.class);
+
+                       //user latlng
+                       reqIntent.putExtra("ulat",ulat);
+                       reqIntent.putExtra("ulon",ulon);
+
+                       //rider latlng
+                       reqIntent.putExtra("rlat",marker.getPosition().latitude);
+                       reqIntent.putExtra("rlon",marker.getPosition().longitude);
+
+                       //rider uid
+                       reqIntent.putExtra("ruid",marker.getTag().toString());
+                       reqIntent.putExtra("category","Bike");
+                       startActivity(reqIntent);
+                       finish();
+                   }
+               }
+
+
+
 
                 return false;
             }

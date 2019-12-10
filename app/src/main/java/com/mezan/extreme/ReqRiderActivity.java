@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -105,110 +106,114 @@ public class ReqRiderActivity extends AppCompatActivity {
 
                     String pAddress = pickAddress.getText().toString();
                     if (pAddress.equals("") || pAddress.equals(null)){
-                        pAddress = "N/A";
-                    }
-                    reqDB.child("pick").setValue(pAddress);
-                    reqDB.child("riderid").setValue(ruid);
-                    reqDB.child("reqid").setValue(reqDB.getKey());
-                    reqDB.child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    String currentDateandTime = sdf.format(new Date());
-
-                    reqDB.child("reqtime").setValue(currentDateandTime);
-                    reqDB.child("responsetime").setValue("none");
-
-
-                    LatLng latLngFrom = new LatLng(ulat,ulon);
-                    LatLng latLngTo = new LatLng(rlat,rlon);
-                    Double distance = SphericalUtil.computeDistanceBetween(latLngFrom, latLngTo);
-                    DecimalFormat format = new DecimalFormat("##.00");
-                    String dist = "";
-                    if(distance>1000){
-                        distance = distance/1000;
-                        String val = format.format(distance);
-                        dist = val+"Km";
+                       // pAddress = "N/A";
+                        Snackbar.make(root,"Please Enter An Address",Snackbar.LENGTH_LONG).show();
                     }else {
-                        String val = format.format(distance);
-                        dist = val+"m";
-                    }
-                    reqDB.child("category").setValue(category);
-                    reqDB.child("request").setValue("Pending");
+                        reqDB.child("pick").setValue(pAddress);
+                        reqDB.child("riderid").setValue(ruid);
+                        reqDB.child("reqid").setValue(reqDB.getKey());
+                        reqDB.child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        String currentDateandTime = sdf.format(new Date());
 
-                    reqDB.child("distance").setValue(dist);
-                    reqDB.child("mobile").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+                        reqDB.child("reqtime").setValue(currentDateandTime);
+                        reqDB.child("responsetime").setValue("none");
 
 
-                DatabaseReference riderDb = FirebaseDatabase.getInstance().getReference().child("Rider").child(ruid);
-                riderDb.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            if (dataSnapshot.child("notificationKey").getValue() != null){
-                                new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!"+"Pick Address :"+pickAddress.getText(),dataSnapshot.child("notificationKey").getValue().toString());
-                                Snackbar.make(root,"Request has been sent!",Snackbar.LENGTH_LONG).show();
-                            }
+                        LatLng latLngFrom = new LatLng(ulat,ulon);
+                        LatLng latLngTo = new LatLng(rlat,rlon);
+                        Double distance = SphericalUtil.computeDistanceBetween(latLngFrom, latLngTo);
+                        DecimalFormat format = new DecimalFormat("##.00");
+                        String dist = "";
+                        if(distance>1000){
+                            distance = distance/1000;
+                            String val = format.format(distance);
+                            dist = val+"Km";
+                        }else {
+                            String val = format.format(distance);
+                            dist = val+"m";
                         }
-                    }
+                        reqDB.child("category").setValue(category);
+                        reqDB.child("request").setValue("Pending");
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-                    DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    userDb.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()){
-                                if (dataSnapshot.child("name").getValue() != null){
-                                    reqDB.child("name").setValue(dataSnapshot.child("name").getValue());
+                        reqDB.child("distance").setValue(dist);
+                        reqDB.child("mobile").setValue(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
 
 
+                        DatabaseReference riderDb = FirebaseDatabase.getInstance().getReference().child("Rider").child(ruid);
+                        riderDb.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    if (dataSnapshot.child("notificationKey").getValue() != null){
+                                        new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!"+"Pick Address :"+pickAddress.getText(),dataSnapshot.child("notificationKey").getValue().toString());
+                                        Snackbar.make(root,"Request has been sent!",Snackbar.LENGTH_LONG).show();
+                                        DisableRequest();
+                                    }
                                 }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        userDb.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()){
+                                    if (dataSnapshot.child("name").getValue() != null){
+                                        reqDB.child("name").setValue(dataSnapshot.child("name").getValue());
+
+
+                                    }
                                 /*if (dataSnapshot.child("notificationKey").getValue() != null){
                                     new SendNotification(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber(),"You have a ride request!",dataSnapshot.child("notificationKey").getValue().toString());
                                 }*/
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    DatabaseReference userLocDb = FirebaseDatabase.getInstance().getReference().child("UserLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-                    userLocDb.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot userLocDBSnap) {
-
-                            String lat = "";
-                            String lon = "";
-                            if (userLocDBSnap.exists()){
-                                if (userLocDBSnap.child("lat").getValue() != null){
-                                    lat = userLocDBSnap.child("lat").getValue().toString();
-                                    reqDB.child("lat").setValue(lat);
-                                }
-                                if (userLocDBSnap.child("lon").getValue() != null){
-                                    lon = userLocDBSnap.child("lon").getValue().toString();
-                                    reqDB.child("lon").setValue(lon);
                                 }
                             }
 
-                        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
 
-                        }
-                    });
+                        DatabaseReference userLocDb = FirebaseDatabase.getInstance().getReference().child("UserLoc").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                        userLocDb.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot userLocDBSnap) {
+
+                                String lat = "";
+                                String lon = "";
+                                if (userLocDBSnap.exists()){
+                                    if (userLocDBSnap.child("lat").getValue() != null){
+                                        lat = userLocDBSnap.child("lat").getValue().toString();
+                                        reqDB.child("lat").setValue(lat);
+                                    }
+                                    if (userLocDBSnap.child("lon").getValue() != null){
+                                        lon = userLocDBSnap.child("lon").getValue().toString();
+                                        reqDB.child("lon").setValue(lon);
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
 
 
 
-            }
+                    }
+                    }
+
         });
 
 
@@ -309,5 +314,13 @@ public class ReqRiderActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(),UserInterface.class));
+    }
+
+    public void DisableRequest(){
+        btnReq.setText("Requested");
+        btnReq.setEnabled(false);
+        btnReq.setBackgroundColor(Color.rgb(0,0,0));
+        pickAddress.setEnabled(false);
+
     }
 }

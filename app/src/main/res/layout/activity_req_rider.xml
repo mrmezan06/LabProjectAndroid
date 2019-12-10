@@ -155,9 +155,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:textColor="#fff2"
+            android:textColor="#000"
             android:textAlignment="center"
             android:textSize="24sp"
+
             android:hint="Enter An Address"
             android:background="#FFF"
             android:id="@+id/pickAddress"

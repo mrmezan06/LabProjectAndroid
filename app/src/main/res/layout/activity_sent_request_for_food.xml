@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     android:id="@+id/rootSRF"
     android:orientation="vertical"
+    android:gravity="top"
     android:background="@color/cardview_dark_background"
     tools:context=".food.SentRequestForFoodActivity">
 
     <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
         android:weightSum="10"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -30,6 +33,8 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:weightSum="10"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -41,13 +46,18 @@
             android:text="Pick Driver :"
             android:textColor="#FFF"
             android:layout_height="wrap_content" />
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_weight="6"
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:text="ABCD"
+            android:id="@+id/driverText"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <Button
+        android:layout_marginTop="40dp"
         android:id="@+id/sentOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
