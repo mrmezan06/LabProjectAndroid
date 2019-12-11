@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cardview_dark_background"
+    android:id="@+id/rootFLRO"
+    tools:context=".FoodListRiderOrder">
+
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Information"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="#FFF"
+        />
+
+    <ListView
+        android:id="@+id/orderItemList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7.0"
+        >
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:text="Pick Address:"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="#FFF"
+        />
+        <TextView
+            android:id="@+id/FLROPick"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:text="Dinajpur"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#FFF"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".8"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <Button
+            android:id="@+id/btnReqOrderReject"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:text="Reject"
+            android:background="#F80218"
+            android:textColor="#FFF"
+            />
+        <Button
+            android:id="@+id/btnReqOrderAccept"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:text="Accept"
+            android:textColor="#FFF"
+            android:background="#10F510"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

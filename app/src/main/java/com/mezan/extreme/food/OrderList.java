@@ -44,7 +44,7 @@ public class OrderList extends AppCompatActivity {
 
     /* GPS Status */
     Context context;
-    Intent intent1 ;
+
     LocationManager locationManager ;
     boolean GpsStatus = false ;
     Criteria criteria ;

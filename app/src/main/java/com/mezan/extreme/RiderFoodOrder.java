@@ -3,6 +3,7 @@ package com.mezan.extreme;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +44,9 @@ public class RiderFoodOrder extends AppCompatActivity {
         refList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent it = new Intent(getApplicationContext(),FoodListRiderOrder.class);
+                it.putExtra("orderID",keyList.get(i));
+                startActivity(it);
             }
         });
 

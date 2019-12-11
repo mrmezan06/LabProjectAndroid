@@ -78,11 +78,11 @@ public class OrderListAdapter extends BaseAdapter {
 
         if (i < nameList.size()){
             txtName.setText(nameList.get(i));
-            txtPrice.setText(priceSingleList.get(i));
+            txtPrice.setText(priceSingleList.get(i)+" ৳");
             qtyminus.setText("-");
             qtyplux.setText("+");
             txtQty.setText(quantityList.get(i)+" Pcs");
-            txtTotalPrice.setText(priceTotalList.get(i));
+            txtTotalPrice.setText(priceTotalList.get(i)+" ৳");
             /*Double tPrice = Double.parseDouble(priceTotalList.get(i));
             estimatedPrice += tPrice;*/
 
@@ -104,7 +104,7 @@ public class OrderListAdapter extends BaseAdapter {
                     for (int j=0;j<priceTotalList.size();j++){
                         mp += Double.parseDouble(priceTotalList.get(j));
                     }
-                    txtTotalPrice.setText(String.valueOf(mp));
+                    txtTotalPrice.setText(String.valueOf(mp)+ " ৳");
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -123,9 +123,9 @@ public class OrderListAdapter extends BaseAdapter {
                 int cqty = getINTPlus(quantityList.get(i));
 
                 addcartDB.child("Quantity").setValue(String.valueOf(cqty));
-                txtQty.setText(String.valueOf(cqty));
+                txtQty.setText(String.valueOf(cqty)+"Pcs");
                 addcartDB.child("totalPrice").setValue(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
-                txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
+                txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i)))+" ৳");
             }
         });
 
@@ -139,8 +139,8 @@ public class OrderListAdapter extends BaseAdapter {
                 int cqty = getINTMinus(quantityList.get(i));
 
                 addcartDB.child("Quantity").setValue(String.valueOf(cqty));
-                txtQty.setText(String.valueOf(cqty));
-                addcartDB.child("totalPrice").setValue(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
+                txtQty.setText(String.valueOf(cqty)+"Pcs");
+                addcartDB.child("totalPrice").setValue(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i)))+" ৳");
                 txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
                 if (cqty == 0){
                     Snackbar.make(root,"No More Decrease item available",Snackbar.LENGTH_LONG).show();
