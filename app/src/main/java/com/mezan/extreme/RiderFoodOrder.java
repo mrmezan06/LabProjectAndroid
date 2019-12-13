@@ -24,6 +24,7 @@ public class RiderFoodOrder extends AppCompatActivity {
 
     DatabaseReference mFoodOrderDB;
     ArrayList<String>keyList = new ArrayList<>();
+    ArrayList<String>nameList = new ArrayList<>();
 
     ListView refList;
 
@@ -37,7 +38,7 @@ public class RiderFoodOrder extends AppCompatActivity {
         refList = findViewById(R.id.orderIDFood);
 
 
-        adapter = new FoodReqRefAdapter(this,keyList);
+        adapter = new FoodReqRefAdapter(this,nameList);
 
         refList.setAdapter(adapter);
 
@@ -62,12 +63,45 @@ public class RiderFoodOrder extends AppCompatActivity {
 
                 if (dataSnapshot.exists()){
                     keyList.clear();
+                    nameList.clear();
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
                         String key = ds.getKey();
                         Log.d("OrderKEY",key);
-                        keyList.add(key);
+                        String uid = "";
+                        if (ds.child("userid").exists()){
+
+
+                            uid = ds.child("userid").getValue().toString();
+                            Log.d("OrderUID",uid);
+                            keyList.add(key);
+                            DatabaseReference dbUser = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(uid);
+                            dbUser.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot data) {
+
+                                    if (data.exists()){
+                                        if (data.child("name").exists()){
+
+                                            String name = data.child("name").getValue().toString();
+                                            Log.d("Ordername",name);
+
+                                            nameList.add(name);
+
+                                        }
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+
                     }
-                    adapter.notifyDataSetChanged();
+
 
                 }
 

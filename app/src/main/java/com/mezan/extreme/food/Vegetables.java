@@ -1,6 +1,7 @@
 package com.mezan.extreme.food;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class Vegetables extends Fragment {
     String []name;
     String []description;
     String []price;
+    String Hotel = "";
     public Vegetables() {
         // Required empty public constructor
     }
@@ -50,36 +52,44 @@ public class Vegetables extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
 
-                //already pending order has or not
-                final DatabaseReference orderDB = FirebaseDatabase.getInstance().getReference().child("Order").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                orderDB.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
+                boolean isOrder =  checkHotelIsConflict();
 
-                            if (dataSnapshot.child("status").exists()){
-                                String status = dataSnapshot.child("status").getValue().toString();
-                                if (status.equals("pending")){
-                                    try {
-                                        Toast.makeText(getContext(),"Already have a pending order",Toast.LENGTH_LONG).show();
-                                    }catch (Exception e){
-                                        e.printStackTrace();
+                if (!isOrder){
+                    //already pending order has or not
+                    final DatabaseReference orderDB = FirebaseDatabase.getInstance().getReference().child("Order").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    orderDB.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()){
+
+                                if (dataSnapshot.child("status").exists()){
+                                    String status = dataSnapshot.child("status").getValue().toString();
+                                    if (status.equals("pending")){
+                                        try {
+                                            Toast.makeText(getContext(),"Already have a pending order",Toast.LENGTH_LONG).show();
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+
+                                    }else {
+                                        addtocart(i);
                                     }
-                                }else {
-                                    addtocart(i);
                                 }
+
+                            }else {
+                                addtocart(i);
                             }
-
-                        }else {
-                            addtocart(i);
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }else {
+                    Toast.makeText(getContext(),"Plz Choose :"+Hotel,Toast.LENGTH_LONG).show();
+                }
+
 
 
 
@@ -91,6 +101,56 @@ public class Vegetables extends Fragment {
 
         return view;
     }
+
+    boolean conflict = true;
+    private boolean checkHotelIsConflict() {
+
+        DatabaseReference dbHotelCart = FirebaseDatabase.getInstance().getReference().child("HotelCart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        dbHotelCart.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String chotel = "",hotel = "";
+                    if (dataSnapshot.child("chotel").exists()){
+                        chotel = dataSnapshot.child("chotel").getValue().toString();
+                        Log.d("CHotel",chotel);
+
+                    }
+                    if (dataSnapshot.child("hotel").exists()){
+                        //if exists mean one hotel already have some order
+                        hotel = dataSnapshot.child("hotel").getValue().toString();
+                        Hotel = hotel;
+                        Log.d("Hotel",hotel);
+                        if (chotel.equals(hotel)){
+                            //then no problem
+                            conflict = false;
+                        }else {
+                            conflict = true;
+                        }
+
+                    }else {
+                        //no problem
+                        dataSnapshot.getRef().child("hotel").setValue(chotel);
+                        conflict = false;
+                    }
+                }else {
+                    try {
+                        Toast.makeText(getContext(),"Please Select A Hotel Before Order!",Toast.LENGTH_LONG).show();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return conflict;
+    }
+
     public void addtocart(final int i){
         final DatabaseReference addCartDB = FirebaseDatabase.getInstance().getReference().child("addcart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 /*addCartDB.child("food").setValue(name[i]);
@@ -146,4 +206,5 @@ public class Vegetables extends Fragment {
         });
         Toast.makeText(getContext(),"Item added to the cart",Toast.LENGTH_SHORT).show();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.mezan.extreme.food;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -14,6 +15,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mezan.extreme.R;
 
 public class FoodTabMenu extends AppCompatActivity {
@@ -33,6 +40,8 @@ public class FoodTabMenu extends AppCompatActivity {
             4f,4.5f,5f,4.5f,5f
     };
     String name[] = new String[25];
+
+    String HName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +59,13 @@ public class FoodTabMenu extends AppCompatActivity {
         Bundle bd = it.getExtras();
         if (bd != null){
             positionHotel = bd.getInt("index",0);
+
         }
 
         name = getResources().getStringArray(R.array.hotelName);
+
+
+
 
         TextView nameTxt,deliveryTimeTxt;
         RatingBar hotelRating;
@@ -75,6 +88,10 @@ public class FoodTabMenu extends AppCompatActivity {
 
         //hotel identification
         nameTxt.setText(name[positionHotel]);
+
+        HName = name[positionHotel];
+
+
         deliveryTimeTxt.setText("45\nMIN");
 
         hotelRating.setRating(Rating[positionHotel]);
@@ -103,6 +120,10 @@ public class FoodTabMenu extends AppCompatActivity {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+
+        setHotelNameAddCart(HName);
+
+
         final TabAdapter adapter = new TabAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
@@ -124,6 +145,14 @@ public class FoodTabMenu extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    private void setHotelNameAddCart(final String hName) {
+
+        DatabaseReference dbHotelCart = FirebaseDatabase.getInstance().getReference().child("HotelCart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        dbHotelCart.child("chotel").setValue(hName);
 
 
     }
