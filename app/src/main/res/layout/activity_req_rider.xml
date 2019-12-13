@@ -158,7 +158,6 @@
             android:textColor="#000"
             android:textAlignment="center"
             android:textSize="24sp"
-
             android:hint="Enter An Address"
             android:background="#FFF"
             android:id="@+id/pickAddress"

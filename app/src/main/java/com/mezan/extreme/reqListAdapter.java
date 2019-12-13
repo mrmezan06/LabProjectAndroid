@@ -235,11 +235,12 @@ public class reqListAdapter extends BaseAdapter {
             }
 
       }else if (dataObj.get(i).getStatus().equals("Accepted")){
-            reqAccept.setBackgroundColor(Color.rgb(0,0,0));
+            reqAccept.setBackgroundColor(Color.parseColor("#096E22"));
+
             reqReject.setEnabled(false);
             reqAccept.setEnabled(false);
         }else if (dataObj.get(i).getStatus().equals("Rejected")){
-            reqReject.setBackgroundColor(Color.rgb(0,0,0));
+            reqReject.setBackgroundColor(Color.parseColor("#5D1203"));
             reqReject.setEnabled(false);
             reqAccept.setEnabled(false);
         }

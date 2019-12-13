@@ -139,7 +139,7 @@ public class OrderListAdapter extends BaseAdapter {
                 int cqty = getINTMinus(quantityList.get(i));
 
                 addcartDB.child("Quantity").setValue(String.valueOf(cqty));
-                txtQty.setText(String.valueOf(cqty)+"Pcs");
+                txtQty.setText(cqty +"Pcs");
                 addcartDB.child("totalPrice").setValue(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i)))+" ৳");
                 txtTotalPrice.setText(String.valueOf(cqty*Double.parseDouble(priceSingleList.get(i))));
                 if (cqty == 0){

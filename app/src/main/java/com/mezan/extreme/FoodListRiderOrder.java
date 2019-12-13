@@ -1,5 +1,6 @@
 package com.mezan.extreme;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -183,9 +184,10 @@ public class FoodListRiderOrder extends AppCompatActivity {
                                 btnAccept.setEnabled(false);
                                 btnReject.setEnabled(false);
                                 if (status.equals("accepted")){
-                                    btnAccept.setBackgroundColor(Color.rgb(0,0,0));
+                                    btnAccept.setBackgroundColor(Color.parseColor("#096E22"));
+
                                 }else {
-                                    btnReject.setBackgroundColor(Color.rgb(0,0,0));
+                                    btnReject.setBackgroundColor(Color.parseColor("#5D1203"));
                                 }
                             }
                         }catch (Exception e){

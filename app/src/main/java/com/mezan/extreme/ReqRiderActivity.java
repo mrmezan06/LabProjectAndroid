@@ -264,15 +264,15 @@ public class ReqRiderActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String availabilty = "";
+                    //String availabilty = "";
                     String driver = "";
                     String mobile = "";
                     if (dataSnapshot.child("name").getValue() != null){
                         driver = dataSnapshot.child("name").getValue().toString();
                     }
-                    if (dataSnapshot.child("availability").getValue() != null){
+                    /*if (dataSnapshot.child("availability").getValue() != null){
                       availabilty = dataSnapshot.child("availability").getValue().toString();
-                    }
+                    }*/
                     if (dataSnapshot.child("mobile").getValue() != null){
                         mobile = dataSnapshot.child("mobile").getValue().toString();
                     }
@@ -294,7 +294,7 @@ public class ReqRiderActivity extends AppCompatActivity {
                             }
 
                     nameTxt.setText(driver);
-                    availableTxt.setText(availabilty);
+                    //availableTxt.setText(availabilty);
                     distanceTxt.setText(dist);
                     mobileTxt.setText(mobile);
 
@@ -307,6 +307,24 @@ public class ReqRiderActivity extends AppCompatActivity {
 
             }
         });
+        DatabaseReference riderLocDB = FirebaseDatabase.getInstance().getReference().child("RiderLoc").child(ruid);
+        riderLocDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.child("availability").exists()){
+                        String av = dataSnapshot.child("availability").getValue().toString();
+                        availableTxt.setText(av);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
@@ -319,7 +337,7 @@ public class ReqRiderActivity extends AppCompatActivity {
     public void DisableRequest(){
         btnReq.setText("Requested");
         btnReq.setEnabled(false);
-        btnReq.setBackgroundColor(Color.rgb(0,0,0));
+        btnReq.setBackgroundColor(Color.parseColor("#096E22"));
         pickAddress.setEnabled(false);
 
     }

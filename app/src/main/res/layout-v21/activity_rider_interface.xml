@@ -105,7 +105,7 @@
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_weight="6"
+                android:layout_weight="8.5"
                 android:text="Set Availability :"
                 android:textColor="#FFF"
                 android:padding="5dp"
@@ -114,10 +114,9 @@
             <Switch
                 android:id="@+id/checkAvailability"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:buttonTint="#FFF"
-                android:foregroundTint="#000"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:background="#47020F"
                 />
 
         </LinearLayout>
