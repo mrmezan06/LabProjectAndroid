@@ -241,6 +241,7 @@ public class reqListAdapter extends BaseAdapter {
             reqAccept.setEnabled(false);
         }else if (dataObj.get(i).getStatus().equals("Rejected")){
             reqReject.setBackgroundColor(Color.parseColor("#5D1203"));
+
             reqReject.setEnabled(false);
             reqAccept.setEnabled(false);
         }

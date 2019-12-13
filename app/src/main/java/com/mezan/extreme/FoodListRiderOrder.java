@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,7 @@ public class FoodListRiderOrder extends AppCompatActivity {
 
     LinearLayout root;
     TextView pickAddressText;
+    TextView hotelText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class FoodListRiderOrder extends AppCompatActivity {
         btnAccept = findViewById(R.id.btnReqOrderAccept);
         btnReject = findViewById(R.id.btnReqOrderReject);
         pickAddressText = findViewById(R.id.FLROPick);
+        hotelText = findViewById(R.id.hotelDName);
 
         orderList = findViewById(R.id.orderItemList);
 
@@ -73,6 +76,7 @@ public class FoodListRiderOrder extends AppCompatActivity {
             RiderFoodOrderDB = FirebaseDatabase.getInstance().getReference().child("FoodOrder").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key);
 
             findUserID(RiderFoodOrderDB);
+            FindHotelName(key);
 
         }else {
             Snackbar.make(root,"Something Went Wrong!",Snackbar.LENGTH_LONG).show();
@@ -126,6 +130,7 @@ public class FoodListRiderOrder extends AppCompatActivity {
 
                             FirebaseDatabase.getInstance().getReference().child("Order").child(userID).child("status").setValue(val);
 
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -140,6 +145,41 @@ public class FoodListRiderOrder extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void FindHotelName(String key) {
+
+        DatabaseReference dbFoodOrder = FirebaseDatabase.getInstance().getReference().child("FoodOrder").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key);
+        dbFoodOrder.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.child("pick").exists()){
+                        try {
+                            String pick = dataSnapshot.child("pick").getValue().toString();
+                            pickAddressText.setText(pick);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    if (dataSnapshot.child("hotel").exists()){
+                        try {
+                            String hotel = dataSnapshot.child("hotel").getValue().toString();
+                            hotelText.setText(hotel);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private void sendNotificationToUser(String userID, final String result) {
@@ -168,6 +208,8 @@ public class FoodListRiderOrder extends AppCompatActivity {
     }
 
     private void findUserID(DatabaseReference riderFoodOrderDB) {
+
+
 
         riderFoodOrderDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -205,19 +247,8 @@ public class FoodListRiderOrder extends AppCompatActivity {
                             orderDB.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot orderDS) {
-                                    String pickAddress = "";
+
                                     if (orderDS.exists()){
-                                        if (orderDS.child("pick").exists()){
-                                            try {
-                                                pickAddress = orderDS.child("pick").getValue().toString();
-                                                Log.d("FLRO Pick",pickAddress);
-                                                pickAddressText.setText(pickAddress);
-
-                                            }catch (Exception e){
-                                                e.printStackTrace();
-                                            }
-
-                                        }
 
                                         if (orderDS.child("order").child(key).exists()){
 

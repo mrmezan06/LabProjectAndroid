@@ -90,9 +90,10 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
                 String address = pickAddressET.getText().toString();
 
-                if (address.equals("") || address.equals(null)) {
+                if (address.equals("")) {
                     Snackbar.make(root, "Need an Address!", Snackbar.LENGTH_LONG).show();
                 }else {
+
                     MakeOrder();
 
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Rider").child(driverUID);
@@ -140,6 +141,8 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
         FoodOrderDB.child(orderid).child("userid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
         FoodOrderDB.child(orderid).child("status").setValue("pending");
         FoodOrderDB.child(orderid).child("orderid").setValue(orderid);
+        FoodOrderDB.child(orderid).child("pick").setValue(pickAddressET.getText().toString());
+
 
         //orderDB.child("order").child(orderid);
         DatabaseReference addcartDB = FirebaseDatabase.getInstance().getReference().child("addcart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -174,7 +177,8 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
 
                     dataSnapshot.getRef().setValue(null);
-                    btnSOrder.setBackgroundColor(Color.rgb(0,0,0));
+
+                    btnSOrder.setBackgroundColor(Color.parseColor("#780244"));
 
 
                 }
@@ -186,6 +190,44 @@ public class SentRequestForFoodActivity extends AppCompatActivity {
 
             }
         });
+
+        DatabaseReference dbHotelCart = FirebaseDatabase.getInstance().getReference().child("HotelCart").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        dbHotelCart.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.child("hotel").exists()){
+                        try {
+                            String hotelname = dataSnapshot.child("hotel").getValue().toString();
+                            DatabaseReference dbFoodOrder = FirebaseDatabase.getInstance().getReference().child("FoodOrder").child(driverUID).child(orderid);
+                            dbFoodOrder.child("hotel").setValue(hotelname);
+                            DatabaseReference dbOrder = FirebaseDatabase.getInstance().getReference().child("Order").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            dbOrder.child("hotel").setValue(hotelname);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            dataSnapshot.child("hotel").getRef().setValue(null);
+                            dataSnapshot.child("chotel").getRef().setValue(null);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //dbHotelCart.setValue(null);
 
 
 
