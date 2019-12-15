@@ -202,8 +202,14 @@ public class RiderRegister extends AppCompatActivity {
     }
     private void VerifyPhoneNumberWithCode() {
 
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
-        SignInWithPhoneCredential(credential);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+            SignInWithPhoneCredential(credential);
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),"Insert Verification Code!",Toast.LENGTH_LONG).show();
+        }
+
+
 
 
 

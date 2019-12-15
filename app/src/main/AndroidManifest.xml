@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/bike"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FoodListRiderOrder"></activity>
+        <activity android:name=".ParcelActivity"></activity>
+        <activity android:name=".FoodListRiderOrder" />
         <activity android:name=".RiderFoodOrder" />
         <activity android:name=".food.SentRequestForFoodActivity" />
         <activity android:name=".food.OrderList" />

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -197,8 +198,14 @@ public class UserLoginActivity extends AppCompatActivity {
     }
     private void VerifyPhoneNumberWithCode() {
 
+        try {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
             SignInWithPhoneCredential(credential);
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Insert Verification Code!",Toast.LENGTH_LONG).show();
+        }
+
 
 
 

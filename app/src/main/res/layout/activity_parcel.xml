@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootPA"
+    android:orientation="vertical"
+    android:gravity="top"
+    android:background="@color/cardview_dark_background"
+    tools:context=".ParcelActivity">
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="Pick Address :"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/pAddressE"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:hint="Enter an address"
+            android:textColor="#FFF"
+            android:textColorHint="#FFF"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="Sent Address:"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/dAddressE"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:hint="Enter an address"
+            android:textColor="#FFF"
+            android:textColorHint="#FFF"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="Type :"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/typeSpinner"
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:textAlignment="center"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="Pick Driver :"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="20sp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="ABCD"
+            android:id="@+id/PdriverText"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="40dp"
+        android:id="@+id/sentParcelOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="sent Order"
+        android:background="@color/colorAccent"
+        android:textColor="#FFF"
+        />
+</LinearLayout>

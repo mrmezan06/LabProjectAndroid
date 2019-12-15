@@ -213,8 +213,15 @@ public class UserInterface extends AppCompatActivity {
                                         mUserLocDB.child("lat").setValue(String.valueOf(location.getLatitude()));
                                         mUserLocDB.child("lon").setValue(String.valueOf(location.getLongitude()));
                                         mUserLocDB.child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                        String riderAddress = setAddress(location.getLatitude(),location.getLongitude());
-                                        Log.d("RiderAddress",riderAddress);
+                                        try {
+                                            String riderAddress = setAddress(location.getLatitude(),location.getLongitude());
+                                            Log.d("RiderAddress",riderAddress);
+
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                            Snackbar.make(root,"Something went wrong!",Snackbar.LENGTH_LONG).show();
+                                        }
+
                                         if(type.equals("bike")){
                                             //Bike Map
                                             Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
@@ -237,7 +244,14 @@ public class UserInterface extends AppCompatActivity {
 
                                             startActivity(it);
                                         }else if (type.equals("parcel")){
+
                                             //parcel
+                                            Intent it = new Intent(UserInterface.this,BikeMapsActivity.class);
+                                            it.putExtra("lat",location.getLatitude());
+                                            it.putExtra("lon",location.getLongitude());
+                                            it.putExtra("order","parcel");
+                                            startActivity(it);
+
                                         }else if (type.equals("address")){
                                             String myAddress = setAddress(location.getLatitude(),location.getLongitude());
                                             rootAddress.setVisibility(View.VISIBLE);

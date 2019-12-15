@@ -150,8 +150,7 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
            Marker marker =  mMap.addMarker(new MarkerOptions().position(userLocation).title(address).icon(BitmapDescriptorFactory.fromResource(R.drawable.markeruser)));
            marker.setTag("Your Position");
 
-
-        CameraPosition googlePlex = CameraPosition.builder()
+             CameraPosition googlePlex = CameraPosition.builder()
                 .target(new LatLng(ulat,ulon))
                 .zoom(7)
                 .bearing(0)
@@ -221,19 +220,36 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
 
                /* Toast.makeText(getApplicationContext(),marker.getTag().toString(),Toast.LENGTH_LONG).show();
                 Log.d("MarkerClick",marker.getTag().toString());    */
-               if (marker.getTag().equals("Your Position")){
-                   Toast.makeText(getApplicationContext(),"Click Driver Marker",Toast.LENGTH_LONG).show();
+
+               String mytag = marker.getTag().toString();
+               if (mytag.equals("Your Position") || mytag == null){
+                   Toast.makeText(getApplicationContext(),"Click Driver Marker!",Toast.LENGTH_LONG).show();
                }else {
                    if (food.equals("food")){
-
-
                        Intent foodIT = new Intent(getApplicationContext(), SentRequestForFoodActivity.class);
-                       foodIT.putExtra("duid",marker.getTag().toString());
-                       startActivity(foodIT);
-                       finish();
+                       String tag = marker.getTag().toString();
+                       if (tag.equals("Your Position")){
+                           Toast.makeText(getApplicationContext(),"Click Driver Marker!",Toast.LENGTH_LONG).show();
+                       }else {
+                           foodIT.putExtra("duid",tag);
+                           startActivity(foodIT);
+                           finish();
+                       }
+
+                   }else if (food.equals("parcel")){
+                       //parcel order
 
 
-                   }else {
+                       Intent pIT = new Intent(getApplicationContext(),ParcelActivity.class);
+
+                       String tag = marker.getTag().toString();
+                       if (!tag.equals("Your Position")){
+                           pIT.putExtra("driver",tag);
+                           startActivity(pIT);
+                           finish();
+                       }
+                   }
+                   else {
                        Intent reqIntent = new Intent(getApplicationContext(),ReqRiderActivity.class);
 
                        //user latlng
@@ -243,16 +259,19 @@ public class BikeMapsActivity extends FragmentActivity implements OnMapReadyCall
                        //rider latlng
                        reqIntent.putExtra("rlat",marker.getPosition().latitude);
                        reqIntent.putExtra("rlon",marker.getPosition().longitude);
+                       reqIntent.putExtra("category", "Bike");
 
                        //rider uid
-                       reqIntent.putExtra("ruid",marker.getTag().toString());
-                       reqIntent.putExtra("category","Bike");
-                       startActivity(reqIntent);
-                       finish();
+                       String tag = marker.getTag().toString();
+                       if (!tag.equals("Your Position")) {
+                           reqIntent.putExtra("ruid", tag);
+                           startActivity(reqIntent);
+                           finish();
+                       }else {
+                           Toast.makeText(getApplicationContext(),"Click Driver Marker!",Toast.LENGTH_LONG).show();
+                       }
                    }
                }
-
-
 
 
                 return false;
