@@ -56,14 +56,15 @@
         <activity android:name=".UserDetails" />
         <activity android:name=".UserInterface" />
         <activity android:name=".UserLoginActivity" />
-        <activity android:name=".LoadingScreen" />
-        <activity android:name=".ModuleActivity">
+        <activity android:name=".LoadingScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ModuleActivity"/>
+
     </application>
 
 </manifest>

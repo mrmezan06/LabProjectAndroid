@@ -41,8 +41,8 @@ public class LoadingScreen extends AppCompatActivity {
 //        clockwise();
 
 
-        animObj.setImageResource(R.drawable.car);
-        rootView.setBackgroundColor(Color.parseColor("#8A1569"));
+        animObj.setImageResource(R.drawable.food);
+       // rootView.setBackgroundColor(Color.parseColor("#8A1569"));
 //        animObj.animate().translationXBy(0f).translationYBy(0f).rotationBy(3600).setDuration(2000);
 
         final Animation clockwise = AnimationUtils.loadAnimation(this,R.anim.clockwise);
@@ -56,13 +56,12 @@ public class LoadingScreen extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 if (!isFirstAnimation) {
-                    animObj.clearAnimation();
-                    Intent intent;
-                    if(isFirst) {
+                        animObj.clearAnimation();
+                        Intent intent;
                         intent = new Intent(LoadingScreen.this, ModuleActivity.class);
                         startActivity(intent);
                         finish();
-                    }
+
                 }
 
                 isFirstAnimation = true;

@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FD0568"
     android:id="@+id/rootView"
     tools:context=".LoadingScreen">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/car"
+        android:src="@drawable/food"
         android:id="@+id/splash"
         />
 

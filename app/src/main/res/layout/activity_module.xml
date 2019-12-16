@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="10"
+    android:orientation="vertical"
     android:background="#E91E63"
     android:gravity="center"
+    android:layout_margin="10dp"
     android:id="@+id/rootModule"
     tools:context=".ModuleActivity">
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/userArea"
         >
         <LinearLayout
@@ -26,56 +25,37 @@
             >
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="7"
-                android:text="USER\nAREA"
+                android:layout_height="match_parent"
+                android:text="USER AREA"
                 android:textAlignment="center"
-                android:textSize="36sp"
+                android:textSize="30sp"
                 android:textColor="#FFF"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:textAlignment="center"
-                android:textSize="22sp"
-                android:textColor="#FFF"
-                android:text="Bike,Car,Food,Parcel"
+                android:textStyle="italic"
                 />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_weight="5"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/riderArea"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="10"
             android:background="#347505"
             >
             <TextView
+                android:textStyle="italic"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="7"
-                android:text="RIDER\nAREA"
+                android:layout_height="match_parent"
+                android:text="RIDER AREA"
                 android:textAlignment="center"
-                android:textSize="36sp"
+                android:textSize="30sp"
                 android:textColor="#FFF"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:textColor="#FFF"
-                android:textSize="22sp"
-                android:textAlignment="center"
-                android:text="Any Interested Rider Allowed"
                 />
 
         </LinearLayout>
