@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/cardview_dark_background"
     android:layout_margin="10dp"
-    tools:context=".RiderFoodOrder">
+    tools:context=".ParcelReqList">
 
     <TextView
         android:layout_width="match_parent"
@@ -21,11 +21,10 @@
         />
 
     <ListView
-        android:id="@+id/orderIDFood"
+        android:id="@+id/orderParcelList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </ListView>
-
 
 </LinearLayout>

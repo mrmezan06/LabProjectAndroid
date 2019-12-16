@@ -18,7 +18,9 @@
         android:roundIcon="@drawable/bike"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ParcelActivity"></activity>
+        <activity android:name=".ParcelInfoRider"></activity>
+        <activity android:name=".ParcelReqList" />
+        <activity android:name=".ParcelActivity" />
         <activity android:name=".FoodListRiderOrder" />
         <activity android:name=".RiderFoodOrder" />
         <activity android:name=".food.SentRequestForFoodActivity" />

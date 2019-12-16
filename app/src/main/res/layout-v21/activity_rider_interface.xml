@@ -93,6 +93,23 @@
         </LinearLayout>
 
         <LinearLayout
+            android:background="#D81B60"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtParcelRequest"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Parcel Request List"
+                android:textColor="#FFF"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:weightSum="10"
             android:orientation="horizontal"
             android:background="#D81B60"
