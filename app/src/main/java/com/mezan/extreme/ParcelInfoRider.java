@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ParcelInfoRider extends AppCompatActivity {
 
-    TextView nametxt,picktxt,deliverytxt,statustxt,typetxt;
+    TextView nametxt,picktxt,deliverytxt,statustxt,typetxt,mobiletext;
     Button btnAccept,btnReject;
     String name = "";
     String key = "";
@@ -33,6 +33,7 @@ public class ParcelInfoRider extends AppCompatActivity {
         deliverytxt = findViewById(R.id.deliveryRiderParcel);
         statustxt = findViewById(R.id.statusRiderParcel);
         typetxt = findViewById(R.id.typeOfParcel);
+        mobiletext = findViewById(R.id.UserPhone);
 
         btnAccept = findViewById(R.id.btnReqParcelAccept);
         btnReject = findViewById(R.id.btnReqParcelReject);
@@ -189,6 +190,18 @@ public class ParcelInfoRider extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    //uid of user
+                    if (dataSnapshot.child("uid").exists()){
+                        try {
+                            String uid = dataSnapshot.child("uid").getValue().toString();
+                            //typetxt.setText(dl);
+
+                            SettingUserPhone(uid);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -198,5 +211,31 @@ public class ParcelInfoRider extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void SettingUserPhone(String uid) {
+        DatabaseReference dbUser = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(uid);
+        dbUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.child("mobile").exists()){
+                        try {
+                            String mob = dataSnapshot.child("mobile").getValue().toString();
+                                mobiletext.setText(mob);
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

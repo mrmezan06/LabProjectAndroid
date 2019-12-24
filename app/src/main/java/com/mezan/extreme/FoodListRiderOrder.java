@@ -45,7 +45,7 @@ public class FoodListRiderOrder extends AppCompatActivity {
 
     LinearLayout root;
     TextView pickAddressText;
-    TextView hotelText;
+    TextView hotelText,nametext,mobiletext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,8 @@ public class FoodListRiderOrder extends AppCompatActivity {
         btnReject = findViewById(R.id.btnReqOrderReject);
         pickAddressText = findViewById(R.id.FLROPick);
         hotelText = findViewById(R.id.hotelDName);
+        nametext = findViewById(R.id.foodUserName);
+        mobiletext = findViewById(R.id.foodUserPhone);
 
         orderList = findViewById(R.id.orderItemList);
 
@@ -170,6 +172,16 @@ public class FoodListRiderOrder extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    if (dataSnapshot.child("userid").exists()){
+                        try {
+                            String uid = dataSnapshot.child("userid").getValue().toString();
+                            SettingUserPhone(uid);
+
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -180,6 +192,41 @@ public class FoodListRiderOrder extends AppCompatActivity {
         });
 
 
+    }
+    private void SettingUserPhone(String uid) {
+        DatabaseReference dbUser = FirebaseDatabase.getInstance().getReference().child("UserInfo").child(uid);
+        dbUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.child("mobile").exists()){
+                        try {
+                            String mob = dataSnapshot.child("mobile").getValue().toString();
+                            mobiletext.setText(mob);
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    if (dataSnapshot.child("name").exists()){
+                        try {
+                            String name = dataSnapshot.child("name").getValue().toString();
+                            nametext.setText(name);
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void sendNotificationToUser(String userID, final String result) {
